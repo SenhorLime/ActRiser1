@@ -1,0 +1,12 @@
+# Ignore executable files
+*.out
+*.app
+*.exe
+*.o
+
+# Ignore CLion files
+/.idea
+/cmake-build-debug
+
+# Ignore CMake lists (It's different for Windows and Linux)
+CMakeLists.txt
