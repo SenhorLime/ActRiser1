@@ -2,18 +2,26 @@
 #define ACTRISE1_GAME_HPP
 
 #include "Window.hpp"
-//#include "StateMachine.hpp"
 
 class Game {
 public:
-	Game();
+  void Start();
 
-	void Start();
 private:
-	//void SetGameState();
+  bool IsQuiting();
 
-	Window window;
-	//StateMachine gameState;
+  void GameLoop();
+
+  void ShowSplashScreen();
+  void ShowMenu();
+
+  enum GameState {
+      Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Dialog, Quiting
+  };
+
+private:
+  GameState gameState;
+  Window EngineWindow;
 };
 
 
