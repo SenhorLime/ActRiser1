@@ -5,7 +5,7 @@
 void Game::Start() {
   if (gameState != Uninitialized) { return; }
 
-  gameState = Game::Playing;
+  gameState = Game::ShowingSplash;
 
   while (!IsQuiting()) {
     GameLoop();
@@ -48,6 +48,7 @@ void Game::GameLoop() {
 void Game::ShowSplashScreen() {
   SplashScreen splash;
   splash.Show(EngineWindow);
+  gameState = ShowingMenu;
 }
 
 void Game::ShowMenu() {
