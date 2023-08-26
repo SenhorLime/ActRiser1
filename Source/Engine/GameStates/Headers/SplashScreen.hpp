@@ -1,17 +1,13 @@
 #ifndef ACTRISE1_SPLASHSCREEN_HPP
 #define ACTRISE1_SPLASHSCREEN_HPP
 
-#include "../../Headers/Window.hpp"
+#include "InitialStatesRender.hpp"
 
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
-
-class SplashScreen {
+class SplashScreen : public InitialStatesRender {
 public:
   void Show(Window &EngineWindow);
 
-private:
-  sf::Sprite LoadSprites();
+  void HandleEvents(Window &EngineWindow, sf::Event &event);
 };
 
 

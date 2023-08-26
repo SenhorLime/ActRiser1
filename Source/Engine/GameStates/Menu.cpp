@@ -2,11 +2,6 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-void Menu::LoadSprites() {
-  menuTexture.loadFromFile("../Assets/SplashScreen/mainmenu.png");
-  menuSprite.setTexture(menuTexture);
-}
-
 void Menu::SetButtons() {
   MenuItem playButton;
   playButton.rect.top = 145;
@@ -28,11 +23,11 @@ void Menu::SetButtons() {
 }
 
 Menu::MenuResult Menu::Show(Window &EngineWindow) {
-  LoadSprites();
+  LoadSprites("../Assets/SplashScreen/mainmenu.png");
   SetButtons();
 
   EngineWindow.mainWindow.clear();
-  EngineWindow.mainWindow.draw(menuSprite);
+  EngineWindow.mainWindow.draw(sprite);
   EngineWindow.mainWindow.display();
 
   return GetMenuResponse(EngineWindow);
@@ -56,13 +51,13 @@ Menu::MenuResult Menu::HandleClick(sf::Vector2i mouseInput) {
 Menu::MenuResult Menu::GetMenuResponse(Window &EngineWindow) {
   sf::Event event;
 
-  while (true) {
+  while (EngineWindow.mainWindow.isOpen()) {
     while (EngineWindow.mainWindow.pollEvent(event)) {
       if (event.type == sf::Event::MouseButtonPressed) {
         return HandleClick({event.mouseButton.x, event.mouseButton.y});
       }
-
-      if (event.type == sf::Event::Closed) { return Exit; }
     }
   }
+
+  return Exit;
 }

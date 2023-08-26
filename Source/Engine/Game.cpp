@@ -23,6 +23,8 @@ bool Game::IsQuiting() {
 }
 
 void Game::GameLoop() {
+  sf::Event event;
+
   while (EngineWindow.mainWindow.isOpen()) {
     EngineWindow.HandleEvents();
 
@@ -46,8 +48,12 @@ void Game::GameLoop() {
 }
 
 void Game::ShowSplashScreen() {
+  sf::Event event;
   SplashScreen splash;
+
   splash.Show(EngineWindow);
+  splash.HandleEvents(EngineWindow, event);
+
   gameState = ShowingMenu;
 }
 

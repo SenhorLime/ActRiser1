@@ -2,6 +2,5 @@
 
 int main() {
   Game ActRiser;
-
   ActRiser.Start();
 }

@@ -1,25 +1,17 @@
 #include "Headers/SplashScreen.hpp"
 
-sf::Sprite SplashScreen::LoadSprites() {
-  sf::Texture splashTexture;
-  sf::Sprite splashSprite;
+void SplashScreen::Show(Window &EngineWindow) {
+  LoadSprites("../Assets/SplashScreen/SplashScreen.png");
 
-  splashTexture.loadFromFile("../Assets/SplashScreen/SplashScreen.png");
-  splashSprite.setTexture(splashTexture);
-
-  return splashSprite;
+  EngineWindow.mainWindow.clear();
+  EngineWindow.mainWindow.draw(sprite);
+  EngineWindow.mainWindow.display();
 }
 
-void SplashScreen::Show(Window &EngineWindow) {
-  EngineWindow.mainWindow.draw(LoadSprites());
-  EngineWindow.mainWindow.display();
-
-  sf::Event event;
-  while (true) {
+void SplashScreen::HandleEvents(Window &EngineWindow, sf::Event &event) {
+  while (EngineWindow.mainWindow.isOpen()) {
     while (EngineWindow.mainWindow.pollEvent(event)) {
-      if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-        return;
-      }
+      if (event.key.code == sf::Keyboard::Escape) { return; }
     }
   }
 }
