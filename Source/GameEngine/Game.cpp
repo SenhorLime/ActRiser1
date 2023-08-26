@@ -1,11 +1,11 @@
 #include "Headers/Game.hpp"
-#include "GameStates/Headers/SplashScreen.hpp"
-#include "GameStates/Headers/Menu.hpp"
+#include "../GameStates/Headers/SplashScreen.hpp"
+#include "../GameStates/Headers/Menu.hpp"
 
 void Game::Start() {
   if (gameState != Uninitialized) { return; }
 
-  gameState = Game::ShowingSplash;
+  gameState = Game::Playing;
 
   while (!IsQuiting()) {
     GameLoop();
