@@ -5,7 +5,7 @@
 void Game::Start() {
   if (gameState != Uninitialized) { return; }
 
-  gameState = Game::Playing;
+  gameState = Game::ShowingSplash;
 
   while (!IsQuiting()) {
     GameLoop();

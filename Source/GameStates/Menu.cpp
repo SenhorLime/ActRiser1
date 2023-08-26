@@ -5,16 +5,16 @@
 void Menu::SetButtons() {
   MenuItem playButton;
   playButton.rect.top = 145;
-  playButton.rect.height = 380;
   playButton.rect.left = 0;
+  playButton.rect.height = 380;
   playButton.rect.width = 1023;
   playButton.action = Play;
 
   MenuItem exitButton;
-  exitButton.rect.left = 0;
-  exitButton.rect.width = 1023;
   exitButton.rect.top = 383;
+  exitButton.rect.left = 0;
   exitButton.rect.height = 560;
+  exitButton.rect.width = 1023;
   exitButton.action = Exit;
 
   menuItems.push_back(playButton);
@@ -23,7 +23,7 @@ void Menu::SetButtons() {
 }
 
 Menu::MenuResult Menu::Show(Window &EngineWindow) {
-  LoadSprites("../Assets/SplashScreen/mainmenu.png");
+  InitialStatesRender::LoadSprites("../Assets/SplashScreen/mainmenu.png");
   SetButtons();
 
   EngineWindow.mainWindow.clear();

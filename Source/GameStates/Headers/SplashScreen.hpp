@@ -5,8 +5,6 @@
 
 class SplashScreen : public InitialStatesRender {
 public:
-  void Show(Window &EngineWindow);
-
   void HandleEvents(Window &EngineWindow, sf::Event &event);
 };
 

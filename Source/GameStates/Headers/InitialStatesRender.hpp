@@ -1,7 +1,7 @@
 #ifndef ACTRISE1_INITIALSTATESRENDER_HPP
 #define ACTRISE1_INITIALSTATESRENDER_HPP
 
-#include "../../Engine/Headers/Window.hpp"
+#include "../../GameEngine/Headers/Window.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>

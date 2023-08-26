@@ -1,7 +1,7 @@
 #include "Headers/SplashScreen.hpp"
 
-void SplashScreen::Show(Window &EngineWindow) {
-  LoadSprites("../Assets/SplashScreen/SplashScreen.png");
+void InitialStatesRender::Show(Window &EngineWindow) {
+  InitialStatesRender::LoadSprites("../Assets/SplashScreen/SplashScreen.png");
 
   EngineWindow.mainWindow.clear();
   EngineWindow.mainWindow.draw(sprite);
