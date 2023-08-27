@@ -1,6 +1,6 @@
-#include "Headers/Window.hpp"
+#include "Window.hpp"
 
-Window::Window() { Create(sf::Vector2u(1024, 576), "Act Riser"); }
+Window::Window() { Create(sf::Vector2u(1280, 720), "Act Riser"); }
 
 void Window::Create(const sf::Vector2u &windowSize, const std::string &windowTitle) {
   mainWindow.create({windowSize.x, windowSize.y}, windowTitle);

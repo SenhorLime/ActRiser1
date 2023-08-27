@@ -1,11 +1,10 @@
 #ifndef ACTRISE1_SPLASHSCREEN_HPP
 #define ACTRISE1_SPLASHSCREEN_HPP
 
-#include "InitialStatesRender.hpp"
+#include "../Headers/InitialStatesRender.hpp"
 
 class SplashScreen : public InitialStatesRender {
 public:
-  void HandleEvents(Window &EngineWindow, sf::Event &event);
 };
 
 

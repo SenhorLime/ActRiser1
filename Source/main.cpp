@@ -1,4 +1,4 @@
-#include "GameEngine/Headers/Game.hpp"
+#include "GameEngine/Game/Game.hpp"
 
 int main() {
   Game ActRiser;

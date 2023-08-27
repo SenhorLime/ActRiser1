@@ -1,11 +1,12 @@
-#include "Headers/Game.hpp"
-#include "../GameStates/Headers/SplashScreen.hpp"
-#include "../GameStates/Headers/Menu.hpp"
+#include "Game.hpp"
+#include "../../GameStates/Menu/Menu.hpp"
+#include "../../GameStates/Dialog/TextBox.hpp"
+#include "../../GameStates/SplashScreen/SplashScreen.hpp"
 
 void Game::Start() {
   if (gameState != Uninitialized) { return; }
 
-  gameState = Game::ShowingSplash;
+  gameState = Game::Dialog;
 
   while (!IsQuiting()) {
     GameLoop();
@@ -35,8 +36,11 @@ void Game::GameLoop() {
       case Game::ShowingMenu:
         ShowMenu();
         break;
+      case Game::Dialog:
+        ShowDialog();
+        break;
       case Game::Playing:
-        EngineWindow.mainWindow.clear();
+        EngineWindow.mainWindow.clear(sf::Color::White);
         EngineWindow.mainWindow.display();
 
         if (EngineWindow.HandleEvents() == sf::Event::Closed) {
@@ -45,6 +49,11 @@ void Game::GameLoop() {
         break;
     }
   }
+}
+
+void Game::ShowDialog() {
+  TextBox textBox;
+  textBox.RenderDialog(EngineWindow);
 }
 
 void Game::ShowSplashScreen() {
@@ -67,7 +76,7 @@ void Game::ShowMenu() {
       gameState = Game::Quiting;
       break;
     case Menu::Play:
-      gameState = Game::Playing;
+      gameState = Game::Dialog;
       break;
   }
 }

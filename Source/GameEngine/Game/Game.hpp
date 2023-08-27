@@ -1,7 +1,7 @@
 #ifndef ACTRISE1_GAME_HPP
 #define ACTRISE1_GAME_HPP
 
-#include "Window.hpp"
+#include "../Window/Window.hpp"
 
 class Game {
 public:
@@ -14,6 +14,7 @@ private:
 
   void ShowSplashScreen();
   void ShowMenu();
+  void ShowDialog();
 
   enum GameState {
       Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Dialog, Quiting

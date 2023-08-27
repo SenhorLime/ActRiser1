@@ -1,6 +1,4 @@
-#include "Headers/Menu.hpp"
-
-#include <SFML/Graphics/Texture.hpp>
+#include "Menu.hpp"
 
 void Menu::SetButtons() {
   MenuItem playButton;
@@ -23,7 +21,7 @@ void Menu::SetButtons() {
 }
 
 Menu::MenuResult Menu::Show(Window &EngineWindow) {
-  InitialStatesRender::LoadSprites("../Assets/SplashScreen/mainmenu.png");
+  InitialStatesRender::LoadSprites("../Assets/Menu/mainmenu.png");
   SetButtons();
 
   EngineWindow.mainWindow.clear();
@@ -31,6 +29,20 @@ Menu::MenuResult Menu::Show(Window &EngineWindow) {
   EngineWindow.mainWindow.display();
 
   return GetMenuResponse(EngineWindow);
+}
+
+Menu::MenuResult Menu::GetMenuResponse(Window &EngineWindow) {
+  sf::Event event;
+
+  while (EngineWindow.mainWindow.isOpen()) {
+    while (EngineWindow.mainWindow.pollEvent(event)) {
+      switch (event.type) {
+        case sf::Event::MouseButtonPressed:
+          return HandleClick({event.mouseButton.x, event.mouseButton.y});
+      }
+    }
+  }
+  return Exit;
 }
 
 Menu::MenuResult Menu::HandleClick(sf::Vector2i mouseInput) {
@@ -48,16 +60,3 @@ Menu::MenuResult Menu::HandleClick(sf::Vector2i mouseInput) {
   return Nothing;
 }
 
-Menu::MenuResult Menu::GetMenuResponse(Window &EngineWindow) {
-  sf::Event event;
-
-  while (EngineWindow.mainWindow.isOpen()) {
-    while (EngineWindow.mainWindow.pollEvent(event)) {
-      if (event.type == sf::Event::MouseButtonPressed) {
-        return HandleClick({event.mouseButton.x, event.mouseButton.y});
-      }
-    }
-  }
-
-  return Exit;
-}

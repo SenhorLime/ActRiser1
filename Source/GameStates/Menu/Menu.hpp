@@ -1,7 +1,7 @@
 #ifndef ACTRISE1_MENU_HPP
 #define ACTRISE1_MENU_HPP
 
-#include "InitialStatesRender.hpp"
+#include "../Headers/InitialStatesRender.hpp"
 
 #include <list>
 
