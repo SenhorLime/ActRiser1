@@ -1,7 +1,6 @@
-#include "Engine/Headers/Game.hpp"
+#include "GameEngine/Headers/Game.hpp"
 
 int main() {
   Game ActRiser;
-
   ActRiser.Start();
 }

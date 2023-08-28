@@ -1,11 +1,11 @@
 #include "Headers/Game.hpp"
-#include "GameStates/Headers/SplashScreen.hpp"
-#include "GameStates/Headers/Menu.hpp"
+#include "../GameStates/Headers/SplashScreen.hpp"
+#include "../GameStates/Headers/Menu.hpp"
 
 void Game::Start() {
   if (gameState != Uninitialized) { return; }
 
-  gameState = Game::Playing;
+  gameState = Game::ShowingSplash;
 
   while (!IsQuiting()) {
     GameLoop();
@@ -23,6 +23,8 @@ bool Game::IsQuiting() {
 }
 
 void Game::GameLoop() {
+  sf::Event event;
+
   while (EngineWindow.mainWindow.isOpen()) {
     EngineWindow.HandleEvents();
 
@@ -46,8 +48,13 @@ void Game::GameLoop() {
 }
 
 void Game::ShowSplashScreen() {
+  sf::Event event;
   SplashScreen splash;
+
   splash.Show(EngineWindow);
+  splash.HandleEvents(EngineWindow, event);
+
+  gameState = ShowingMenu;
 }
 
 void Game::ShowMenu() {
