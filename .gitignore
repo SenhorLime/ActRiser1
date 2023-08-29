@@ -4,9 +4,11 @@
 *.exe
 *.o
 
-# Ignore CLion files
+# Ignore IDEs files
 /.idea
 /cmake-build-debug
+/.settings
+/Debug
 
 # Ignore CMake lists (It's different for Windows and Linux)
 CMakeLists.txt
