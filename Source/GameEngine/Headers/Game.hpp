@@ -16,11 +16,11 @@ private:
   void ShowMenu();
 
   enum GameState {
-      Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Dialog, Quiting
+      Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Dialog, Quiting, Nothing
   };
 
 private:
-  GameState gameState;
+  GameState gameState = Uninitialized;
   Window EngineWindow;
 };
 

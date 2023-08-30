@@ -13,6 +13,7 @@ void SplashScreen::HandleEvents(Window &EngineWindow, sf::Event &event) {
     while (EngineWindow.mainWindow.pollEvent(event)) {
       if (event.key.code == sf::Keyboard::Escape) { return; }
     }
+
   }
 }
 
