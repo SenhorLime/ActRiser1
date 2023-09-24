@@ -69,7 +69,7 @@ void Game::SetNebulonPosition(ldtk::Entity &nebulonEntity) {
 void Game::Update(float &deltaTime) {
 	// Updating the player movement
 	anjinho.UpdateDeltaTime(deltaTime);
-	anjinho.ShootArrow(anjinho.GetPostion() + sf::Vector2f(10.f, 10.f));
+	anjinho.ShootArrow(anjinho.GetPostion());
 	anjinho.MoveCharacter();
 
 	// Updating the Enemies movement
@@ -83,14 +83,29 @@ void Game::Update(float &deltaTime) {
 	auto oneEyeCollider = GetEnemyCollider(oneEye.sprite);
 	auto nebulonCollider = GetEnemyCollider(nebulon.sprite);
 
-	if (playerCollider.intersects(oneEyeCollider)
-			or playerCollider.intersects(nebulonCollider)) {
-		anjinho.vidas--;
+	// Testing the collision with a enemy and showing the damage given
+	if (playerCollider.intersects(oneEyeCollider) and oneEye.cooldownCount.getElapsedTime().asSeconds() >= oneEye.cooldownTime) {
+		anjinho.vidas -= 1;
+
 		char str[5];
 		if (anjinho.vidas >= 0) {
 			sprintf(str, "Vidas: \t%d", anjinho.vidas);
 			lifeText.setString(str);
 		}
+
+		oneEye.cooldownCount.restart();
+	}
+
+	if (playerCollider.intersects(nebulonCollider) and nebulon.cooldownCount.getElapsedTime().asSeconds() >= nebulon.cooldownTime) {
+		anjinho.vidas -= 3;
+
+		char str[5];
+		if (anjinho.vidas >= 0) {
+			sprintf(str, "Vidas: \t%d", anjinho.vidas);
+			lifeText.setString(str);
+		}
+
+		nebulon.cooldownCount.restart();
 	}
 
 // Code for adding Collision between the player and the map

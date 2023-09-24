@@ -4,9 +4,10 @@
 #include <SFML/Window/Keyboard.hpp>
 
 Angel::Angel() {
+	cooldownTime = 0.5f;
 	speed = 75.f;
 	deltaTime = 0;
-	vidas = 5;
+	vidas = 8;
 	pontos = 0;
 
 	LoadTextures("Assets/Characters/Angel/Angel_Sheet.png");
@@ -46,9 +47,10 @@ void Angel::MoveCharacter() {
 }
 
 void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
 		Arrow arrow(playerPosition, shootDirection);
 		arrows.push_back(arrow);
+		cooldownCount.restart();
 	}
 }
 

@@ -22,7 +22,7 @@ int main() {
 	Game ActRaiser;
 	ActRaiser.Init(project);
 
-	// Creating the Game Window and setting a maximum framerate
+	// Creating the Game Window and setting visual configuration
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "ActRaiser77");
 	window.setMouseCursorVisible(false);
 	window.setFramerateLimit(60);

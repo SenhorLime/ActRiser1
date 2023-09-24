@@ -2,17 +2,20 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Clock.hpp>
 
 class Character {
 public:
 	sf::Sprite sprite;
+	sf::Clock cooldownCount;
+	float cooldownTime;
 
 public:
 	virtual void UpdateDeltaTime(float &dt);
 
 protected:
 	sf::Texture texture;
-
+	sf::Clock animationFrameTime;
 	float speed;
 	float deltaTime;
 
