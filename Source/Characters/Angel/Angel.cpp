@@ -1,5 +1,6 @@
 #include "Angel.hpp"
 
+#include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 Angel::Angel() {
@@ -19,25 +20,36 @@ void Angel::MoveCharacter() {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		movement.y -= 1.f;
+		shootDirection = sf::Vector2f(0.f, -1.f);
 		CropSprites(sf::IntRect(45, 5, 50, 60));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		movement.y += 1.f;
+		shootDirection = sf::Vector2f(0.f, 1.f);
 		CropSprites(sf::IntRect(45, 128, 50, 60));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		movement.x -= 1.f;
+		shootDirection = sf::Vector2f(-1.f, 0.f);
 		CropSprites(sf::IntRect(58, 192, 35, 60));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		movement.x += 1.f;
+		shootDirection = sf::Vector2f(1.f, 0.f);
 		CropSprites(sf::IntRect(47, 67, 35, 60));
 	}
 
 	SetMovementDirection(movement);
+}
+
+void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		Arrow arrow(playerPosition, shootDirection);
+		arrows.push_back(arrow);
+	}
 }
 
 void Angel::SetMovementDirection(sf::Vector2f &direction) {

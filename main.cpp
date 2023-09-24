@@ -24,6 +24,7 @@ int main() {
 
 	// Creating the Game Window and setting a maximum framerate
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "ActRaiser77");
+	window.setMouseCursorVisible(false);
 	window.setFramerateLimit(60);
 
 	// Creating a Clock variable for updating the movement of the player

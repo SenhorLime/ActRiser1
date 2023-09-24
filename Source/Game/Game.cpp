@@ -69,6 +69,7 @@ void Game::SetNebulonPosition(ldtk::Entity &nebulonEntity) {
 void Game::Update(float &deltaTime) {
 	// Updating the player movement
 	anjinho.UpdateDeltaTime(deltaTime);
+	anjinho.ShootArrow(anjinho.GetPostion() + sf::Vector2f(10.f, 10.f));
 	anjinho.MoveCharacter();
 
 	// Updating the Enemies movement
@@ -82,7 +83,8 @@ void Game::Update(float &deltaTime) {
 	auto oneEyeCollider = GetEnemyCollider(oneEye.sprite);
 	auto nebulonCollider = GetEnemyCollider(nebulon.sprite);
 
-	if (playerCollider.intersects(oneEyeCollider) or playerCollider.intersects(nebulonCollider)) {
+	if (playerCollider.intersects(oneEyeCollider)
+			or playerCollider.intersects(nebulonCollider)) {
 		anjinho.vidas--;
 		char str[5];
 		if (anjinho.vidas >= 0) {
@@ -131,5 +133,11 @@ void Game::Render(sf::RenderTarget &target) {
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);
 	target.draw(lifeText);
+
+	// Drawing the bullets
+	for (auto &arrow : anjinho.arrows) {
+		arrow.Update();
+		target.draw(arrow.texture);
+	}
 
 }
