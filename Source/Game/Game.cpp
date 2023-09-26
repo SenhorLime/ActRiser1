@@ -4,6 +4,7 @@
 
 void Game::Init(const ldtk::Project &ldtk_proj) {
 	// Get the game World from the project
+	//Alisson Esteve aqui.
 	auto &world = ldtk_proj.getWorld();
 	// Get the level from the project
 	auto &ldtkLevel0 = world.getLevel("Level_0");
