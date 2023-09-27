@@ -14,3 +14,4 @@
 
 # Ignore CMake lists (It's different for Windows and Linux)
 CMakeLists.txt
+/lib/
