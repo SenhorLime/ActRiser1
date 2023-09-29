@@ -4,9 +4,10 @@
 #include <iostream>
 #include <cstddef> //For nullptr_t
 
-Game* Game::instance= nullptr;;
+Game *Game::instance = nullptr;
+;
 
-Game::Game(){
+Game::Game() {
 	window = new sf::RenderWindow();
 	window->create(sf::VideoMode(1280, 720), "ActRaiser77");
 	window->setMouseCursorVisible(false);
@@ -16,12 +17,12 @@ Game::Game(){
 
 }
 
-Game *Game::getGame(){
-	    if(instance==nullptr){
-	    	instance = new Game();
-	    }
-	    return instance;
+Game* Game::getGame() {
+	if (instance == nullptr) {
+		instance = new Game();
 	}
+	return instance;
+}
 
 void Game::GameMusic(sf::Music &backgroundMusic) {
 	//backgroundMusic.openFromFile("Assets/Music/Monster.ogg");
@@ -29,7 +30,6 @@ void Game::GameMusic(sf::Music &backgroundMusic) {
 	backgroundMusic.setVolume(50);
 	backgroundMusic.setLoop(true);
 }
-
 
 void Game::Init() {
 	// Get the game World from the project
@@ -82,24 +82,23 @@ void Game::Init() {
 	lifeText.setCharacterSize(8);
 }
 
-
-void Game::run(){
+void Game::run() {
 	while (window->isOpen()) {
-			sf::Event event;
+		sf::Event event;
 
-			while (window->pollEvent(event)) {
-				if (event.type == sf::Event::Closed) {
-					window->close();
-				}
+		while (window->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				window->close();
 			}
-
-			float deltaTime = time.restart().asSeconds();
-
-			Update(deltaTime);
-			window->clear();
-			Render(window);
-			window->display();
 		}
+
+		float deltaTime = time.restart().asSeconds();
+
+		Update(deltaTime);
+		window->clear();
+		Render(window);
+		window->display();
+	}
 
 }
 
@@ -137,7 +136,9 @@ void Game::Update(float &deltaTime) {
 	auto nebulonCollider = GetEnemyCollider(nebulon.sprite);
 
 	// Testing the collision with a enemy and showing the damage given
-	if (playerCollider.intersects(oneEyeCollider) and anjinho.cooldownCount.getElapsedTime().asSeconds() >= anjinho.cooldownTime) {
+	if (playerCollider.intersects(oneEyeCollider)
+			and anjinho.cooldownCount.getElapsedTime().asSeconds()
+					>= anjinho.cooldownTime) {
 		anjinho.vidas -= 1;
 
 		char str[5];
@@ -149,7 +150,9 @@ void Game::Update(float &deltaTime) {
 		//oneEye.cooldownCount.restart();
 	}
 
-	if (playerCollider.intersects(nebulonCollider) and anjinho.cooldownCount.getElapsedTime().asSeconds() >= anjinho.cooldownTime) {
+	if (playerCollider.intersects(nebulonCollider)
+			and anjinho.cooldownCount.getElapsedTime().asSeconds()
+					>= anjinho.cooldownTime) {
 		anjinho.vidas -= 3;
 
 		char str[5];
@@ -179,7 +182,26 @@ void Game::Update(float &deltaTime) {
 //		}
 //	}
 
-	camera.move((anjinho.sprite.getPosition() - camera.getCenter()) / 5.f);
+	moveCamera();
+}
+
+void Game::moveCamera() {
+	sf::Vector2f movment;// = (anjinho.sprite.getPosition() - camera.getCenter())/5.f;
+	int offset = 10;
+
+	//Controla o movimento ao longo de x.
+	if ((anjinho.sprite.getPosition().x + offset > camera.getSize().x / 2) &&
+	   (anjinho.sprite.getPosition().x - offset < cameraBounds.width - camera.getSize().x/2))
+		movment.x = (anjinho.sprite.getPosition().x - camera.getCenter().x)/ 5.f;
+
+	//Controla o movimento ao longo de y.
+	if ((anjinho.sprite.getPosition().y + offset > camera.getSize().y / 2) &&
+	   (anjinho.sprite.getPosition().y - offset < cameraBounds.height - camera.getSize().y/2))
+		movment.y = (anjinho.sprite.getPosition().y - camera.getCenter().y)/ 5.f;
+
+	//Versão do movimento sem controle de bordas
+	//movment = (anjinho.sprite.getPosition()- camera.getCenter())/ 5.f;
+	camera.move(movment);
 }
 
 void Game::Render(sf::RenderTarget *target) {
@@ -192,11 +214,11 @@ void Game::Render(sf::RenderTarget *target) {
 	target->draw(GameMap.GetLayer("Obstacles"));
 
 	//Drawing the player
-	target->draw(anjinho.sprite);
+	anjinho.draw(target);
 
 	// Drawing the Enemies
-	target->draw(oneEye.sprite);
-	target->draw(nebulon.sprite);
+	oneEye.draw(target);
+	nebulon.draw(target);
 
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);
@@ -208,10 +230,23 @@ void Game::Render(sf::RenderTarget *target) {
 		target->draw(arrow.texture);
 	}
 
+	sf::Vertex line[] = { sf::Vertex(sf::Vector2f(0, 0)), sf::Vertex(
+			sf::Vector2f(anjinho.GetPostion())) };
+
+	target->draw(line, 2, sf::Lines);
+}
+void Game::close() {
+	this->backgroundMusic.stop();
 }
 
- Game::~Game(){
-	std::cout<< "Game Destruido!" <<std::endl;
-	delete(Game::getGame());
+Game::~Game() {
+	std::cout << "Game Destruido!" << std::endl;
+	delete (window);
+	delete (Game::getGame());
 
 }
+
+const sf::RenderWindow* Game::getWindow() const {
+	return window;
+}
+

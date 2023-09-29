@@ -9,7 +9,6 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Audio/Music.hpp>
@@ -28,7 +27,7 @@ private:
 	Nebulon nebulon;
 
 	sf::View camera;
-	sf::FloatRect cameraBounds;
+
 	sf::Font textFont;
 	sf::Text lifeText;
 
@@ -43,7 +42,7 @@ private:
 	sf::Music backgroundMusic;
 
 public:
-
+	sf::FloatRect cameraBounds;
 	static Game * getGame();
 
 	void Init();
@@ -54,11 +53,17 @@ public:
 
 	void Render(sf::RenderTarget * target);
 
+	void close();
+
 	virtual ~Game();
+	const sf::RenderWindow * getWindow() const;
+
 
 private:
 	Game();
 	void GameMusic(sf::Music &backgroundMusic) ;
+
+	void moveCamera() ;
 
 	void SetPlayerPosition(ldtk::Entity &playerEntity);
 

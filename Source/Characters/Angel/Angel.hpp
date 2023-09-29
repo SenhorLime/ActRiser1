@@ -10,7 +10,10 @@ class Angel: public Character {
 public:
 	sf::Clock cooldownCount;
 	float cooldownTime;
+	float  offset_x;
+
 	Angel();
+
 
 	void MoveCharacter();
 	void ShootArrow(const sf::Vector2f &playerPosition);

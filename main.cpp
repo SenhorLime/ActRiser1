@@ -7,9 +7,10 @@
 
 int main() {
 
-
 	// Initializing the game from the LDtk project data
 	Game  * ActRaiser = Game::getGame();
 	ActRaiser->Init();
 	ActRaiser->run();
-	}
+	ActRaiser->close();
+
+}
