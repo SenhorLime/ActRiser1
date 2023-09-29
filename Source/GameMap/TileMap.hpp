@@ -8,11 +8,17 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+
 #include <LDtkLoader/Level.hpp>
+#include <LDtkLoader/Project.hpp>
 
 class TileMap {
 public:
 	static std::string path;
+
+	const ldtk::World * world;
+
+	TileMap();
 
 	class Textures {
 		Textures() = default;
@@ -33,11 +39,14 @@ public:
 				override;
 	};
 
-	TileMap() = default;
+	//TileMap() = default;
 	void Load(const ldtk::Level &level);
 	auto GetLayer(const std::string &name) const -> const Layer&;
 
 private:
 	mutable sf::RenderTexture m_renderTexture;
 	std::map<std::string, Layer> layers;
+
+	ldtk::Project project;
+
 };

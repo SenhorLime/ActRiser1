@@ -2,6 +2,23 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
+
+TileMap::TileMap():world(nullptr){
+
+	std::string ldtk_filename = "Assets/Maps/GameMap.ldtk";
+		try {
+			project.loadFromFile(ldtk_filename);
+			std::cout << "\nLDtk World \"" << project.getFilePath()
+					<< "\" was loaded successfully." << std::endl;
+		} catch (std::exception &ex) {
+			std::cerr << ex.what() << std::endl;
+		}
+		world = &(project.getWorld());
+
+		TileMap::path = project.getFilePath().directory();
+
+}
+
 auto TileMap::Textures::instance() -> Textures& {
 	static Textures instance;
 	return instance;

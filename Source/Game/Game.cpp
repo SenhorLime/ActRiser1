@@ -6,7 +6,15 @@
 
 Game* Game::instance= nullptr;;
 
-Game::Game(){}
+Game::Game(){
+	window = new sf::RenderWindow();
+	window->create(sf::VideoMode(1280, 720), "ActRaiser77");
+	window->setMouseCursorVisible(false);
+	window->setFramerateLimit(60);
+
+	sf::Music backgroundMusic;
+
+}
 
 Game *Game::getGame(){
 	    if(instance==nullptr){
@@ -15,16 +23,22 @@ Game *Game::getGame(){
 	    return instance;
 	}
 
+void Game::GameMusic(sf::Music &backgroundMusic) {
+	//backgroundMusic.openFromFile("Assets/Music/Monster.ogg");
+	backgroundMusic.play();
+	backgroundMusic.setVolume(50);
+	backgroundMusic.setLoop(true);
+}
 
-void Game::Init(const ldtk::Project &ldtk_proj) {
+
+void Game::Init() {
 	// Get the game World from the project
 	//Alisson Esteve aqui.
-	auto &world = ldtk_proj.getWorld();
+	//auto &world = ldtk_proj.getWorld();
 	// Get the level from the project
-	auto &ldtkLevel0 = world.getLevel("Level_0");
+	auto &ldtkLevel0 = this->GameMap.world->getLevel("Level_0");
 
 	// Load the TileMap from the level
-	TileMap::path = ldtk_proj.getFilePath().directory();
 	GameMap.Load(ldtkLevel0);
 
 	// Get the layer of Entities
@@ -46,6 +60,9 @@ void Game::Init(const ldtk::Project &ldtk_proj) {
 	ldtk::Entity &nebulonEntity =
 			charactherSpawns.getEntitiesByName("Nebulon")[0].get();
 
+	backgroundMusic.openFromFile("Assets/Music/15-Birth-of-the-People.ogg");
+	GameMusic(backgroundMusic);
+
 	SetPlayerPosition(playerEntity);
 	SetOneEyePostion(oneEyeEntity);
 	SetNebulonPosition(nebulonEntity);
@@ -63,6 +80,27 @@ void Game::Init(const ldtk::Project &ldtk_proj) {
 	lifeText.setFont(textFont);
 	lifeText.setFillColor(sf::Color::Red);
 	lifeText.setCharacterSize(8);
+}
+
+
+void Game::run(){
+	while (window->isOpen()) {
+			sf::Event event;
+
+			while (window->pollEvent(event)) {
+				if (event.type == sf::Event::Closed) {
+					window->close();
+				}
+			}
+
+			float deltaTime = time.restart().asSeconds();
+
+			Update(deltaTime);
+			window->clear();
+			Render(window);
+			window->display();
+		}
+
 }
 
 void Game::SetPlayerPosition(ldtk::Entity &playerEntity) {
@@ -144,30 +182,30 @@ void Game::Update(float &deltaTime) {
 	camera.move((anjinho.sprite.getPosition() - camera.getCenter()) / 5.f);
 }
 
-void Game::Render(sf::RenderTarget &target) {
-	target.setView(camera);
+void Game::Render(sf::RenderTarget *target) {
+	target->setView(camera);
 
 	// Drawing the Ground Layer
-	target.draw(GameMap.GetLayer("Ground"));
+	target->draw(GameMap.GetLayer("Ground"));
 
 	// Drawing the Obstacles Layer
-	target.draw(GameMap.GetLayer("Obstacles"));
+	target->draw(GameMap.GetLayer("Obstacles"));
 
 	//Drawing the player
-	target.draw(anjinho.sprite);
+	target->draw(anjinho.sprite);
 
 	// Drawing the Enemies
-	target.draw(oneEye.sprite);
-	target.draw(nebulon.sprite);
+	target->draw(oneEye.sprite);
+	target->draw(nebulon.sprite);
 
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);
-	target.draw(lifeText);
+	target->draw(lifeText);
 
 	// Drawing the bullets
 	for (auto &arrow : anjinho.arrows) {
 		arrow.Update();
-		target.draw(arrow.texture);
+		target->draw(arrow.texture);
 	}
 
 }
