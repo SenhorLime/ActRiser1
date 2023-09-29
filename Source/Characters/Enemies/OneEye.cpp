@@ -1,7 +1,7 @@
 #include "OneEye.hpp"
 
 OneEye::OneEye() {
-	cooldownTime = 2.f;
+
 	speed = 7.5f;
 	deltaTime = 0;
 

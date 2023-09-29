@@ -11,6 +11,7 @@ Angel::Angel() {
 	pontos = 0;
 
 	LoadTextures("Assets/Characters/Angel/Angel_Sheet.png");
+	//LoadTextures("Assets/Tilesets/original/soanjo.png");
 	SetSprites();
 	CropSprites(sf::IntRect(58, 192, 35, 60));
 	SetScale(sf::Vector2f(0.2f, 0.2f));
@@ -43,6 +44,14 @@ void Angel::MoveCharacter() {
 		CropSprites(sf::IntRect(47, 67, 35, 60));
 	}
 
+
+	/*  if( (rect->left > (float)window->getSize().x / 2) &&
+	      (rect->left < (float)window->getSize().x * 2 - (float)window->getSize().x / 2) ){
+	        offset_x = rect->left - (float)window->getSize().x / 2 - 20;
+	  }
+*/
+
+
 	SetMovementDirection(movement);
 }
 
@@ -56,5 +65,6 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 void Angel::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
+	//if(movement.x > win)
 	sprite.move(movement);
 }

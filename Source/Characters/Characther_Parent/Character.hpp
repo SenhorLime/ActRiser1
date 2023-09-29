@@ -1,14 +1,15 @@
 #pragma once
 
+#include <string>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Clock.hpp>
 
+
 class Character {
 public:
 	sf::Sprite sprite;
-	sf::Clock cooldownCount;
-	float cooldownTime;
+
 
 public:
 	virtual void UpdateDeltaTime(float &dt);

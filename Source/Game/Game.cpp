@@ -1,6 +1,20 @@
 #include "Game.hpp"
 #include "Collision.hpp"
+
 #include <iostream>
+#include <cstddef> //For nullptr_t
+
+Game* Game::instance= nullptr;;
+
+Game::Game(){}
+
+Game *Game::getGame(){
+	    if(instance==nullptr){
+	    	instance = new Game();
+	    }
+	    return instance;
+	}
+
 
 void Game::Init(const ldtk::Project &ldtk_proj) {
 	// Get the game World from the project
@@ -85,7 +99,7 @@ void Game::Update(float &deltaTime) {
 	auto nebulonCollider = GetEnemyCollider(nebulon.sprite);
 
 	// Testing the collision with a enemy and showing the damage given
-	if (playerCollider.intersects(oneEyeCollider) and oneEye.cooldownCount.getElapsedTime().asSeconds() >= oneEye.cooldownTime) {
+	if (playerCollider.intersects(oneEyeCollider) and anjinho.cooldownCount.getElapsedTime().asSeconds() >= anjinho.cooldownTime) {
 		anjinho.vidas -= 1;
 
 		char str[5];
@@ -94,10 +108,10 @@ void Game::Update(float &deltaTime) {
 			lifeText.setString(str);
 		}
 
-		oneEye.cooldownCount.restart();
+		//oneEye.cooldownCount.restart();
 	}
 
-	if (playerCollider.intersects(nebulonCollider) and nebulon.cooldownCount.getElapsedTime().asSeconds() >= nebulon.cooldownTime) {
+	if (playerCollider.intersects(nebulonCollider) and anjinho.cooldownCount.getElapsedTime().asSeconds() >= anjinho.cooldownTime) {
 		anjinho.vidas -= 3;
 
 		char str[5];
@@ -106,7 +120,7 @@ void Game::Update(float &deltaTime) {
 			lifeText.setString(str);
 		}
 
-		nebulon.cooldownCount.restart();
+		//nebulon.cooldownCount.restart();
 	}
 
 // Code for adding Collision between the player and the map
@@ -155,5 +169,11 @@ void Game::Render(sf::RenderTarget &target) {
 		arrow.Update();
 		target.draw(arrow.texture);
 	}
+
+}
+
+ Game::~Game(){
+	std::cout<< "Game Destruido!" <<std::endl;
+	delete(Game::getGame());
 
 }

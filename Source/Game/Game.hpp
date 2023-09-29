@@ -30,12 +30,21 @@ private:
 
 	std::vector<sf::FloatRect> colliders;
 	bool showCollider = false;
+	Game();
+	static Game *instance;
+
+
 public:
+
+	static Game * getGame();
+
 	void Init(const ldtk::Project &ldtk_proj);
 
 	void Update(float &deltaTime);
 
 	void Render(sf::RenderTarget &target);
+
+	virtual ~Game();
 
 private:
 	void SetPlayerPosition(ldtk::Entity &playerEntity);

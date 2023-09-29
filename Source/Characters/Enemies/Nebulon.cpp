@@ -1,7 +1,7 @@
 #include "Nebulon.hpp"
 
 Nebulon::Nebulon() {
-	cooldownTime = 2.f;
+	//cooldownTime = 2.f;
 	speed = 15.f;
 	deltaTime = 0;
 

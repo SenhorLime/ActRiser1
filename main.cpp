@@ -1,6 +1,9 @@
 #include "Source/Game/Game.hpp"
 #include "Source/Music/Music.hpp"
 
+#include <string>
+#include <iostream>
+
 #include <LDtkLoader/Project.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Clock.hpp>
@@ -19,8 +22,8 @@ int main() {
 	}
 
 	// Initializing the game from the LDtk project data
-	Game ActRaiser;
-	ActRaiser.Init(project);
+	Game  * ActRaiser = Game::getGame();
+	ActRaiser->Init(project);
 
 	// Creating the Game Window and setting visual configuration
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "ActRaiser77");
@@ -44,9 +47,9 @@ int main() {
 
 		float deltaTime = time.restart().asSeconds();
 
-		ActRaiser.Update(deltaTime);
+		ActRaiser->Update(deltaTime);
 		window.clear();
-		ActRaiser.Render(window);
+		ActRaiser->Render(window);
 		window.display();
 	}
 }
