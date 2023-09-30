@@ -2,12 +2,18 @@
 
 #include <vector>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Clock.hpp>
 #include "../Characther_Parent/Character.hpp"
 #include "Arrow/Arrow.hpp"
 
 class Angel: public Character {
 public:
+	sf::Clock cooldownCount;
+	float cooldownTime;
+	float  offset_x;
+
 	Angel();
+
 
 	void MoveCharacter();
 	void ShootArrow(const sf::Vector2f &playerPosition);

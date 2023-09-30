@@ -1,7 +1,9 @@
 #include "Angel.hpp"
+#include "../../Game/Game.hpp"
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Graphics/rect.hpp>
 
 Angel::Angel() {
 	cooldownTime = 0.5f;
@@ -9,11 +11,17 @@ Angel::Angel() {
 	deltaTime = 0;
 	vidas = 8;
 	pontos = 0;
+	offset_x = 0;
 
 	LoadTextures("Assets/Characters/Angel/Angel_Sheet.png");
+	//LoadTextures("Assets/Tilesets/original/soanjo.png");
 	SetSprites();
 	CropSprites(sf::IntRect(58, 192, 35, 60));
 	SetScale(sf::Vector2f(0.2f, 0.2f));
+
+	sprite.setOrigin(sprite.getLocalBounds().width / 2,
+			sprite.getLocalBounds().height / 2);
+
 }
 
 void Angel::MoveCharacter() {
@@ -47,7 +55,8 @@ void Angel::MoveCharacter() {
 }
 
 void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+			and cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
 		Arrow arrow(playerPosition, shootDirection);
 		arrows.push_back(arrow);
 		cooldownCount.restart();
@@ -56,5 +65,22 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 void Angel::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
+	sf::FloatRect sprRect = sprite.getGlobalBounds();
+	sf::FloatRect camRect = Game::getGame()->cameraBounds;
+	//std::cout << "T" << sprRect.top << " L" << sprRect.left << " W"<< sprRect.width << " H" << sprRect.height << std::endl;
+
+
+	if ((sprRect.left + movement.x < 0)) {
+		movement.x = 0;
+	} else if (((sprRect.left + sprRect.width) + movement.x > camRect.width)) {
+		movement.x = 0;
+	}
+
+	if ((sprRect.top + movement.y < 0)) {
+		movement.y = 0;
+	} else if (((sprRect.top + sprRect.height) + movement.y > camRect.height)) {
+		movement.y = 0;
+	}
+
 	sprite.move(movement);
 }

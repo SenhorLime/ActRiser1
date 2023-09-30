@@ -2,6 +2,23 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
+
+TileMap::TileMap():world(nullptr){
+
+	std::string ldtk_filename = "Assets/Maps/ActRaiser_Map.ldtk";
+		try {
+			project.loadFromFile(ldtk_filename);
+			std::cout << "\nLDtk World \"" << project.getFilePath()
+					<< "\" was loaded successfully." << std::endl;
+		} catch (std::exception &ex) {
+			std::cerr << ex.what() << std::endl;
+		}
+		world = &(project.getWorld());
+
+		TileMap::path = project.getFilePath().directory();
+
+}
+
 auto TileMap::Textures::instance() -> Textures& {
 	static Textures instance;
 	return instance;
@@ -52,7 +69,7 @@ void TileMap::Load(const ldtk::Level &level) {
 	m_renderTexture.create(level.size.x, level.size.y);
 	layers.clear();
 	for (const auto &layer : level.allLayers()) {
-		if (layer.getType() == ldtk::LayerType::AutoLayer) {
+		if (layer.getType() == ldtk::LayerType::Tiles) {
 			layers.insert( { layer.getName(), { layer, m_renderTexture } });
 		}
 	}

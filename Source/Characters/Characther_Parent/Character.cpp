@@ -26,3 +26,7 @@ void Character::CropSprites(sf::IntRect spriteRect) {
 void Character::SetScale(sf::Vector2f spriteScale) {
 	sprite.setScale(spriteScale);
 }
+
+void Character::draw(sf::RenderTarget *target) {
+	target->draw(sprite);
+}
