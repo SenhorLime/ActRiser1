@@ -242,3 +242,6 @@ void Game::Render(sf::RenderTarget *target) {
 void Game::close() {
 	this->backgroundMusic.stop();
 }
+
+
+Game::~Game(){}
