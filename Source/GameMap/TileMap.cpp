@@ -5,7 +5,7 @@
 
 TileMap::TileMap():world(nullptr){
 
-	std::string ldtk_filename = "Assets/Maps/GameMap.ldtk";
+	std::string ldtk_filename = "Assets/Maps/ActRaiser_Map.ldtk";
 		try {
 			project.loadFromFile(ldtk_filename);
 			std::cout << "\nLDtk World \"" << project.getFilePath()
@@ -69,7 +69,7 @@ void TileMap::Load(const ldtk::Level &level) {
 	m_renderTexture.create(level.size.x, level.size.y);
 	layers.clear();
 	for (const auto &layer : level.allLayers()) {
-		if (layer.getType() == ldtk::LayerType::AutoLayer) {
+		if (layer.getType() == ldtk::LayerType::Tiles) {
 			layers.insert( { layer.getName(), { layer, m_renderTexture } });
 		}
 	}

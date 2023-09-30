@@ -42,31 +42,32 @@ void Game::Init() {
 	GameMap.Load(ldtkLevel0);
 
 	// Get the layer of Entities
-	auto &worldCollissions = ldtkLevel0.getLayer("Map_Collissions");
-	auto &charactherSpawns = ldtkLevel0.getLayer("Spawns");
+//	auto &worldCollissions = ldtkLevel0.getLayer("Map_Collissions");
+	auto &charactherSpawns = ldtkLevel0.getLayer("Spanws");
 
 	// Get the Collider shapes and store then in a std::vector
-	for (ldtk::Entity &col : worldCollissions.getEntitiesByName("Map_Collider")) {
-		colliders.emplace_back((float) col.getPosition().x,
-				(float) col.getPosition().y, (float) col.getSize().x,
-				(float) col.getSize().y);
-	}
+//	for (ldtk::Entity &col : worldCollissions.getEntitiesByName("Map_Collider")) {
+//		colliders.emplace_back((float) col.getPosition().x,
+//				(float) col.getPosition().y, (float) col.getSize().x,
+//				(float) col.getSize().y);
+//	}
 
 	// Get the map Entities for setting the characters spawn points
-	ldtk::Entity &playerEntity =
-			charactherSpawns.getEntitiesByName("Player")[0].get();
+//	ldtk::Entity &playerEntity =
+//			charactherSpawns.getEntitiesByName("Player")[0].get();
 	ldtk::Entity &oneEyeEntity =
-			charactherSpawns.getEntitiesByName("OneEye")[0].get();
+			charactherSpawns.getEntitiesByName("Blue_Dragon")[0].get();
 	ldtk::Entity &nebulonEntity =
-			charactherSpawns.getEntitiesByName("Nebulon")[0].get();
+			charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
 
 	backgroundMusic.openFromFile("Assets/Music/15-Birth-of-the-People.ogg");
 	GameMusic(backgroundMusic);
 
-	SetPlayerPosition(playerEntity);
+//	SetPlayerPosition(playerEntity);
 	SetOneEyePostion(oneEyeEntity);
 	SetNebulonPosition(nebulonEntity);
 
+	anjinho.sprite.setPosition(200, 200);
 	camera.setSize( { 256, 144 });
 	camera.zoom(0.7f);
 	camera.setCenter(anjinho.sprite.getPosition());
@@ -199,7 +200,7 @@ void Game::moveCamera() {
 	   (anjinho.sprite.getPosition().y - offset < cameraBounds.height - camera.getSize().y/2))
 		movment.y = (anjinho.sprite.getPosition().y - camera.getCenter().y)/ 5.f;
 
-	//Versão do movimento sem controle de bordas
+	//Versï¿½o do movimento sem controle de bordas
 	//movment = (anjinho.sprite.getPosition()- camera.getCenter())/ 5.f;
 	camera.move(movment);
 }
@@ -209,9 +210,11 @@ void Game::Render(sf::RenderTarget *target) {
 
 	// Drawing the Ground Layer
 	target->draw(GameMap.GetLayer("Ground"));
+	target->draw(GameMap.GetLayer("Tree"));
 
 	// Drawing the Obstacles Layer
 	target->draw(GameMap.GetLayer("Obstacles"));
+
 
 	//Drawing the player
 	anjinho.draw(target);
