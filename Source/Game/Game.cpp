@@ -1,3 +1,4 @@
+
 #include "Game.hpp"
 #include "Collision.hpp"
 
@@ -241,15 +242,3 @@ void Game::Render(sf::RenderTarget *target) {
 void Game::close() {
 	this->backgroundMusic.stop();
 }
-
-Game::~Game() {
-	std::cout << "Game Destruido!" << std::endl;
-	delete (window);
-	delete (Game::getGame());
-
-}
-
-const sf::RenderWindow* Game::getWindow() const {
-	return window;
-}
-
