@@ -70,7 +70,7 @@ void Game::Init() {
 
 	anjinho.sprite.setPosition(200, 200);
 	camera.setSize( { 256, 144 });
-	camera.zoom(0.7f);
+	camera.zoom(01.f);
 	camera.setCenter(anjinho.sprite.getPosition());
 	cameraBounds.left = 0;
 	cameraBounds.top = 0;
@@ -123,12 +123,11 @@ void Game::SetNebulonPosition(ldtk::Entity &nebulonEntity) {
 void Game::Update(float &deltaTime) {
 	// Updating the player movement
 	anjinho.UpdateDeltaTime(deltaTime);
-	anjinho.ShootArrow(anjinho.GetPostion());
-	anjinho.MoveCharacter();
 
 	// Updating the Enemies movement
 	oneEye.UpdateDeltaTime(deltaTime);
 	oneEye.MoveCharacter();
+
 	nebulon.UpdateDeltaTime(deltaTime);
 	nebulon.MoveCharacter();
 
@@ -234,10 +233,9 @@ void Game::Render(sf::RenderTarget *target) {
 		target->draw(arrow.texture);
 	}
 
-	sf::Vertex line[] = { sf::Vertex(sf::Vector2f(0, 0)), sf::Vertex(
-			sf::Vector2f(anjinho.GetPostion())) };
-
-	target->draw(line, 2, sf::Lines);
+	///sf::Vertex line[] = { sf::Vertex(sf::Vector2f(0, 0)), sf::Vertex(
+	//sf::Vector2f(anjinho.animatedSprite.getPosition())) };
+	//target->draw(line, 2, sf::Lines);
 }
 void Game::close() {
 	this->backgroundMusic.stop();

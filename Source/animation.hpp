@@ -1,3 +1,4 @@
+#pragma once
 /*
  * animation.hpp
  *
@@ -5,8 +6,8 @@
  *      Author: arsrc
  */
 
-#ifndef ANIMATION_HPP_
-#define ANIMATION_HPP_
+//#ifndef ANIMATION_HPP_
+//#define ANIMATION_HPP_
 
 
 #include <iostream>
@@ -18,11 +19,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Image.hpp>
-/*Classe que define os sprites que compõe
+
+/**Classe que define os sprites que compõe
  * uma animação.
  */
-
-
 class Animation {
 public:
 	Animation(sf::Texture *texture = nullptr);
@@ -57,6 +57,8 @@ public:
 		 * Esse método exige que a textura tenha suas
 		 */
 	Animation& addFramesColumn(int number_x, int number_y, int column);
+
+	Animation& addFrames(const sf::IntRect &rect, int linhas, int colunas);
 	size_t size() const;
 
 	/**Retorna a rect do sprite na posição index */
@@ -68,6 +70,7 @@ private:
 	sf::Texture *_texture;
 };
 
+
 /**
  * @class AnimatedSprite
  * @brief Utilizada no local do Sprite da aplicação
@@ -76,7 +79,8 @@ private:
  * 		  Essa classe controla a animação dos sprites em
  * 		  cada objeto da classe Animation.
  */
-class AnimatedSprite: public sf::Drawable, public sf::Transformable {
+class AnimatedSprite: public sf::Sprite {
+//class AnimatedSprite: public sf::Drawable, public sf::Transformable {
 public:
 	AnimatedSprite(const AnimatedSprite&) = default;
 	AnimatedSprite& operator=(const AnimatedSprite&) = default;
@@ -90,16 +94,12 @@ public:
 
 	/**
 	 * @fn  AnimatedSprite(Animation*=nullptr, Status=Playing, const sf::Time&=sf::seconds(0.15), bool=true, int=0)
-	 * @brief
-	 *
-	 * @pre
-	 * @post
 	 * @param animation = Já recebe uma primeira animação. Default = nullptr.
 	 * @param status	= Situação atual da animação {Stopped, Paused, Playing }
 	 * @param deltaTime = Tempo entre os sprites. Default = sf::seconds(0.15)
 	 * @param loop = Se a animação será repetida. Default = true.
 	 * @param repeat = Se não está em loop quantas vezes deve repetir. Default = 0.
-	 *
+	 * @brief
 	 * Pode ser inicializada sem nada somente com os parametros padrão e depois
 	 * modificados com os get and sets da classe.
 	 *
@@ -128,7 +128,7 @@ public:
 	void setFrame(size_t index);
 	void setColor(const sf::Color &color);
 	void update(const sf::Time &deltaTime);
-
+	void draw(sf::RenderTarget &target) const;
 private:
 	Animation *_animation;
 	sf::Time _delta;
@@ -142,6 +142,8 @@ private:
 	void setFrame(size_t index, bool resetTime);
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const
 			override;
+
 };
 
-#endif /* ANIMATION_HPP_ */
+
+//#endif /* ANIMATION_HPP_ */

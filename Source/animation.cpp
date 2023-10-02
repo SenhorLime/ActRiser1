@@ -5,23 +5,7 @@
  *      Author: arsrc
  */
 
-#ifndef ANIMATION_HPP_
-#define ANIMATION_HPP_
-
-
-#include <iostream>
-#include <cassert>
-
-#include <SFML/Window/Event.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Image.hpp>
-#include "animation.hpp"
-/*Classe que define os sprites que compõe
- * uma animação.
- */
+#include "./animation.hpp"
 
 Animation::Animation(sf::Texture *texture) :
 		_texture(texture) {
@@ -68,6 +52,21 @@ Animation& Animation::addFramesColumn(int number_x, int number_y, int column) {
 		addFrame(sf::IntRect(column * delta_x, i * delta_y, delta_x, delta_y));
 	return *this;
 }
+
+
+Animation& Animation::addFrames(const sf::IntRect &rect, int linhas, int colunas){
+	//const sf::Vector2u size = _texture->getSize();
+	const float delta_x = rect.width;
+	const float delta_y = rect.height;
+
+	for (int i = 0; i < linhas; ++i)
+		for (int j = 0; j < colunas; ++j)
+		addFrame(sf::IntRect(j * delta_x+rect.left, i* delta_y + rect.top, delta_x, delta_y));
+	return *this;
+}
+
+//==================================================================//
+
 
 AnimatedSprite::AnimatedSprite(Animation *animation, Status status,
 		const sf::Time &deltaTime, bool loop, int repeat) :
@@ -201,6 +200,9 @@ void AnimatedSprite::draw(sf::RenderTarget &target,
 		target.draw(_vertices, 4, sf::Quads, states);
 	}
 }
+void AnimatedSprite::draw(sf::RenderTarget &target) const {
+		target.draw(sf::Sprite(*(_animation->_texture)));
+
+}
 
 
-#endif /* ANIMATION_HPP_ */

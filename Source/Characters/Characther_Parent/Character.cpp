@@ -17,6 +17,7 @@ void Character::SetSprites() {
 
 void Character::UpdateDeltaTime(float &dt) {
 	deltaTime = dt;
+	animatedSprite.update(sf::seconds(dt));
 }
 
 void Character::CropSprites(sf::IntRect spriteRect) {
@@ -27,6 +28,18 @@ void Character::SetScale(sf::Vector2f spriteScale) {
 	sprite.setScale(spriteScale);
 }
 
+void Character::Move(sf::Vector2f movement) {
+	sprite.move(movement);
+	animatedSprite.move(movement);
+}
+
 void Character::draw(sf::RenderTarget *target) {
-	target->draw(sprite);
+	if (animacoes.size() == 0) {
+		target->draw(sprite);
+		std::cout << "Simples" << std::endl;
+	} else {
+		target->draw(animatedSprite);
+		std::cout << "Animated" << std::endl;
+	}
+
 }

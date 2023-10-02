@@ -1,15 +1,23 @@
 #pragma once
 
 #include <string>
+#include <map>
+#include <vector>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-
+#include "../../animation.hpp"
 
 class Character {
 public:
 	sf::Sprite sprite;
+
+	//Para animações
+	sf::Texture _texture;
+	AnimatedSprite animatedSprite;
+	std::map<std::string, Animation> animacoes;
+
 
 
 public:
@@ -26,5 +34,6 @@ protected:
 	virtual void LoadTextures(std::string filePath);
 	virtual void CropSprites(sf::IntRect spriteRect);
 	virtual void SetScale(sf::Vector2f spriteScale);
+	virtual void Move(sf::Vector2f spriteScale);
 
 };
