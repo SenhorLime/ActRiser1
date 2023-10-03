@@ -1,12 +1,13 @@
 #pragma once
-#ifndef ANIMATION_HPP_
-#define ANIMATION_HPP_
+//#ifndef ANIMATION_HPP_
+//#define ANIMATION_HPP_
 
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Clock.hpp>
 #include "../Characther_Parent/Character.hpp"
 #include "Arrow/Arrow.hpp"
+
 
 class Angel: public Character {
 public:
@@ -30,7 +31,6 @@ public:
 	Status status = Stopped;
 
 	int vidas;
-	std::vector<Arrow> arrows;
 
 private:
 	int pontos;
@@ -38,7 +38,6 @@ private:
 
 public:
 	Angel();
-	//virtual void UpdateDeltaTime(float &dt);
 
 	virtual void UpdateDeltaTime(float &dt);
 
@@ -52,4 +51,4 @@ private:
 
 
 };
-#endif /* ANIMATION_HPP_ */
+//#endif /* ANIMATION_HPP_ */

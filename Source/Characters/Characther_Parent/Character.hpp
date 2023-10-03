@@ -12,7 +12,7 @@
 class Character {
 public:
 	sf::Sprite sprite;
-
+	bool ativo=true; // Variável para retirar objeto do jogo.
 	//Para animações
 	sf::Texture _texture;
 	AnimatedSprite animatedSprite;

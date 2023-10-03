@@ -128,7 +128,7 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 	if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
 		Arrow arrow(playerPosition, shootDirection);
-		arrows.push_back(arrow);
+		Game::getGame()->arrows.push_back(arrow);
 		cooldownCount.restart();
 	}
 }
@@ -147,7 +147,7 @@ void Angel::UpdateDeltaTime(float &dt) {
 	}
 
 	MoveCharacter();
-
+	animatedSprite.setFrameTime(sf::seconds(0.1));
 	switch (status) {//MoveUp,MoveDown, Stopped, MoveRight, MoveLeft, ShootUp, ShootDown, ShootRight, ShootLeft, SendPower
 	case Status::MoveUp:
 		animatedSprite.setAnimation(&animacoes["MoveUp"]);
@@ -173,18 +173,22 @@ void Angel::UpdateDeltaTime(float &dt) {
 	case Status::ShootDown:
 		animatedSprite.setAnimation(&animacoes["ShootDown"]);
 		animatedSprite.setLoop(false);
+		animatedSprite.setFrameTime(sf::seconds(0.05));
 		break;
 	case Status::ShootRight:
 		animatedSprite.setAnimation(&animacoes["ShootRight"]);
 		animatedSprite.setLoop(false);
+		animatedSprite.setFrameTime(sf::seconds(0.05));
 		break;
 	case Status::ShootLeft:
 		animatedSprite.setAnimation(&animacoes["ShootLeft"]);
 		animatedSprite.setLoop(false);
+		animatedSprite.setFrameTime(sf::seconds(0.05));
 		break;
 	case Status::SendPower:
 		animatedSprite.setAnimation(&animacoes["SendPower"]);
 		animatedSprite.setLoop(false);
+		animatedSprite.setFrameTime(sf::seconds(0.05));
 		break;
 	default:
 		//animatedSprite.setAnimation(&animacoes["MoveUp"]);

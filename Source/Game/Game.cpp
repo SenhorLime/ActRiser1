@@ -1,4 +1,3 @@
-
 #include "Game.hpp"
 #include "Collision.hpp"
 
@@ -56,10 +55,10 @@ void Game::Init() {
 	// Get the map Entities for setting the characters spawn points
 //	ldtk::Entity &playerEntity =
 //			charactherSpawns.getEntitiesByName("Player")[0].get();
-	ldtk::Entity &oneEyeEntity =
-			charactherSpawns.getEntitiesByName("Blue_Dragon")[0].get();
-	ldtk::Entity &nebulonEntity =
-			charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
+	ldtk::Entity &oneEyeEntity = charactherSpawns.getEntitiesByName(
+			"Blue_Dragon")[0].get();
+	ldtk::Entity &nebulonEntity = charactherSpawns.getEntitiesByName(
+			"Napper_Bat")[0].get();
 
 	backgroundMusic.openFromFile("Assets/Music/15-Birth-of-the-People.ogg");
 	GameMusic(backgroundMusic);
@@ -70,7 +69,7 @@ void Game::Init() {
 
 	anjinho.sprite.setPosition(200, 200);
 	camera.setSize( { 256, 144 });
-	camera.zoom(01.f);
+	camera.zoom(1.6f);
 	camera.setCenter(anjinho.sprite.getPosition());
 	cameraBounds.left = 0;
 	cameraBounds.top = 0;
@@ -123,6 +122,9 @@ void Game::SetNebulonPosition(ldtk::Entity &nebulonEntity) {
 void Game::Update(float &deltaTime) {
 	// Updating the player movement
 	anjinho.UpdateDeltaTime(deltaTime);
+	for (auto &arrow : arrows) {
+		arrow.UpdateDeltaTime(deltaTime);
+	}
 
 	// Updating the Enemies movement
 	oneEye.UpdateDeltaTime(deltaTime);
@@ -191,14 +193,18 @@ void Game::moveCamera() {
 	int offset = 10;
 
 	//Controla o movimento ao longo de x.
-	if ((anjinho.sprite.getPosition().x + offset > camera.getSize().x / 2) &&
-	   (anjinho.sprite.getPosition().x - offset < cameraBounds.width - camera.getSize().x/2))
-		movment.x = (anjinho.sprite.getPosition().x - camera.getCenter().x)/ 5.f;
+	if ((anjinho.sprite.getPosition().x + offset > camera.getSize().x / 2)
+			&& (anjinho.sprite.getPosition().x - offset
+					< cameraBounds.width - camera.getSize().x / 2))
+		movment.x = (anjinho.sprite.getPosition().x - camera.getCenter().x)
+				/ 5.f;
 
 	//Controla o movimento ao longo de y.
-	if ((anjinho.sprite.getPosition().y + offset > camera.getSize().y / 2) &&
-	   (anjinho.sprite.getPosition().y - offset < cameraBounds.height - camera.getSize().y/2))
-		movment.y = (anjinho.sprite.getPosition().y - camera.getCenter().y)/ 5.f;
+	if ((anjinho.sprite.getPosition().y + offset > camera.getSize().y / 2)
+			&& (anjinho.sprite.getPosition().y - offset
+					< cameraBounds.height - camera.getSize().y / 2))
+		movment.y = (anjinho.sprite.getPosition().y - camera.getCenter().y)
+				/ 5.f;
 
 	//Vers�o do movimento sem controle de bordas
 	//movment = (anjinho.sprite.getPosition()- camera.getCenter())/ 5.f;
@@ -215,10 +221,6 @@ void Game::Render(sf::RenderTarget *target) {
 	// Drawing the Obstacles Layer
 	target->draw(GameMap.GetLayer("Obstacles"));
 
-
-	//Drawing the player
-	anjinho.draw(target);
-
 	// Drawing the Enemies
 	oneEye.draw(target);
 	nebulon.draw(target);
@@ -228,10 +230,11 @@ void Game::Render(sf::RenderTarget *target) {
 	target->draw(lifeText);
 
 	// Drawing the bullets
-	for (auto &arrow : anjinho.arrows) {
-		arrow.Update();
-		target->draw(arrow.texture);
+	for (auto &arrow : arrows) {
+		arrow.draw(target);
 	}
+	//Drawing the player
+	anjinho.draw(target);
 
 	///sf::Vertex line[] = { sf::Vertex(sf::Vector2f(0, 0)), sf::Vertex(
 	//sf::Vector2f(anjinho.animatedSprite.getPosition())) };
@@ -241,5 +244,5 @@ void Game::close() {
 	this->backgroundMusic.stop();
 }
 
-
-Game::~Game(){}
+Game::~Game() {
+}

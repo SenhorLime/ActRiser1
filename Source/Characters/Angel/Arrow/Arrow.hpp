@@ -3,21 +3,22 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include "../../Characther_Parent/Character.hpp"
 
-class Arrow {
+class Arrow: public Character{
 private:
-	sf::Vector2f position;
 	sf::Vector2f direction;
-
-	sf::Sprite sprite;
+	static sf::IntRect rectShootUp,rectShootDown, rectShootRight, rectShootLeft;
 public:
-	sf::RectangleShape texture;
+
 	Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection);
 
-	void Update();
+	virtual void UpdateDeltaTime(float &dt);
 
 	sf::Vector2f GetDirection();
 
 	void SetDirection(sf::Vector2f &newDirection);
+
+	virtual void draw(sf::RenderTarget *target);
 
 };

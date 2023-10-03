@@ -44,6 +44,9 @@ private:
 
 public:
 	sf::FloatRect cameraBounds;
+
+	std::vector<Arrow> arrows;
+
 	static Game * getGame();
 
 	void Init();
