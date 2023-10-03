@@ -8,7 +8,7 @@ sf::IntRect Arrow::rectShootLeft(66, 26, 16, 3);
 
 Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 		direction(arrowDirection) {
-/*
+
 	speed = 150.f;
 
 	//LoadTextures("Assets/Angel/angel.png");
@@ -45,15 +45,7 @@ Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 	CropSprites(*rect);
 	//SetScale(sf::Vector2f(0.65f, 0.65f));
 	sprite.setPosition(startPosition);
-	*/
-	speed = 15.f;
-	deltaTime = 0;
 
-	LoadTextures("./Assets/Characters/Enemies/Nebulon_Sheet.png");
-	SetSprites();
-	sf::IntRect r(1, 2, 14, 14);
-	CropSprites(r);
-	SetScale(sf::Vector2f(0.65f, 0.65f));
 }
 
 void Arrow::UpdateDeltaTime(float &dt) {
