@@ -67,12 +67,14 @@ void Angel::defineAnimacoes() {
 	//Creation of the animates sprite
 	//AnimatedSprite ansprite(&walkLeft, AnimatedSprite::Playing,			sf::seconds(0.15));
 	std::map<std::string, Animation>::iterator it;
-	it = animacoes.find("MoveDown");
+	/*it = animacoes.find("MoveDown");
 	if (it != animacoes.end()) {
 		animatedSprite.setAnimation(&(it->second));
 	} else {
 		std::cout << "Não foi possivel buscar animação no mapa" << std::endl;
 	}
+	*/
+	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
 	animatedSprite.setFrameTime(sf::seconds(0.15));
 	//animatedSprite.setScale(0.5,0.5);
 	animatedSprite.play();
@@ -113,11 +115,10 @@ void Angel::MoveCharacter() {
 		status = MoveRight;
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) ) {
 		status = (status == MoveRight ? ShootRight :
 					status == MoveLeft ? ShootLeft :
 					status == MoveUp ? ShootUp : ShootDown);
-		ShootArrow(GetPostion());
 	}
 
 	SetMovementDirection(movement);
@@ -134,25 +135,36 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 void Angel::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
-	/*if(animatedSprite.getStatus()== animatedSprite.Playing and( status == ShootDown or status == ShootUp or status == ShootLeft or status == ShootRight)){
+	if( status == ShootDown or status == ShootUp or status == ShootLeft or status == ShootRight){
+		if(animatedSprite.getStatus()== animatedSprite.Playing)
 			return;
-	}*/
+		else{
+			ShootArrow(GetPostion());
+			status = (status == ShootRight ?  MoveRight:
+								status ==  ShootLeft ? MoveLeft:
+								status ==  ShootUp ? MoveUp: MoveDown);
+		}
+	}
 
 	MoveCharacter();
 
 	switch (status) {//MoveUp,MoveDown, Stopped, MoveRight, MoveLeft, ShootUp, ShootDown, ShootRight, ShootLeft, SendPower
 	case Status::MoveUp:
 		animatedSprite.setAnimation(&animacoes["MoveUp"]);
+		animatedSprite.setLoop(true);
 		break;
 	case Status::MoveDown:
 	case Status::Stopped:
 		animatedSprite.setAnimation(&animacoes["MoveDown"]);
+		animatedSprite.setLoop(true);
 		break;
 	case Status::MoveRight:
 		animatedSprite.setAnimation(&animacoes["MoveRight"]);
+		animatedSprite.setLoop(true);
 		break;
 	case Status::MoveLeft:
 		animatedSprite.setAnimation(&animacoes["MoveLeft"]);
+		animatedSprite.setLoop(true);
 		break;
 	case Status::ShootUp:
 		animatedSprite.setAnimation(&animacoes["ShootUp"]);
@@ -178,6 +190,7 @@ void Angel::UpdateDeltaTime(float &dt) {
 		//animatedSprite.setAnimation(&animacoes["MoveUp"]);
 		break;
 	}
+	animatedSprite.play();
 }
 
 sf::Vector2f Angel::GetPostion() {
@@ -191,7 +204,6 @@ void Angel::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sf::FloatRect sprRect = sprite.getGlobalBounds();
 	sf::FloatRect camRect = Game::getGame()->cameraBounds;
-//std::cout << "T" << sprRect.top << " L" << sprRect.left << " W"<< sprRect.width << " H" << sprRect.height << std::endl;
 
 	if ((sprRect.left + movement.x < 0)) {
 		movement.x = 0;

@@ -36,10 +36,8 @@ void Character::Move(sf::Vector2f movement) {
 void Character::draw(sf::RenderTarget *target) {
 	if (animacoes.size() == 0) {
 		target->draw(sprite);
-		std::cout << "Simples" << std::endl;
 	} else {
 		target->draw(animatedSprite);
-		std::cout << "Animated" << std::endl;
 	}
 
 }
