@@ -1,4 +1,5 @@
 #include "Arrow.hpp"
+#include"../../../Game/ResourceLoader.hpp"
 
 
 sf::IntRect Arrow::rectShootUp(63, 18, 3, 14);
@@ -8,21 +9,10 @@ sf::IntRect Arrow::rectShootLeft(66, 26, 16, 3);
 
 Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 		direction(arrowDirection) {
-
+	sf::Vector2f v2fajustArrow;
 	speed = 150.f;
 
-	//LoadTextures("Assets/Angel/angel.png");
-	sf::Image image;
-	if (!image.loadFromFile("Assets/Angel/angel.png")) {
-		std::cerr << "Erro lendo imagem" << std::endl;
-	}
-
-	sf::Color cor(120, 144, 0);
-	image.createMaskFromColor(cor);
-	if (!	texture.loadFromImage(image)) {
-		std::cerr << "Erro carregando textura" << std::endl;
-	}
-	texture.setSmooth(true);
+	texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
 
 	SetSprites();
 
@@ -31,8 +21,10 @@ Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 	if (arrowDirection.x == 0) {
 		if (arrowDirection.y == 1) {
 			rect = &rectShootDown;
+			v2fajustArrow.x -= 5;
 		} else {
 			rect = &rectShootUp;
+			v2fajustArrow.x += 5;
 		}
 	} else {
 		if (arrowDirection.x == 1) {
@@ -44,7 +36,7 @@ Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 
 	CropSprites(*rect);
 	//SetScale(sf::Vector2f(0.65f, 0.65f));
-	sprite.setPosition(startPosition);
+	sprite.setPosition(startPosition + v2fajustArrow);
 
 }
 

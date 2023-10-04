@@ -6,10 +6,14 @@ Nebulon::Nebulon() {
 	speed = 15.f;
 	deltaTime = 0;
 
-	LoadTextures("Assets/Characters/Enemies/Nebulon_Sheet.png");
+	LoadTextures("Nebulon");
 	SetSprites();
 	CropSprites(sf::IntRect(1, 2, 14, 14));
 	SetScale(sf::Vector2f(0.65f, 0.65f));
+}
+void Nebulon::UpdateDeltaTime(float &dt) {
+	Character::UpdateDeltaTime(dt);
+	MoveCharacter();
 }
 
 void Nebulon::MoveCharacter() {
@@ -54,4 +58,8 @@ void Nebulon::MoveCharacter() {
 void Nebulon::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sprite.move(movement);
+}
+
+void Nebulon::setPosition(sf::Vector2f &position){
+	sprite.setPosition(position);
 }

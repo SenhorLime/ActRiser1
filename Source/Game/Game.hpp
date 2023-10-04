@@ -1,8 +1,10 @@
 
 #pragma once
 
+#include <vector>
 
 #include <LDtkLoader/Project.hpp>
+
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Clock.hpp>
@@ -23,9 +25,7 @@ class Game {
 private:
 	TileMap GameMap;
 
-	Angel anjinho;
-	OneEye oneEye;
-	Nebulon nebulon;
+	Angel * player;
 
 	sf::View camera;
 
@@ -45,6 +45,7 @@ private:
 public:
 	sf::FloatRect cameraBounds;
 
+	std::vector<Character*> charactersVector;
 	std::vector<Arrow> arrows;
 
 	static Game * getGame();
@@ -67,11 +68,14 @@ private:
 	Game();
 	void GameMusic(sf::Music &backgroundMusic) ;
 
+	void carregaAssets();
+
 	void moveCamera() ;
 
 	void SetPlayerPosition(ldtk::Entity &playerEntity);
 
 	void SetOneEyePostion(ldtk::Entity &oneEyeEntity);
-
 	void SetNebulonPosition(ldtk::Entity &nebulonEntity);
+
+
 };

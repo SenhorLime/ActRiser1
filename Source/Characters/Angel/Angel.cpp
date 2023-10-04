@@ -1,9 +1,11 @@
 #include "Angel.hpp"
 #include "../../Game/Game.hpp"
+#include "../../Game/ResourceLoader.hpp"
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Graphics/rect.hpp>
+
 
 Angel::Angel() {
 	cooldownTime = 0.5f;
@@ -12,46 +14,40 @@ Angel::Angel() {
 	vidas = 8;
 	pontos = 0;
 	offset_x = 0;
-
+	sprite.setPosition(200, 200);
 	defineAnimacoes();
 
 }
 void Angel::defineAnimacoes() {
 	//load of the texture image
-	sf::Image image;
-	if (!image.loadFromFile("Assets/Angel/angel.png")) {
-		std::cerr << "Erro lendo imagem" << std::endl;
-	}
-	sf::Color cor(120, 144, 0);
-	image.createMaskFromColor(cor);
 
-	_texture.loadFromImage(image);
+	_texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
 
-	//Creation of the different animations for diferent status
+	//Criando uma animação  para cada status
 	//MoveUp, MoveDown, Stopped, MoveRight, MoveLeft, ShootUp, ShootDown, ShootRight, ShootLeft, SendPower
 
-	Animation walkLeft(&_texture);
+	Animation walkLeft(_texture);
 	walkLeft.addFrames(sf::IntRect(86, 0, 13, 16), 1, 2);
 
-	Animation walkRight(&_texture);
+	Animation walkRight(_texture);
 
 	walkRight.addFrames(sf::IntRect(60, 0, 13, 16), 1, 2);
 
-	Animation walkUp(&_texture);
+	Animation walkUp(_texture);
 	walkUp.addFrames(sf::IntRect(30, 0, 15, 16), 1, 2);
 
-	Animation walkDown(&_texture);
+	Animation walkDown(_texture);
 	walkDown.addFrames(sf::IntRect(0, 0, 15, 16), 1, 2);
 
-	Animation shootDown(&_texture);
+	Animation shootDown(_texture);
 	shootDown.addFrames(sf::IntRect(0, 32, 16, 22), 1, 6);
-	Animation shootUp(&_texture);
+	Animation shootUp(_texture);
 	shootUp.addFrames(sf::IntRect(0, 54, 16, 20), 1, 6);
-	Animation shootRight(&_texture);
+	Animation shootRight(_texture);
 	shootRight.addFrames(sf::IntRect(0, 74, 23, 16), 1, 5);
-	Animation shootLeft(&_texture);
+	Animation shootLeft(_texture);
 	shootLeft.addFrames(sf::IntRect(0, 90, 23, 16), 1, 5);
-	Animation sendPower(&_texture);
+	Animation sendPower(_texture);
 	sendPower.addFrames(sf::IntRect(0, 16, 16, 16), 1, 4);
 
 	animacoes.insert( { "MoveLeft", walkLeft });
@@ -64,18 +60,11 @@ void Angel::defineAnimacoes() {
 	animacoes.insert( { "ShootLeft", shootLeft });
 	animacoes.insert( { "SendPower", sendPower });
 
-	//Creation of the animates sprite
-	//AnimatedSprite ansprite(&walkLeft, AnimatedSprite::Playing,			sf::seconds(0.15));
+	//Cria o sprite animado.
+
 	std::map<std::string, Animation>::iterator it;
-	/*it = animacoes.find("MoveDown");
-	if (it != animacoes.end()) {
-		animatedSprite.setAnimation(&(it->second));
-	} else {
-		std::cout << "Não foi possivel buscar animação no mapa" << std::endl;
-	}
-	*/
 	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
-	animatedSprite.setFrameTime(sf::seconds(0.15));
+	animatedSprite.setFrameTime(sf::seconds(0.1));
 	//animatedSprite.setScale(0.5,0.5);
 	animatedSprite.play();
 	animatedSprite.setOrigin(
@@ -127,8 +116,8 @@ void Angel::MoveCharacter() {
 void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 	if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
-		Arrow arrow(playerPosition, shootDirection);
-		Game::getGame()->arrows.push_back(arrow);
+		Arrow * arrow =new Arrow(playerPosition, shootDirection);
+		Game::getGame()->charactersVector.push_back(arrow);
 		cooldownCount.restart();
 	}
 }

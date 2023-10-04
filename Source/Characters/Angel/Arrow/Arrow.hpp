@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../../Characther_Parent/Character.hpp"
 
+
 class Arrow: public Character{
 private:
 	sf::Vector2f direction;
