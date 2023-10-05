@@ -1,4 +1,4 @@
-#include "Source/Game/Game.hpp"
+#include "Game/Game.hpp"
 //#include "Source/Music/Music.hpp"
 
 #include <string>

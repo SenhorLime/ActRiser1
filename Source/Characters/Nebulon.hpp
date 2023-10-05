@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../Characther_Parent/Character.hpp"
+#include "Character.hpp"
 
-class OneEye : public Character {
+class Nebulon : public Character {
 public:
-	OneEye();
-	OneEye(sf::Vector2f &position);
-	virtual void UpdateDeltaTime(float &dt);
+	Nebulon();
+	Nebulon(sf::Vector2f &position);
 
+	virtual void UpdateDeltaTime(float &dt) ;
 private:
 	void initEnemy();
 	void MoveCharacter();

@@ -1,6 +1,5 @@
 #include "Arrow.hpp"
-#include"../../../Game/ResourceLoader.hpp"
-
+#include "../Game/ResourceLoader.hpp"
 
 sf::IntRect Arrow::rectShootUp(63, 18, 3, 14);
 sf::IntRect Arrow::rectShootDown(60, 18, 3, 14);

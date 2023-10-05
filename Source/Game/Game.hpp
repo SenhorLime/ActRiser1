@@ -17,9 +17,9 @@
 #include <SFML/Audio/Music.hpp>
 
 #include "../GameMap/TileMap.hpp"
-#include "../Characters/Angel/Angel.hpp"
-#include "../Characters/Enemies/OneEye.hpp"
-#include "../Characters/Enemies/Nebulon.hpp"
+#include "../Characters/Angel.hpp"
+#include "../Characters/OneEye.hpp"
+#include "../Characters/Nebulon.hpp"
 
 class Game {
 private:

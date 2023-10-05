@@ -1,6 +1,6 @@
 #include "Angel.hpp"
-#include "../../Game/Game.hpp"
-#include "../../Game/ResourceLoader.hpp"
+#include "../Game/Game.hpp"
+#include "../Game/ResourceLoader.hpp"
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -23,7 +23,7 @@ void Angel::defineAnimacoes() {
 
 	_texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
 
-	//Criando uma animação  para cada status
+	//Criando uma animaï¿½ï¿½o  para cada status
 	//MoveUp, MoveDown, Stopped, MoveRight, MoveLeft, ShootUp, ShootDown, ShootRight, ShootLeft, SendPower
 
 	Animation walkLeft(_texture);

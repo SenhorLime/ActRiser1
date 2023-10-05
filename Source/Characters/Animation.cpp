@@ -5,7 +5,7 @@
  *      Author: arsrc
  */
 
-#include "./animation.hpp"
+#include "Animation.hpp"
 
 Animation::Animation(sf::Texture *texture) :
 		_texture(texture) {
