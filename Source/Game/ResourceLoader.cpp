@@ -30,17 +30,18 @@ sf::Music* ResourceLoader::getMusics(std::string nome) {
 					<< std::endl;
 			return nullptr;
 		}
-		return (&(it->second));
+		return ((it->second));
 }
 
 void ResourceLoader::addMusics(std::string nome, std::string path) {
-	sf::Texture _texture;
-	if (!_texture.loadFromFile(path)) {
-		std::cerr << "Não foi possivel adicionar a textura: " << nome
+	sf::Music * _music = new sf::Music();
+	if (!_music->openFromFile(path)) {
+		std::cerr << "Não foi possivel adicionar a música: " << nome
 				<< ". Local:" << path << std::endl;
 	}
 
-	textureMap.insert( { nome, _texture });
+	musicMap.insert( { nome, _music});
+
 }
 
 sf::Sound* ResourceLoader::getSondEfects(std::string nome) {

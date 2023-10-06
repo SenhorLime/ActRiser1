@@ -25,11 +25,11 @@ Game* Game::getGame() {
 	return instance;
 }
 
-void Game::GameMusic(sf::Music &backgroundMusic) {
+void Game::GameMusic(sf::Music *backgroundMusic) {
 	//backgroundMusic.openFromFile("Assets/Music/Monster.ogg");
-	backgroundMusic.play();
-	backgroundMusic.setVolume(50);
-	backgroundMusic.setLoop(true);
+	backgroundMusic->play();
+	backgroundMusic->setVolume(50);
+	backgroundMusic->setLoop(true);
 }
 
 void Game::carregaAssets() {
@@ -49,6 +49,8 @@ void Game::carregaAssets() {
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
 	resources->addTextura("Enemy",
 			"Assets/Characters/Enemies/Nebulon_Sheet.png");
+
+	resources->addMusics("musicFilmore", "Assets/Music/15-Birth-of-the-People.ogg");
 
 }
 
@@ -84,7 +86,7 @@ void Game::Init() {
 	ldtk::Entity &EnemyEntity = charactherSpawns.getEntitiesByName(
 			"Napper_Bat")[0].get();
 
-	backgroundMusic.openFromFile("Assets/Music/15-Birth-of-the-People.ogg");
+	backgroundMusic = ResourceLoader::getResourceLoader()->getMusics("musicFilmore");
 	GameMusic(backgroundMusic);
 
 	//oneEye->sprite.setPosition(),
@@ -278,7 +280,7 @@ void Game::Render(sf::RenderTarget *target) {
 	//target->draw(line, 2, sf::Lines);
 }
 void Game::close() {
-	this->backgroundMusic.stop();
+	this->backgroundMusic->stop();
 }
 
 Game::~Game() {

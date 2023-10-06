@@ -21,9 +21,9 @@ public:
 
 	static ResourceLoader *instance;
 
-	std::map<std::string,  sf::Texture> textureMap;
+	std::map<std::string, sf::Texture> textureMap;
 	std::map<std::string, sf::Sound> soundMap;
-	std::map<std::string, sf::Music> musicMap;
+	std::map<std::string, sf::Music *> musicMap;
 
 
 	sf::Sound sondEfects;

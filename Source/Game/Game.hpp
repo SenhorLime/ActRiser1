@@ -19,7 +19,7 @@
 #include "../GameMap/TileMap.hpp"
 #include "../Characters/Angel.hpp"
 #include "../Characters/OneEye.hpp"
-#include "../Characters/Nebulon.hpp"
+#include "../Characters/Enemy.hpp"
 
 class Game {
 private:
@@ -40,7 +40,7 @@ private:
 	sf::RenderWindow * window;
 	sf::Clock time;
 
-	sf::Music backgroundMusic;
+	sf::Music * backgroundMusic;
 
 public:
 	sf::FloatRect cameraBounds;
@@ -66,7 +66,7 @@ public:
 
 private:
 	Game();
-	void GameMusic(sf::Music &backgroundMusic) ;
+	void GameMusic(sf::Music * backgroundMusic) ;
 
 	void carregaAssets();
 

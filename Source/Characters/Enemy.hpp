@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Characther_Parent/Character.hpp"
+#include "./Character.hpp"
 
 class Enemy : public Character {
 public:
@@ -9,6 +9,8 @@ public:
 
 	virtual void UpdateDeltaTime(float &dt) ;
 private:
+	int hitPoints, damage, spRecovery;
+
 	void initEnemy();
 	void MoveCharacter();
 	void SetMovementDirection(sf::Vector2f &direction);
