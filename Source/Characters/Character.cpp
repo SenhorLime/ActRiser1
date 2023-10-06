@@ -1,4 +1,4 @@
-#include "../Characther_Parent/Character.hpp"
+#include "Character.hpp"
 
 #include <iostream>
 

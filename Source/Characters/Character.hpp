@@ -7,14 +7,14 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "../../animation.hpp"
-#include "../../Game/ResourceLoader.hpp"
+#include "../Game/ResourceLoader.hpp"
+#include "Animation.hpp"
 
 class Character {
 public:
 	sf::Sprite sprite;
-	bool ativo=true; // Variável para retirar objeto do jogo.
-	//Para animações
+	bool ativo=true; // Variï¿½vel para retirar objeto do jogo.
+	//Para animaï¿½ï¿½es
 	sf::Texture * _texture;
 	AnimatedSprite animatedSprite;
 	std::map<std::string, Animation> animacoes;
