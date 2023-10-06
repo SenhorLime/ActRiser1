@@ -69,6 +69,3 @@ void OneEye::SetMovementDirection(sf::Vector2f &direction) {
 	sprite.move(movement);
 }
 
-void OneEye::setPosition(sf::Vector2f &position) {
-	sprite.setPosition(position);
-}

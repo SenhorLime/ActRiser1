@@ -1,22 +1,32 @@
 
-#include "Nebulon.hpp"
+#include "Enemy.hpp"
 
-Nebulon::Nebulon() {
+Enemy::Enemy() {
+	initEnemy();
+}
+
+Enemy::Enemy(sf::Vector2f &position) {
+	sprite.setPosition(position);
+	initEnemy();
+}
+
+void Enemy::initEnemy() {
 	//cooldownTime = 2.f;
 	speed = 15.f;
 	deltaTime = 0;
 
-	LoadTextures("Nebulon");
+	LoadTextures("Enemy");
 	SetSprites();
 	CropSprites(sf::IntRect(1, 2, 14, 14));
 	SetScale(sf::Vector2f(0.65f, 0.65f));
 }
-void Nebulon::UpdateDeltaTime(float &dt) {
+
+void Enemy::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
 	MoveCharacter();
 }
 
-void Nebulon::MoveCharacter() {
+void Enemy::MoveCharacter() {
 	sf::Vector2f movement(0.f, 0.f);
 	static int time = 0;
 	time++;
@@ -55,11 +65,7 @@ void Nebulon::MoveCharacter() {
 	SetMovementDirection(movement);
 }
 
-void Nebulon::SetMovementDirection(sf::Vector2f &direction) {
+void Enemy::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sprite.move(movement);
-}
-
-void Nebulon::setPosition(sf::Vector2f &position){
-	sprite.setPosition(position);
 }

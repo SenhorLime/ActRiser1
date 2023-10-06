@@ -47,7 +47,7 @@ void Game::carregaAssets() {
 	resources->addTextura("Angel", _textura);
 	resources->addTextura("OneEye",
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
-	resources->addTextura("Nebulon",
+	resources->addTextura("Enemy",
 			"Assets/Characters/Enemies/Nebulon_Sheet.png");
 
 }
@@ -81,20 +81,29 @@ void Game::Init() {
 //			charactherSpawns.getEntitiesByName("Player")[0].get();
 	ldtk::Entity &oneEyeEntity = charactherSpawns.getEntitiesByName(
 			"Blue_Dragon")[0].get();
-	ldtk::Entity &nebulonEntity = charactherSpawns.getEntitiesByName(
+	ldtk::Entity &EnemyEntity = charactherSpawns.getEntitiesByName(
 			"Napper_Bat")[0].get();
 
 	backgroundMusic.openFromFile("Assets/Music/15-Birth-of-the-People.ogg");
 	GameMusic(backgroundMusic);
 
+	//oneEye->sprite.setPosition(),
+		//		static_cast<float>(oneEyeEntity.getPosition().y));
+
 	player = new Angel();
 	charactersVector.push_back(player);
-	charactersVector.push_back(new OneEye());
-	charactersVector.push_back(new Nebulon());
+
+	sf::Vector2f enemyPosition(static_cast<float>(oneEyeEntity.getPosition().x),
+		static_cast<float>(oneEyeEntity.getPosition().y));
+	charactersVector.push_back(new OneEye(enemyPosition));
+
+	enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
+	enemyPosition.y =  static_cast<float>(EnemyEntity.getPosition().y);
+	charactersVector.push_back(new Enemy(enemyPosition));
 
 //	SetPlayerPosition(playerEntity);
-	SetOneEyePostion(oneEyeEntity);
-	SetNebulonPosition(nebulonEntity);
+//	SetOneEyePostion(oneEyeEntity);
+//	SetEnemyPosition(EnemyEntity);
 
 
 	camera.setSize( { 256, 144 });
@@ -132,7 +141,7 @@ void Game::run() {
 	}
 
 }
-
+/*
 void Game::SetPlayerPosition(ldtk::Entity &playerEntity) {
 	player->sprite.setPosition(
 			static_cast<float>(playerEntity.getPosition().x),
@@ -140,16 +149,15 @@ void Game::SetPlayerPosition(ldtk::Entity &playerEntity) {
 }
 
 void Game::SetOneEyePostion(ldtk::Entity &oneEyeEntity) {
-	//oneEye->sprite.setPosition(static_cast<float>(oneEyeEntity.getPosition().x),
-	//		static_cast<float>(oneEyeEntity.getPosition().y));
+
 }
 
-void Game::SetNebulonPosition(ldtk::Entity &nebulonEntity) {
-	//nebulon->sprite.setPosition(
-	//		static_cast<float>(nebulonEntity.getPosition().x),
-	//		static_cast<float>(nebulonEntity.getPosition().y));
+void Game::SetEnemyPosition(ldtk::Entity &EnemyEntity) {
+	//Enemy->sprite.setPosition(
+	//		static_cast<float>(EnemyEntity.getPosition().x),
+	//		static_cast<float>(EnemyEntity.getPosition().y));
 }
-
+*/
 void Game::Update(float &deltaTime) {
 	// Updating the player movement
 
@@ -159,14 +167,14 @@ void Game::Update(float &deltaTime) {
 	//Tudo feito no for.
 	//player->UpdateDeltaTime(deltaTime);
 	//oneEye->UpdateDeltaTime(deltaTime);
-	//nebulon->UpdateDeltaTime(deltaTime);
+	//Enemy->UpdateDeltaTime(deltaTime);
 
 
 	//todo[estabelecer colisões]
 	// Get the Coliisor Bounds of all characters
 	 auto playerCollider = GetPlayerCollider(player->sprite);
 	 auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
-	 auto nebulonCollider = GetEnemyCollider(charactersVector[2]->sprite);
+	 auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
 
 	// Testing the collision with a enemy and showing the damage given
 	if (playerCollider.intersects(oneEyeCollider)
@@ -183,7 +191,7 @@ void Game::Update(float &deltaTime) {
 		//oneEye->cooldownCount.restart();
 	}
 
-	if (playerCollider.intersects(nebulonCollider)
+	if (playerCollider.intersects(EnemyCollider)
 			and player->cooldownCount.getElapsedTime().asSeconds()
 					>= player->cooldownTime) {
 		player->vidas -= 3;
@@ -194,7 +202,7 @@ void Game::Update(float &deltaTime) {
 			lifeText.setString(str);
 		}
 
-		//nebulon->cooldownCount.restart();
+		//Enemy->cooldownCount.restart();
 	}
 
 
@@ -254,7 +262,7 @@ void Game::Render(sf::RenderTarget *target) {
 
 	// Drawing Characters // Drawing the bullets
 	//oneEye->draw(target);
-	//nebulon->draw(target);
+	//Enemy->draw(target);
     for (auto it = charactersVector.rbegin(); it != charactersVector.rend(); ++it) {
 	        Character* personagem = *it;
 	        personagem->draw(target);

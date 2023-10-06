@@ -2,10 +2,10 @@
 
 #include "../Characther_Parent/Character.hpp"
 
-class Nebulon : public Character {
+class Enemy : public Character {
 public:
-	Nebulon();
-	Nebulon(sf::Vector2f &position);
+	Enemy();
+	Enemy(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt) ;
 private:
