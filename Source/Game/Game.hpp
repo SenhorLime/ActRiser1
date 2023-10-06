@@ -72,5 +72,10 @@ private:
 
 	void moveCamera() ;
 
+	void SetPlayerPosition(ldtk::Entity &playerEntity);
+
+	void SetOneEyePostion(ldtk::Entity &oneEyeEntity);
+	void SetNebulonPosition(ldtk::Entity &nebulonEntity);
+
 
 };
