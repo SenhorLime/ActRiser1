@@ -62,8 +62,11 @@ void Angel::defineAnimacoes() {
 
 	//Cria o sprite animado.
 
-	std::map<std::string, Animation>::iterator it;
+	//std::map<std::string, Animation>::iterator it;
+
 	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+	shootDirection = sf::Vector2f(0.f, 1.f);
+
 	animatedSprite.setFrameTime(sf::seconds(0.1));
 	//animatedSprite.setScale(0.5,0.5);
 	animatedSprite.play();

@@ -8,7 +8,8 @@
 Game *Game::instance = nullptr;
 ;
 
-Game::Game() :player(nullptr){
+Game::Game() :
+		player(nullptr) {
 	window = new sf::RenderWindow();
 	window->create(sf::VideoMode(1280, 720), "ActRaiser77");
 	window->setMouseCursorVisible(false);
@@ -47,66 +48,51 @@ void Game::carregaAssets() {
 	resources->addTextura("Angel", _textura);
 	resources->addTextura("OneEye",
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
-	resources->addTextura("Enemy",
+	resources->addTextura("Nebulon_Sheet",
 			"Assets/Characters/Enemies/Nebulon_Sheet.png");
+	resources->addTextura("Enemy", "Assets/Enemy/Enemy.png");
 
-	resources->addMusics("musicFilmore", "Assets/Music/15-Birth-of-the-People.ogg");
+	resources->addMusics("musicFilmore",
+			"Assets/Music/15-Birth-of-the-People.ogg");
 
 }
 
 void Game::Init() {
-	// Get the game World from the project
-	//Alisson Esteve aqui.
-	//auto &world = ldtk_proj.getWorld();
-	// Get the level from the project
 
 	carregaAssets();
 
+	//-------------------Controle do Mapa ------------------------//
+	//todo[mover pra classe do mapa]
 	auto &ldtkLevel0 = this->GameMap.world->getLevel("Level_0");
 
 	// Load the TileMap from the level
 	GameMap.Load(ldtkLevel0);
 
 	// Get the layer of Entities
-//	auto &worldCollissions = ldtkLevel0.getLayer("Map_Collissions");
 	auto &charactherSpawns = ldtkLevel0.getLayer("Spanws");
 
-	// Get the Collider shapes and store then in a std::vector
-//	for (ldtk::Entity &col : worldCollissions.getEntitiesByName("Map_Collider")) {
-//		colliders.emplace_back((float) col.getPosition().x,
-//				(float) col.getPosition().y, (float) col.getSize().x,
-//				(float) col.getSize().y);
-//	}
-
-	// Get the map Entities for setting the characters spawn points
-//	ldtk::Entity &playerEntity =
-//			charactherSpawns.getEntitiesByName("Player")[0].get();
 	ldtk::Entity &oneEyeEntity = charactherSpawns.getEntitiesByName(
 			"Blue_Dragon")[0].get();
-	ldtk::Entity &EnemyEntity = charactherSpawns.getEntitiesByName(
-			"Napper_Bat")[0].get();
+	ldtk::Entity &EnemyEntity =
+			charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
+	//---------------------------------------------------//
 
-	backgroundMusic = ResourceLoader::getResourceLoader()->getMusics("musicFilmore");
+	backgroundMusic = ResourceLoader::getResourceLoader()->getMusics(
+			"musicFilmore");
 	GameMusic(backgroundMusic);
-
-	//oneEye->sprite.setPosition(),
-		//		static_cast<float>(oneEyeEntity.getPosition().y));
 
 	player = new Angel();
 	charactersVector.push_back(player);
 
 	sf::Vector2f enemyPosition(static_cast<float>(oneEyeEntity.getPosition().x),
-		static_cast<float>(oneEyeEntity.getPosition().y));
+			static_cast<float>(oneEyeEntity.getPosition().y));
 	charactersVector.push_back(new OneEye(enemyPosition));
 
 	enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
-	enemyPosition.y =  static_cast<float>(EnemyEntity.getPosition().y);
+	enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
 	charactersVector.push_back(new Enemy(enemyPosition));
-
-//	SetPlayerPosition(playerEntity);
-//	SetOneEyePostion(oneEyeEntity);
-//	SetEnemyPosition(EnemyEntity);
-
+	enemyPosition.x += 30;
+	charactersVector.push_back(new NapperBat(enemyPosition));
 
 	camera.setSize( { 256, 144 });
 	camera.zoom(1.6f);
@@ -143,40 +129,27 @@ void Game::run() {
 	}
 
 }
-/*
-void Game::SetPlayerPosition(ldtk::Entity &playerEntity) {
-	player->sprite.setPosition(
-			static_cast<float>(playerEntity.getPosition().x),
-			static_cast<float>(playerEntity.getPosition().y));
-}
 
-void Game::SetOneEyePostion(ldtk::Entity &oneEyeEntity) {
-
-}
-
-void Game::SetEnemyPosition(ldtk::Entity &EnemyEntity) {
-	//Enemy->sprite.setPosition(
-	//		static_cast<float>(EnemyEntity.getPosition().x),
-	//		static_cast<float>(EnemyEntity.getPosition().y));
-}
-*/
 void Game::Update(float &deltaTime) {
-	// Updating the player movement
 
-	for (auto personagem : charactersVector) {
-		personagem->UpdateDeltaTime(deltaTime);
+	for (Character* personagem : charactersVector) {
+			personagem->UpdateDeltaTime(deltaTime);
+		    }
+
+	for (std::list<Character*>::iterator it = charactersVector.begin();
+			it != charactersVector.end(); ++it) {
+		Character *personagem = *it;
+		if(personagem->ativo == false){
+			delete(*it);
+			charactersVector.erase(it);
+		}
 	}
-	//Tudo feito no for.
-	//player->UpdateDeltaTime(deltaTime);
-	//oneEye->UpdateDeltaTime(deltaTime);
-	//Enemy->UpdateDeltaTime(deltaTime);
-
 
 	//todo[estabelecer colisões]
 	// Get the Coliisor Bounds of all characters
-	 auto playerCollider = GetPlayerCollider(player->sprite);
-	 auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
-	 auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
+	/*auto playerCollider = GetPlayerCollider(player->sprite);
+	auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
+	auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
 
 	// Testing the collision with a enemy and showing the damage given
 	if (playerCollider.intersects(oneEyeCollider)
@@ -190,7 +163,6 @@ void Game::Update(float &deltaTime) {
 			lifeText.setString(str);
 		}
 
-		//oneEye->cooldownCount.restart();
 	}
 
 	if (playerCollider.intersects(EnemyCollider)
@@ -204,10 +176,8 @@ void Game::Update(float &deltaTime) {
 			lifeText.setString(str);
 		}
 
-		//Enemy->cooldownCount.restart();
 	}
-
-
+*/
 // Code for adding Collision between the player and the map
 //	for (auto &rect : colliders) {
 //		sf::FloatRect intersect;
@@ -263,17 +233,14 @@ void Game::Render(sf::RenderTarget *target) {
 	target->draw(GameMap.GetLayer("Obstacles"));
 
 	// Drawing Characters // Drawing the bullets
-	//oneEye->draw(target);
-	//Enemy->draw(target);
-    for (auto it = charactersVector.rbegin(); it != charactersVector.rend(); ++it) {
-	        Character* personagem = *it;
-	        personagem->draw(target);
-	    }
+	for (auto it = charactersVector.rbegin(); it != charactersVector.rend();
+			++it) {
+		Character *personagem = *it;
+		personagem->draw(target);
+	}
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);
 	target->draw(lifeText);
-
-
 
 	///sf::Vertex line[] = { sf::Vertex(sf::Vector2f(0, 0)), sf::Vertex(
 	//sf::Vector2f(anjinho->animatedSprite.getPosition())) };
@@ -284,7 +251,7 @@ void Game::close() {
 }
 
 Game::~Game() {
-	 for (Character* personagem : charactersVector) {
-	        delete personagem;
-	    }
+	for (Character *personagem : charactersVector) {
+		delete personagem;
+	}
 }

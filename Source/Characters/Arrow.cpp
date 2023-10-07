@@ -1,5 +1,6 @@
 #include "Arrow.hpp"
 #include "../Game/ResourceLoader.hpp"
+#include "../Game/Game.hpp"
 
 sf::IntRect Arrow::rectShootUp(63, 18, 3, 14);
 sf::IntRect Arrow::rectShootDown(60, 18, 3, 14);
@@ -43,6 +44,11 @@ void Arrow::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
 	sf::Vector2f movement = direction * speed * deltaTime;
 	Move(movement);
+
+	if (!getMyBounds().intersects(Game::getGame()->cameraBounds)) {
+		this->ativo = false;
+		std::cout<< "Eliminado" << std::endl;
+	}
 }
 
 sf::Vector2f Arrow::GetDirection() {
@@ -53,8 +59,8 @@ void Arrow::SetDirection(sf::Vector2f &newDirection) {
 	direction = newDirection;
 }
 
-void Arrow::draw(sf::RenderTarget *target){
-	//Character::draw(target);
-	target->draw(sprite);
+void Arrow::draw(sf::RenderTarget *target) {
+	Character::draw(target);
+	//target->draw(sprite);
 }
 

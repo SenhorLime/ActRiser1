@@ -15,7 +15,7 @@ void Enemy::initEnemy() {
 	speed = 15.f;
 	deltaTime = 0;
 
-	LoadTextures("Enemy");
+	LoadTextures("Nebulon_Sheet");
 	SetSprites();
 	CropSprites(sf::IntRect(1, 2, 14, 14));
 	SetScale(sf::Vector2f(0.65f, 0.65f));

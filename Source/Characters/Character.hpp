@@ -22,6 +22,7 @@ public:
 
 
 public:
+	virtual sf::FloatRect   getMyBounds();
 	virtual void UpdateDeltaTime(float &dt);
 	virtual void draw(sf::RenderTarget *target);
 	virtual ~Character();
@@ -30,6 +31,7 @@ protected:
 	sf::Clock animationFrameTime;
 	float speed;
 	float deltaTime;
+	sf::IntRect myBounds;
 
 protected:
 	virtual void SetSprites();

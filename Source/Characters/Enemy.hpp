@@ -5,12 +5,12 @@
 class Enemy : public Character {
 public:
 	Enemy();
+
 	Enemy(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt) ;
-private:
+protected:
 	int hitPoints, damage, spRecovery;
-
 	void initEnemy();
 	void MoveCharacter();
 	void SetMovementDirection(sf::Vector2f &direction);

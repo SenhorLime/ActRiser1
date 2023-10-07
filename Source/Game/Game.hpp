@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <list>
 #include <vector>
 
 #include <LDtkLoader/Project.hpp>
@@ -20,6 +21,7 @@
 #include "../Characters/Angel.hpp"
 #include "../Characters/OneEye.hpp"
 #include "../Characters/Enemy.hpp"
+#include "../Characters/NapperBat.hpp"
 
 class Game {
 private:
@@ -45,8 +47,7 @@ private:
 public:
 	sf::FloatRect cameraBounds;
 
-	std::vector<Character*> charactersVector;
-	std::vector<Arrow> arrows;
+	std::list<Character*> charactersVector;
 
 	static Game * getGame();
 
@@ -61,7 +62,7 @@ public:
 	void close();
 
 	virtual ~Game();
-	const sf::RenderWindow * getWindow() const;
+
 
 
 private:

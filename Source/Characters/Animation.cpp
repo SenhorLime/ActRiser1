@@ -6,6 +6,8 @@
  */
 
 #include "Animation.hpp"
+#include "NapperBat.hpp"
+#include "Angel.hpp"
 
 Animation::Animation(sf::Texture *texture) :
 		_texture(texture) {
@@ -201,8 +203,7 @@ void AnimatedSprite::draw(sf::RenderTarget &target,
 	}
 }
 void AnimatedSprite::draw(sf::RenderTarget &target) const {
-		target.draw(sf::Sprite(*(_animation->_texture)));
-
+	target.draw(sf::Sprite(*(_animation->_texture)));
 }
 
 

@@ -39,9 +39,7 @@ void ResourceLoader::addMusics(std::string nome, std::string path) {
 		std::cerr << "Não foi possivel adicionar a música: " << nome
 				<< ". Local:" << path << std::endl;
 	}
-
 	musicMap.insert( { nome, _music});
-
 }
 
 sf::Sound* ResourceLoader::getSondEfects(std::string nome) {
@@ -59,7 +57,6 @@ sf::Texture* ResourceLoader::getTextura(std::string nome)  {
 				<< std::endl;
 		return nullptr;
 	}
-
 
 	return ( &( textureMap[nome]));
 }

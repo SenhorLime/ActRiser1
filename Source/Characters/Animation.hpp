@@ -9,7 +9,6 @@
 //#ifndef ANIMATION_HPP_
 //#define ANIMATION_HPP_
 
-
 #include <iostream>
 #include <cassert>
 
@@ -49,13 +48,13 @@ public:
 	 */
 	Animation& addFramesLine(int number_x, int number_y, int line);
 	/**Adiciona uma coluna de sprites a animação
-		 * Esses frames estão dispostos horizontalmente na textura.
-		 * @arg  number_x - qtd de sprites em uma linha da textura
-		 * @arg  number_y - qtd de sprites em uma coluna da textura
-		 * @arg  line	   - qual linha da da textura será inserida.
-		 *
-		 * Esse método exige que a textura tenha suas
-		 */
+	 * Esses frames estão dispostos horizontalmente na textura.
+	 * @arg  number_x - qtd de sprites em uma linha da textura
+	 * @arg  number_y - qtd de sprites em uma coluna da textura
+	 * @arg  line	   - qual linha da da textura será inserida.
+	 *
+	 * Esse método exige que a textura tenha suas
+	 */
 	Animation& addFramesColumn(int number_x, int number_y, int column);
 
 	Animation& addFrames(const sf::IntRect &rect, int linhas, int colunas);
@@ -69,7 +68,6 @@ private:
 	std::vector<sf::IntRect> _frames;
 	sf::Texture *_texture;
 };
-
 
 /**
  * @class AnimatedSprite
@@ -86,7 +84,6 @@ public:
 	AnimatedSprite& operator=(const AnimatedSprite&) = default;
 	AnimatedSprite(AnimatedSprite&&) = default;
 	AnimatedSprite& operator=(AnimatedSprite&&) = default;
-
 
 	enum Status {
 		Stopped, Paused, Playing
@@ -144,6 +141,5 @@ private:
 			override;
 
 };
-
 
 //#endif /* ANIMATION_HPP_ */
