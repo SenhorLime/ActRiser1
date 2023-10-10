@@ -28,7 +28,7 @@ size_t Animation::size() const {
 	return _frames.size();
 }
 
-const sf::IntRect& Animation::getRect(size_t index) const {
+sf::IntRect& Animation::getRect(size_t index) {
 	return _frames[index];
 }
 
@@ -82,6 +82,10 @@ void AnimatedSprite::setAnimation(Animation *animation) {
 		_elapsed = sf::Time::Zero;
 		_currentFrame = 0;
 		setFrame(0, true);
+		if(this->_animation != nullptr){
+		this->setTexture(*(_animation->getTexture()), true);
+		this->setTextureRect(_animation->getRect(_currentFrame));
+		}
 	}
 }
 

@@ -61,7 +61,7 @@ public:
 	size_t size() const;
 
 	/**Retorna a rect do sprite na posição index */
-	const sf::IntRect& getRect(size_t index) const;
+	sf::IntRect& getRect(size_t index);
 
 private:
 	friend class AnimatedSprite;

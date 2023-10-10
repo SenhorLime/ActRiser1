@@ -36,21 +36,32 @@ void Game::GameMusic(sf::Music *backgroundMusic) {
 void Game::carregaAssets() {
 	ResourceLoader *resources = ResourceLoader::getResourceLoader();
 
+
 	sf::Image image;
 	if (!image.loadFromFile("Assets/Angel/angel.png")) {
 		std::cerr << "Erro carregando imagem angel.png" << std::endl;
 	}
-	sf::Color cor(120, 144, 0);
-	image.createMaskFromColor(cor);
-	sf::Texture _textura;
+	//sf::Color cor(120, 144, 0);
+	image.createMaskFromColor(sf::Color(120, 144, 0));
+	sf::Texture _textura ;
 	_textura.loadFromImage(image);
-
+	_textura.setSmooth(true);
 	resources->addTextura("Angel", _textura);
+
+
+	if (!image.loadFromFile("Assets/Enemy/Enemy.png")) {
+			std::cerr << "Erro carregando imagem Enemy.png" << std::endl;
+		}
+	image.createMaskFromColor(sf::Color(0, 64, 128));
+	_textura.loadFromImage(image);
+	_textura.setSmooth(true);
+	resources->addTextura("Enemy", _textura);
+
 	resources->addTextura("OneEye",
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
 	resources->addTextura("Nebulon_Sheet",
 			"Assets/Characters/Enemies/Nebulon_Sheet.png");
-	resources->addTextura("Enemy", "Assets/Enemy/Enemy.png");
+
 
 	resources->addMusics("musicFilmore",
 			"Assets/Music/15-Birth-of-the-People.ogg");
@@ -92,6 +103,7 @@ void Game::Init() {
 	enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
 	charactersVector.push_back(new Enemy(enemyPosition));
 	enemyPosition.x += 30;
+
 	charactersVector.push_back(new NapperBat(enemyPosition));
 
 	camera.setSize( { 256, 144 });
