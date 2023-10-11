@@ -1,19 +1,21 @@
 #include "NapperBat.hpp"
-
+#include "../Game/Game.hpp"
 NapperBat::NapperBat() {
 	initEnemy();
 }
 NapperBat::NapperBat(sf::Vector2f &position) {
-	sf::Vector2f pt(200.f,200.f);
-	this->setPosition(pt);
+	sf::Vector2f pt(200.f, 200.f);
+	this->setPosition(position);
 	initEnemy();
 }
 
 void NapperBat::initEnemy() {
-	speed = 0;//75.f;
+	speed = 50.f;
 	hitPoints = 1;
 	damage = 1;
 	spRecovery = 1;
+	cooldownTime = 3;
+	srand(time(0));
 
 	//LoadTextures("Enemy");
 	//SetSprites();
@@ -22,20 +24,18 @@ void NapperBat::initEnemy() {
 
 	_texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
 	
-	texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
-	texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
 
-	Animation walkLeft(texture);
+	Animation walkLeft(_texture);
 	walkLeft.addFrames(sf::IntRect(164, 32, 12, 13), 1, 2);
 
-	Animation walkRight(texture);
+	Animation walkRight(_texture);
 
 	walkRight.addFrames(sf::IntRect(140, 32, 12, 13), 1, 2);
 
-	Animation walkUp(texture);
+	Animation walkUp(_texture);
 	walkUp.addFrames(sf::IntRect(0, 32, 35, 11), 1, 2);
 
-	Animation walkDown(texture);
+	Animation walkDown(_texture);
 	walkDown.addFrames(sf::IntRect(70, 32, 35, 11), 1, 2);
 
 	animacoes.insert( { "MoveLeft", walkLeft });
@@ -44,7 +44,7 @@ void NapperBat::initEnemy() {
 	animacoes.insert( { "MoveDown", walkDown });
 
 	//Cria o sprite animado.
-	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+	goStop();
 	animatedSprite.setFrameTime(sf::seconds(0.1));
 	//animatedSprite.setScale(0.5,0.5);
 	animatedSprite.play();
@@ -53,39 +53,44 @@ void NapperBat::initEnemy() {
 			animatedSprite.getAnimation()->getRect(0).height / 2);
 
 }
-
 void NapperBat::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
+	deltaTime = dt;
 	MoveCharacter();
+
 }
 
 void NapperBat::MoveCharacter() {
-	sf::Vector2f movement(0.f, 0.f);
-	static int time = 0;
-	time++;
+	sf::Vector2f movement2 = movement * speed * deltaTime;
 
-	if (time <= 150) {
-		int status = rand() % 4;
+	if (saindoDaTela(movement2)){
+	voltarPraTela(movement2);
+	}
+	else if((cooldownCount.getElapsedTime().asSeconds() >= cooldownTime)
+			) {
+		int status = rand() % 6;
+		movement.x = 0;
+		movement.y = -0;
 		switch (status) {
 		case 0:
-			animatedSprite.setAnimation(&(animacoes["MoveLeft"]));
-			movement.x = -1.0f;
-		break;
+			goLeft();
+			break;
 		case 1:
-			animatedSprite.setAnimation(&(animacoes["MoveRight"]));
-			movement.x = 1.0f;
+			goRight();
 			break;
 		case 2:
-			animatedSprite.setAnimation(&(animacoes["MoveUp"]));
-			movement.y = -1.0f;
+			goUp();
 			break;
 		case 3:
-			animatedSprite.setAnimation(&(animacoes["MoveDown"]));
-			movement.y = -1.0f;
+			goDown();
 			break;
 		default:
+			goStop();
 			break;
 		}
+		cooldownCount.restart();
+		movement2 = movement * speed * deltaTime;
+		//std::cout<< "Dentro" << std::endl;
 	}
 
 	SetMovementDirection(movement);
@@ -94,8 +99,73 @@ void NapperBat::MoveCharacter() {
 void NapperBat::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sprite.move(movement);
+	animatedSprite.move(movement);
+}
+bool NapperBat::saindoDaTela(sf::Vector2f &direction) {
+	sf::FloatRect sprRect = sprite.getGlobalBounds();
+	sf::FloatRect camRect = Game::getGame()->cameraBounds;
+	if ((sprRect.left + direction.x < 0)
+			or (((sprRect.left + sprRect.width) + direction.x > camRect.width))
+			or ((sprRect.top + direction.y < 0))
+			or (((sprRect.top + sprRect.height) + direction.y > camRect.height))) {
+		return (true);
+	}
+	return false;
+}
+void NapperBat::voltarPraTela(sf::Vector2f &direction) {
+
+	sf::FloatRect sprRect = sprite.getGlobalBounds();
+	sf::FloatRect camRect = Game::getGame()->cameraBounds;
+
+	if ((sprRect.left + movement.x < 0)) {
+		goRight();
+	} else if (((sprRect.left + sprRect.width) + movement.x > camRect.width)) {
+		goLeft();
+	}else if ((sprRect.top + movement.y < 0)) {
+		goDown();
+	} else if (((sprRect.top + sprRect.height) + movement.y > camRect.height)) {
+		goUp();
+	}
+
 }
 
 void NapperBat::setPosition(sf::Vector2f &position) {
+	animatedSprite.setPosition(position);
 	sprite.setPosition(position);
+}
+
+void NapperBat::goLeft() {
+	animatedSprite.setAnimation(&(animacoes["MoveLeft"]));
+	movement.x = -1.0f;
+	cooldownCount.restart();
+	speed = 50.f;
+	status = Status::MoveLeft;
+}
+void NapperBat::goRight() {
+	animatedSprite.setAnimation(&(animacoes["MoveRight"]));
+	movement.x = 1.0f;
+	cooldownCount.restart();
+	speed = 50.f;
+	status = Status::MoveRight;
+}
+void NapperBat::goDown() {
+	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+	movement.y = 1.0f;
+	cooldownCount.restart();
+	speed = 50.f;
+	status = Status::MoveDown;
+}
+void NapperBat::goUp() {
+	animatedSprite.setAnimation(&(animacoes["MoveUp"]));
+	movement.y = -1.0f;
+	cooldownCount.restart();
+	speed = 50.f;
+	status = Status::MoveUp;
+}
+void NapperBat::goStop() {
+	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+	movement.y = 0; movement.x = 0;
+	cooldownCount.restart();
+	speed = 0;
+	status = Status::Stopped;
 }

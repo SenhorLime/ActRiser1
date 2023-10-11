@@ -27,7 +27,7 @@ public:
 
 protected:
   float deltaTime;
-  sf::Texture *texture;
+  sf::Texture *_texture;
 
 protected:
   virtual void SetSprites();

@@ -12,7 +12,7 @@ Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 	sf::Vector2f v2fajustArrow;
 	speed = 150.f;
 
-	texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
+	_texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
 
 	SetSprites();
 

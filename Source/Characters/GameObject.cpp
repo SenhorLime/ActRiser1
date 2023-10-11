@@ -8,11 +8,11 @@
 #include "GameObject.hpp"
 
 void GameObject::LoadTextures(std::string textureName) {
-  texture = ResourceLoader::getResourceLoader()->getTextura(textureName);
+  _texture = ResourceLoader::getResourceLoader()->getTextura(textureName);
 }
 
 void GameObject::SetSprites() {
-  sprite.setTexture(*texture);
+  sprite.setTexture(*_texture);
 }
 
 void GameObject::UpdateDeltaTime(float &dt) {
