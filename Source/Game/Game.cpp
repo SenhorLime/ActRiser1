@@ -236,7 +236,7 @@ void Game::Render(sf::RenderTarget *target) {
 	for (auto it = charactersVector.rbegin(); it != charactersVector.rend();
 			++it) {
 		Character *personagem = *it;
-		personagem->draw(target);
+		personagem->Draw(target);
 	}
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);

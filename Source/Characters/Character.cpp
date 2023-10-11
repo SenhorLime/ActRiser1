@@ -4,14 +4,6 @@
 #include <iostream>
 #include <typeinfo>
 
-void Character::LoadTextures(std::string textureName) {
-	texture = ResourceLoader::getResourceLoader()->getTextura(textureName);
-}
-
-void Character::SetSprites() {
-	sprite.setTexture(*texture);
-}
-
 sf::FloatRect Character::getMyBounds() {
 	if (animacoes.size() == 0) {
 	return sprite.getGlobalBounds();
@@ -32,16 +24,12 @@ void Character::CropSprites(sf::IntRect spriteRect) {
 	sprite.setTextureRect(spriteRect);
 }
 
-void Character::SetScale(sf::Vector2f spriteScale) {
-	sprite.setScale(spriteScale);
-}
-
-void Character::Move(sf::Vector2f movement) {
+void Character::MoveCharacther(sf::Vector2f movement) {
 	sprite.move(movement);
 	animatedSprite.move(movement);
 }
 
-void Character::draw(sf::RenderTarget *target) {
+void Character::Draw(sf::RenderTarget *target) {
 	if (animacoes.size() == 0) {
 		target->draw(sprite);
 	} else {

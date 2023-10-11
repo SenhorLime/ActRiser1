@@ -3,14 +3,12 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include "../Game/ResourceLoader.hpp"
-#include "Animation.hpp"
 
-class Character {
+#include "GameObject.hpp"
+#include "Animation.hpp"
+#include "../Game/ResourceLoader.hpp"
+
+class Character : public GameObject {
 public:
 	sf::Sprite sprite;
 	bool ativo=true; // Vari�vel para retirar objeto do jogo.
@@ -23,8 +21,8 @@ public:
 
 public:
 	virtual sf::FloatRect   getMyBounds();
-	virtual void UpdateDeltaTime(float &dt);
-	virtual void draw(sf::RenderTarget *target);
+  void UpdateDeltaTime(float &dt) override;
+  void Draw(sf::RenderTarget *target) override;
 	virtual ~Character();
 protected:
 	sf::Texture * texture;
@@ -34,10 +32,7 @@ protected:
 	sf::IntRect myBounds;
 
 protected:
-	virtual void SetSprites();
-	virtual void LoadTextures(std::string textureName);
-	virtual void CropSprites(sf::IntRect spriteRect);
-	virtual void SetScale(sf::Vector2f spriteScale);
-	virtual void Move(sf::Vector2f movement);
+  void CropSprites(sf::IntRect spriteRect) override;
+	virtual void MoveCharacther(sf::Vector2f movement);
 
 };

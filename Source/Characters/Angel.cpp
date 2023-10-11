@@ -213,5 +213,5 @@ void Angel::SetMovementDirection(sf::Vector2f &direction) {
 		movement.y = 0;
 	}
 
-	Move(movement);
+	MoveCharacther(movement);
 }

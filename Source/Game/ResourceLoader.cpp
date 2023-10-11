@@ -50,7 +50,7 @@ void ResourceLoader::addSondEfects(std::string nome, std::string path) {
 	this->sondEfects = sondEfects;
 }
 
-sf::Texture* ResourceLoader::getTextura(std::string nome)  {
+sf::Texture * ResourceLoader::getTextura(std::string nome)  {
 	auto it = textureMap.find(nome);
 	if (it == textureMap.end()) {
 		std::cerr << "Não foi possivel abrir a textura " << nome << "."
@@ -58,7 +58,7 @@ sf::Texture* ResourceLoader::getTextura(std::string nome)  {
 		return nullptr;
 	}
 
-	return ( &( textureMap[nome]));
+  return ( &( textureMap[nome]));
 }
 
 void ResourceLoader::addTextura(std::string nome, std::string path) {
