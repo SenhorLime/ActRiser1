@@ -99,9 +99,14 @@ void Game::Init() {
 			static_cast<float>(oneEyeEntity.getPosition().y));
 	charactersVector.push_back(new OneEye(enemyPosition));
 
+	charactersVector.push_back(new BlueDragon(enemyPosition));
+
 	enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
 	enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
 	charactersVector.push_back(new Enemy(enemyPosition));
+
+	charactersVector.push_back(new RedDemon(enemyPosition));
+
 	enemyPosition.x += 30;
 
 	charactersVector.push_back(new NapperBat(enemyPosition));

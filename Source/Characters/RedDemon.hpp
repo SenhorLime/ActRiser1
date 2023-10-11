@@ -2,7 +2,7 @@
 
 #include "Enemy.hpp"
 
-class NapperBat : public Enemy {
+class RedDemon : public Enemy {
 public:
 	enum Status {
 			MoveUp,
@@ -13,8 +13,8 @@ public:
 			takePeople,
 			flee
 		};
-	NapperBat();
-	NapperBat(sf::Vector2f &position);
+	RedDemon();
+	RedDemon(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt) ;
 private:

@@ -22,6 +22,9 @@
 #include "../Characters/OneEye.hpp"
 #include "../Characters/Enemy.hpp"
 #include "../Characters/NapperBat.hpp"
+#include "../Characters/BlueDragon.hpp"
+#include "../Characters/RedDemon.hpp"
+
 
 class Game {
 private:

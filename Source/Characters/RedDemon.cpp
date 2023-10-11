@@ -1,21 +1,21 @@
-#include "NapperBat.hpp"
+#include "RedDemon.hpp"
 #include "../Game/Game.hpp"
 #include <ctime>
-NapperBat::NapperBat() {
+RedDemon::RedDemon() {
 	initEnemy();
 }
-NapperBat::NapperBat(sf::Vector2f &position) {
+RedDemon::RedDemon(sf::Vector2f &position) {
 	sf::Vector2f pt(200.f, 200.f);
 	this->setPosition(position);
 	initEnemy();
 }
 
-void NapperBat::initEnemy() {
-	speed = 50.f;
-	hitPoints = 1;
-	damage = 1;
-	spRecovery = 1;
-	cooldownTime = 3;
+void RedDemon::initEnemy() {
+	speed = 40.f;
+	hitPoints = 4;
+	damage = 6;
+	spRecovery = 4;
+	cooldownTime = 1;
 	srand(time(0));
 
 	//LoadTextures("Enemy");
@@ -27,17 +27,17 @@ void NapperBat::initEnemy() {
 	;
 
 	Animation walkLeft(_texture);
-	walkLeft.addFrames(sf::IntRect(164, 32, 12, 13), 1, 2);
+	walkLeft.addFrames(sf::IntRect(90, 0, 15, 16), 1, 2);
 
 	Animation walkRight(_texture);
 
-	walkRight.addFrames(sf::IntRect(140, 32, 12, 13), 1, 2);
+	walkRight.addFrames(sf::IntRect(60, 0, 15, 16), 1, 2);
 
 	Animation walkUp(_texture);
-	walkUp.addFrames(sf::IntRect(0, 32, 35, 11), 1, 2);
+	walkUp.addFrames(sf::IntRect(0, 0, 15, 16), 1, 2);
 
 	Animation walkDown(_texture);
-	walkDown.addFrames(sf::IntRect(70, 32, 35, 11), 1, 2);
+	walkDown.addFrames(sf::IntRect(30, 0, 15, 16), 1, 2);
 
 	animacoes.insert( { "MoveLeft", walkLeft });
 	animacoes.insert( { "MoveRight", walkRight });
@@ -55,14 +55,14 @@ void NapperBat::initEnemy() {
 
 }
 
-void NapperBat::UpdateDeltaTime(float &dt) {
+void RedDemon::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
 	deltaTime = dt;
 	MoveCharacter();
 
 }
 
-void NapperBat::MoveCharacter() {
+void RedDemon::MoveCharacter() {
 	sf::Vector2f movement2 = movement * speed * deltaTime;
 
 	if (saindoDaTela(movement2)){
@@ -70,22 +70,23 @@ void NapperBat::MoveCharacter() {
 	}
 	else if((cooldownCount.getElapsedTime().asSeconds() >= cooldownTime)
 			) {
-		int status = rand() % 6;
+		int status = rand() % 10;
 		movement.x = 0;
 		movement.y = -0;
 		switch (status) {
-		case 0:
+		case MoveLeft:
 			goLeft();
 			break;
-		case 1:
+		case MoveRight:
 			goRight();
 			break;
-		case 2:
+		case MoveUp:
 			goUp();
 			break;
-		case 3:
+		case MoveDown:
 			goDown();
 			break;
+		case Stopped:
 		default:
 			goStop();
 			break;
@@ -98,12 +99,12 @@ void NapperBat::MoveCharacter() {
 	SetMovementDirection(movement);
 }
 
-void NapperBat::SetMovementDirection(sf::Vector2f &direction) {
+void RedDemon::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sprite.move(movement);
 	animatedSprite.move(movement);
 }
-bool NapperBat::saindoDaTela(sf::Vector2f &direction) {
+bool RedDemon::saindoDaTela(sf::Vector2f &direction) {
 	sf::FloatRect sprRect = sprite.getGlobalBounds();
 	sf::FloatRect camRect = Game::getGame()->cameraBounds;
 	if ((sprRect.left + direction.x < 0)
@@ -114,7 +115,7 @@ bool NapperBat::saindoDaTela(sf::Vector2f &direction) {
 	}
 	return false;
 }
-void NapperBat::voltarPraTela(sf::Vector2f &direction) {
+void RedDemon::voltarPraTela(sf::Vector2f &direction) {
 
 	sf::FloatRect sprRect = sprite.getGlobalBounds();
 	sf::FloatRect camRect = Game::getGame()->cameraBounds;
@@ -131,40 +132,40 @@ void NapperBat::voltarPraTela(sf::Vector2f &direction) {
 
 }
 
-void NapperBat::setPosition(sf::Vector2f &position) {
+void RedDemon::setPosition(sf::Vector2f &position) {
 	animatedSprite.setPosition(position);
 	sprite.setPosition(position);
 }
 
-void NapperBat::goLeft() {
+void RedDemon::goLeft() {
 	animatedSprite.setAnimation(&(animacoes["MoveLeft"]));
 	movement.x = -1.0f;
 	cooldownCount.restart();
 	speed = 50.f;
 	status = Status::MoveLeft;
 }
-void NapperBat::goRight() {
+void RedDemon::goRight() {
 	animatedSprite.setAnimation(&(animacoes["MoveRight"]));
 	movement.x = 1.0f;
 	cooldownCount.restart();
 	speed = 50.f;
 	status = Status::MoveRight;
 }
-void NapperBat::goDown() {
+void RedDemon::goDown() {
 	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
 	movement.y = 1.0f;
 	cooldownCount.restart();
 	speed = 50.f;
 	status = Status::MoveDown;
 }
-void NapperBat::goUp() {
+void RedDemon::goUp() {
 	animatedSprite.setAnimation(&(animacoes["MoveUp"]));
 	movement.y = -1.0f;
 	cooldownCount.restart();
 	speed = 50.f;
 	status = Status::MoveUp;
 }
-void NapperBat::goStop() {
+void RedDemon::goStop() {
 	animatedSprite.setAnimation(&(animacoes["MoveDown"]));
 	movement.y = 0; movement.x = 0;
 	cooldownCount.restart();

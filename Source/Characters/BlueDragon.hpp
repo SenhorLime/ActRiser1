@@ -2,21 +2,25 @@
 
 #include "Enemy.hpp"
 
-class NapperBat : public Enemy {
+class BlueDragon: public Enemy {
 public:
 	enum Status {
-			MoveUp,
-			MoveDown,
-			Stopped,
-			MoveRight,
-			MoveLeft,
-			takePeople,
-			flee
-		};
-	NapperBat();
-	NapperBat(sf::Vector2f &position);
+		MoveUp,
+		MoveDown,
+		Stopped,
+		MoveRight,
+		MoveLeft,
+		MoveUpRigth,
+		MoveUpLeft,
+		MoveDownRight,
+		MoveDownLeft,
+		burn,
+		flee
+	};
+	BlueDragon();
+	BlueDragon(sf::Vector2f &position);
 
-	virtual void UpdateDeltaTime(float &dt) ;
+	virtual void UpdateDeltaTime(float &dt);
 private:
 	Status status;
 	sf::Clock cooldownCount;
@@ -36,5 +40,9 @@ private:
 	void goDown();
 	void goUp();
 	void goStop();
+	void goUpRigth();
+	void goUpLeft();
+	void goDownRight();
+	void goDownLeft();
 
 };

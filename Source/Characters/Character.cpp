@@ -61,9 +61,9 @@ void Character::draw(sf::RenderTarget *target) {
 	sf::Vector2f f(rect.left, rect.top+ rect.height);
 	sf::Vector2f g(rect.left, rect.top+ rect.height);
 	sf::Vector2f h(rect.left, rect.top);
-	if (typeid(*this) == typeid(NapperBat)) {
+	/*if (typeid(*this) == typeid(NapperBat)) {
 	std::cout<< "rect[" << rect.left<<","<< rect.top<<","<< rect.width<<","<< rect.height<<"]"<<std::endl;
-	}
+	}*/
 	sf::Vertex line[] = { a,b,c,d, e, f, g,h};
 	target->draw(line, 8, sf::Lines);
 

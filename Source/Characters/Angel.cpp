@@ -6,7 +6,6 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Graphics/rect.hpp>
 
-
 Angel::Angel() {
 	cooldownTime = 0.5f;
 	speed = 75.f;
@@ -79,20 +78,6 @@ void Angel::defineAnimacoes() {
 void Angel::MoveCharacter() {
 	sf::Vector2f movement(0.0f, 0.0f);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		movement.y -= 1.f;
-		shootDirection = sf::Vector2f(0.f, -1.f);
-		CropSprites(sf::IntRect(45, 5, 50, 60));
-		status = MoveUp;
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		movement.y += 1.f;
-		shootDirection = sf::Vector2f(0.f, 1.f);
-		CropSprites(sf::IntRect(45, 128, 50, 60));
-		status = MoveDown;
-	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		movement.x -= 1.f;
 		shootDirection = sf::Vector2f(-1.f, 0.f);
@@ -107,7 +92,22 @@ void Angel::MoveCharacter() {
 		status = MoveRight;
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) ) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		movement.y -= 1.f;
+		shootDirection = sf::Vector2f(0.f, -1.f);
+		CropSprites(sf::IntRect(45, 5, 50, 60));
+		status = MoveUp;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		movement.y += 1.f;
+		shootDirection = sf::Vector2f(0.f, 1.f);
+		CropSprites(sf::IntRect(45, 128, 50, 60));
+		status = MoveDown;
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+			and (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime)) {
 		status = (status == MoveRight ? ShootRight :
 					status == MoveLeft ? ShootLeft :
 					status == MoveUp ? ShootUp : ShootDown);
@@ -119,7 +119,7 @@ void Angel::MoveCharacter() {
 void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 	if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
-		Arrow * arrow =new Arrow(playerPosition, shootDirection);
+		Arrow *arrow = new Arrow(playerPosition, shootDirection);
 		Game::getGame()->charactersVector.push_back(arrow);
 		cooldownCount.restart();
 	}
@@ -127,14 +127,15 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 
 void Angel::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
-	if( status == ShootDown or status == ShootUp or status == ShootLeft or status == ShootRight){
-		if(animatedSprite.getStatus()== animatedSprite.Playing)
+	if (status == ShootDown or status == ShootUp or status == ShootLeft
+			or status == ShootRight) {
+		if (animatedSprite.getStatus() == animatedSprite.Playing)
 			return;
-		else{
+		else {
 			ShootArrow(GetPostion());
-			status = (status == ShootRight ?  MoveRight:
-								status ==  ShootLeft ? MoveLeft:
-								status ==  ShootUp ? MoveUp: MoveDown);
+			status = (status == ShootRight ? MoveRight :
+						status == ShootLeft ? MoveLeft :
+						status == ShootUp ? MoveUp : MoveDown);
 		}
 	}
 
