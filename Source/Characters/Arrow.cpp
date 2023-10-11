@@ -43,7 +43,7 @@ Arrow::Arrow(const sf::Vector2f &startPosition, sf::Vector2f &arrowDirection) :
 void Arrow::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
 	sf::Vector2f movement = direction * speed * deltaTime;
-	Move(movement);
+	MoveCharacther(movement);
 
 	if (!getMyBounds().intersects(Game::getGame()->cameraBounds)) {
 		this->ativo = false;
@@ -59,8 +59,4 @@ void Arrow::SetDirection(sf::Vector2f &newDirection) {
 	direction = newDirection;
 }
 
-void Arrow::draw(sf::RenderTarget *target) {
-	Character::draw(target);
-	//target->draw(sprite);
-}
 

@@ -24,7 +24,6 @@ void RedDemon::initEnemy() {
 	//SetScale(sf::Vector2f(0.65f, 0.65f));
 
 	_texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
-	;
 
 	Animation walkLeft(_texture);
 	walkLeft.addFrames(sf::IntRect(90, 0, 15, 16), 1, 2);

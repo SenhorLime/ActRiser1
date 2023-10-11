@@ -9,45 +9,48 @@
 #include "Arrow.hpp"
 
 
-class Angel: public Character {
+class Angel : public Character {
 public:
-	enum Status {
-		MoveUp,
-		MoveDown,
-		Stopped,
-		MoveRight,
-		MoveLeft,
-		ShootUp,
-		ShootDown,
-		ShootRight,
-		ShootLeft,
-		SendPower
-	};
+  enum Status {
+    MoveUp,
+    MoveDown,
+    Stopped,
+    MoveRight,
+    MoveLeft,
+    ShootUp,
+    ShootDown,
+    ShootRight,
+    ShootLeft,
+    SendPower
+  };
 
-	sf::Clock cooldownCount;
-	float cooldownTime;
-	float offset_x;
+  sf::Clock cooldownCount;
+  float cooldownTime;
+  float offset_x;
 
-	Status status = Stopped;
+  Status status = Stopped;
 
-	int vidas;
+  int vidas;
 
 private:
-	int pontos;
-	sf::Vector2f shootDirection;
+  int pontos;
+  sf::Vector2f shootDirection;
 
 public:
-	Angel();
+  Angel();
 
-	virtual void UpdateDeltaTime(float &dt);
+  virtual void UpdateDeltaTime(float &dt);
 
-	sf::Vector2f GetPostion();
+  sf::Vector2f GetPostion();
 
 private:
-	void SetMovementDirection(sf::Vector2f &direction);
-	void defineAnimacoes();
-	void MoveCharacter();
-	void ShootArrow(const sf::Vector2f &playerPosition);
+  void SetMovementDirection(sf::Vector2f &direction);
+
+  void defineAnimacoes();
+
+  void MoveCharacter();
+
+  void ShootArrow(const sf::Vector2f &playerPosition);
 
 
 };
