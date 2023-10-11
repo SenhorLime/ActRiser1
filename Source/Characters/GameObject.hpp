@@ -16,21 +16,25 @@
 
 class GameObject {
 public:
-	sf::Sprite sprite;
+  sf::Sprite sprite;
 
 public:
-	virtual void UpdateDeltaTime(float &dt);
-	virtual void Draw(sf::RenderTarget *target);
-	virtual ~GameObject();
+  virtual void UpdateDeltaTime(float &dt);
+
+  virtual void Draw(sf::RenderTarget *target);
+
+  virtual ~GameObject();
 
 protected:
-	float deltaTime;
-	sf::Texture *texture;
-	sf::Clock deltaTimeClock;
+  float deltaTime;
+  sf::Texture *texture;
 
 protected:
-	virtual void SetSprites();
-	virtual void LoadTextures(std::string textureName);
-	virtual void CropSprites(sf::IntRect spriteRect);
-	virtual void SetScale(sf::Vector2f spriteScale);
+  virtual void SetSprites();
+
+  virtual void LoadTextures(std::string textureName);
+
+  virtual void CropSprites(sf::IntRect spriteRect);
+
+  virtual void SetScale(sf::Vector2f spriteScale);
 };

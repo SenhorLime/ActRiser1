@@ -20,19 +20,19 @@ void NapperBat::initEnemy() {
 	//CropSprites(sf::IntRect(1, 2, 14, 14));
 	//SetScale(sf::Vector2f(0.65f, 0.65f));
 
-	_texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");;
+	texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
 
-	Animation walkLeft(_texture);
+	Animation walkLeft(texture);
 	walkLeft.addFrames(sf::IntRect(164, 32, 12, 13), 1, 2);
 
-	Animation walkRight(_texture);
+	Animation walkRight(texture);
 
 	walkRight.addFrames(sf::IntRect(140, 32, 12, 13), 1, 2);
 
-	Animation walkUp(_texture);
+	Animation walkUp(texture);
 	walkUp.addFrames(sf::IntRect(0, 32, 35, 11), 1, 2);
 
-	Animation walkDown(_texture);
+	Animation walkDown(texture);
 	walkDown.addFrames(sf::IntRect(70, 32, 35, 11), 1, 2);
 
 	animacoes.insert( { "MoveLeft", walkLeft });
