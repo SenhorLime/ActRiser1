@@ -17,6 +17,7 @@ public:
 	RedDemon(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt) ;
+	virtual void takeDemage(int value);
 private:
 	Status status;
 	sf::Clock cooldownCount;

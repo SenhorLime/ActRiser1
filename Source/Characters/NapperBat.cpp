@@ -169,3 +169,7 @@ void NapperBat::goStop() {
 	speed = 0;
 	status = Status::Stopped;
 }
+
+void NapperBat::takeDemage(int value){
+	Enemy::takeDemage(value);
+}

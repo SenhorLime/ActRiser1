@@ -1,16 +1,19 @@
-
 #include "Nebulon.hpp"
 
 Nebulon::Nebulon() {
 	//cooldownTime = 2.f;
 	speed = 15.f;
 	deltaTime = 0;
+	hitPoints = damage = spRecovery = 1;
 
 	LoadTextures("Nebulon");
 	SetSprites();
 	CropSprites(sf::IntRect(1, 2, 14, 14));
 	SetScale(sf::Vector2f(0.65f, 0.65f));
 }
+void Nebulon::initEnemy() {
+}
+
 void Nebulon::UpdateDeltaTime(float &dt) {
 	Character::UpdateDeltaTime(dt);
 	MoveCharacter();
@@ -60,6 +63,10 @@ void Nebulon::SetMovementDirection(sf::Vector2f &direction) {
 	sprite.move(movement);
 }
 
-void Nebulon::setPosition(sf::Vector2f &position){
+void Nebulon::setPosition(sf::Vector2f &position) {
 	sprite.setPosition(position);
+}
+
+void Nebulon::takeDemage(int value) {
+	Enemy::takeDemage(value);
 }

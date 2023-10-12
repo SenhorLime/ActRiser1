@@ -10,7 +10,7 @@ Angel::Angel() {
 	cooldownTime = 0.5f;
 	speed = 75.f;
 	deltaTime = 0;
-	vidas = 8;
+	hitPoints = 8;
 	pontos = 0;
 	offset_x = 0;
 	sprite.setPosition(200, 200);

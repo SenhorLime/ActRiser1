@@ -7,7 +7,7 @@ public:
 	OneEye();
 	OneEye(sf::Vector2f &position);
 	virtual void UpdateDeltaTime(float &dt);
-
+	void takeDemage(int value);
 private:
 	void initEnemy();
 	void MoveCharacter();

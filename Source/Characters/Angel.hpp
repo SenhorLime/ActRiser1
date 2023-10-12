@@ -30,8 +30,6 @@ public:
 
   Status status = Stopped;
 
-  int vidas;
-
 private:
   int pontos;
   sf::Vector2f shootDirection;

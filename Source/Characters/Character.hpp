@@ -30,6 +30,7 @@ protected:
   float speed;
   float deltaTime;
   sf::IntRect myBounds;
+  int hitPoints ;
 
 protected:
   void CropSprites(sf::IntRect spriteRect) override;

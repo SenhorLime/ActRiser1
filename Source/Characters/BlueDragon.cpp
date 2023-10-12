@@ -203,3 +203,7 @@ void BlueDragon::goDownLeft() {
 	status = Status::MoveDownLeft;
 }
 
+
+void BlueDragon::takeDemage(int value){
+	Enemy::takeDemage(value);
+}

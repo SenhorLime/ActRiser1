@@ -21,6 +21,7 @@ public:
 	BlueDragon(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt);
+	void takeDemage(int value);
 private:
 	Status status;
 	sf::Clock cooldownCount;
@@ -44,5 +45,6 @@ private:
 	void goUpLeft();
 	void goDownRight();
 	void goDownLeft();
+
 
 };

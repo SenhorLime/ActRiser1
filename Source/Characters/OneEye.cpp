@@ -72,3 +72,7 @@ void OneEye::SetMovementDirection(sf::Vector2f &direction) {
 void OneEye::setPosition(sf::Vector2f &position) {
 	sprite.setPosition(position);
 }
+
+void OneEye::takeDemage(int value){
+	Enemy::takeDemage(value);
+}

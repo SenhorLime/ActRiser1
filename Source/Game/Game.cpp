@@ -159,9 +159,37 @@ void Game::run() {
 }
 
 void Game::Update(float &deltaTime) {
-
+	static long i = 0;
+	std::cout << "Iteração: " << i++ << std::endl;
 	for (Character *personagem : charactersVector) {
 		personagem->UpdateDeltaTime(deltaTime);
+	}
+
+	//todo[estabelecer colisões]
+	for (std::list<Enemy*>::iterator itEnemy = enemyVector.begin();
+			itEnemy != enemyVector.end(); ++itEnemy) {
+		Enemy *enemy = *itEnemy;
+		if (enemy->ativo == false) {
+			enemyVector.erase(itEnemy);
+			continue;
+		}
+
+		for (std::list<Arrow*>::iterator itArrow = arrowVector.begin();
+				itArrow != arrowVector.end(); ++itArrow) {
+			Arrow *arrow = *itArrow;
+			if (arrow->ativo == false) {
+				arrowVector.erase(itArrow);
+				continue;
+			}
+			if (arrow->getMyBounds().intersects(enemy->getMyBounds())) {
+				arrow->ativo = false;
+				arrowVector.erase(itArrow);
+				enemy->takeDemage(1);
+				std::cout << "colidiu" << std::endl;
+			}
+
+		}
+
 	}
 
 	for (std::list<Character*>::iterator it = charactersVector.begin();
@@ -170,35 +198,6 @@ void Game::Update(float &deltaTime) {
 		if (personagem->ativo == false) {
 			delete (*it);
 			charactersVector.erase(it);
-		}
-	}
-
-	//todo[estabelecer colisões]
-
-	for (std::list<Arrow*>::iterator itArrow = arrowVector.begin();
-			itArrow != arrowVector.end(); ++itArrow) {
-		Arrow *arrow = *itArrow;
-		if (arrow->ativo == false) {
-			arrowVector.erase(itArrow);
-			continue;
-		}
-		//std::cout<< arrow->ativo << std::endl;
-		for (std::list<Enemy*>::iterator itEnemy = enemyVector.begin();
-				itEnemy != enemyVector.end(); ++itEnemy) {
-
-			Enemy *enemy = *itEnemy;
-			if (enemy->ativo == false) {
-				enemyVector.erase(itEnemy);
-				continue;
-			}
-			if (arrow->getMyBounds().intersects(enemy->getMyBounds())) {
-				arrow->ativo = false;
-				enemy->ativo = false;
-				arrowVector.erase(itArrow);
-				enemyVector.erase(itEnemy);
-				std::cout << "colidiu" << std::endl;
-			}
-
 		}
 	}
 	// Get the Coliisor Bounds of all characters
@@ -287,10 +286,15 @@ void Game::Render(sf::RenderTarget *target) {
 	target->draw(GameMap.GetLayer("Obstacles"));
 
 	// Drawing Characters // Drawing the bullets
-	for (auto it = charactersVector.rbegin(); it != charactersVector.rend();
-			++it) {
-		Character *personagem = *it;
-		personagem->Draw(target);
+//	for (auto it = charactersVector.rbegin(); it != charactersVector.rend();
+//			++it) {
+//		Character *personagem = *it;
+//		personagem->Draw(target);
+//	}
+
+	for (Character *personagem : charactersVector) {
+		if (personagem->ativo)
+			personagem->Draw(target);
 	}
 	// Drawing the player life
 	lifeText.setPosition(camera.getCenter().x - 85, camera.getCenter().y - 50);

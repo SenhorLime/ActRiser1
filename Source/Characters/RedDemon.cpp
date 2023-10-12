@@ -171,3 +171,7 @@ void RedDemon::goStop() {
 	speed = 0;
 	status = Status::Stopped;
 }
+
+void RedDemon::takeDemage(int value){
+	Enemy::takeDemage(value);
+}

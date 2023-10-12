@@ -17,6 +17,7 @@ public:
 	NapperBat(sf::Vector2f &position);
 
 	virtual void UpdateDeltaTime(float &dt) ;
+	virtual void takeDemage(int);
 private:
 	Status status;
 	sf::Clock cooldownCount;

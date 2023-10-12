@@ -69,3 +69,9 @@ void Enemy::SetMovementDirection(sf::Vector2f &direction) {
 	sf::Vector2f movement = direction * speed * deltaTime;
 	sprite.move(movement);
 }
+void Enemy::takeDemage(int value){
+	hitPoints-=value;
+	if(hitPoints<=0){
+		ativo = false;
+	}
+}
