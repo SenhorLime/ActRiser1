@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Character.hpp"
+#include "Enemy.hpp"
 
-class OneEye : public Character {
+class OneEye : public Enemy {
 public:
 	OneEye();
 	OneEye(sf::Vector2f &position);

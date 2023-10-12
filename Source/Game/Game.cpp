@@ -36,42 +36,37 @@ void Game::GameMusic(sf::Music *backgroundMusic) {
 void Game::carregaAssets() {
 	ResourceLoader *resources = ResourceLoader::getResourceLoader();
 
-
 	sf::Image image;
 	if (!image.loadFromFile("Assets/Angel/angel.png")) {
 		std::cerr << "Erro carregando imagem angel.png" << std::endl;
 	}
 	//sf::Color cor(120, 144, 0);
 	image.createMaskFromColor(sf::Color(120, 144, 0));
-	sf::Texture _textura ;
+	sf::Texture _textura;
 	_textura.loadFromImage(image);
 	_textura.setSmooth(true);
 	resources->addTextura("Angel", _textura);
 
-
 	if (!image.loadFromFile("Assets/Enemy/Enemy.png")) {
-			std::cerr << "Erro carregando imagem Enemy.png" << std::endl;
-		}
+		std::cerr << "Erro carregando imagem Enemy.png" << std::endl;
+	}
 	image.createMaskFromColor(sf::Color(0, 64, 128));
 	_textura.loadFromImage(image);
 	_textura.setSmooth(true);
 	resources->addTextura("Enemy", _textura);
 
-
 	if (!image.loadFromFile("Assets/Characters/vilages.png")) {
-			std::cerr << "Erro carregando imagem vilages.png" << std::endl;
-		}
+		std::cerr << "Erro carregando imagem vilages.png" << std::endl;
+	}
 	image.createMaskFromColor(sf::Color(0, 102, 0));
 	_textura.loadFromImage(image);
 	_textura.setSmooth(true);
 	resources->addTextura("Vilages", _textura);
 
-
 	resources->addTextura("OneEye",
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
 	resources->addTextura("Nebulon_Sheet",
 			"Assets/Characters/Enemies/Nebulon_Sheet.png");
-
 
 	resources->addMusics("musicFilmore",
 			"Assets/Music/15-Birth-of-the-People.ogg");
@@ -107,10 +102,12 @@ void Game::Init() {
 
 	sf::Vector2f enemyPosition(static_cast<float>(oneEyeEntity.getPosition().x),
 			static_cast<float>(oneEyeEntity.getPosition().y));
-	charactersVector.push_back(new OneEye(enemyPosition));
-	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
+	OneEye *oneEye = new OneEye(enemyPosition);
+	charactersVector.push_back(oneEye);
+	enemyVector.push_back(oneEye);
 
 	charactersVector.push_back(new BlueDragon(enemyPosition));
+	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
 
 	enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
 	enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
@@ -163,15 +160,15 @@ void Game::run() {
 
 void Game::Update(float &deltaTime) {
 
-	for (Character* personagem : charactersVector) {
-			personagem->UpdateDeltaTime(deltaTime);
-		    }
+	for (Character *personagem : charactersVector) {
+		personagem->UpdateDeltaTime(deltaTime);
+	}
 
 	for (std::list<Character*>::iterator it = charactersVector.begin();
 			it != charactersVector.end(); ++it) {
 		Character *personagem = *it;
-		if(personagem->ativo == false){
-			delete(*it);
+		if (personagem->ativo == false) {
+			delete (*it);
 			charactersVector.erase(it);
 		}
 	}
@@ -179,52 +176,63 @@ void Game::Update(float &deltaTime) {
 	//todo[estabelecer colisões]
 
 	for (std::list<Arrow*>::iterator itArrow = arrowVector.begin();
-				itArrow != arrowVector.end(); ++itArrow) {
+			itArrow != arrowVector.end(); ++itArrow) {
 		Arrow *arrow = *itArrow;
+		if (arrow->ativo == false) {
+			arrowVector.erase(itArrow);
+			continue;
+		}
+		//std::cout<< arrow->ativo << std::endl;
 		for (std::list<Enemy*>::iterator itEnemy = enemyVector.begin();
-						itEnemy!= enemyVector.end(); ++itEnemy) {
-			Enemy *enemy = *itEnemy;
+				itEnemy != enemyVector.end(); ++itEnemy) {
 
-			if(arrow->getMyBounds().intersects(enemy->getMyBounds())){
-//				std::cout<< "Colidiu" << std::endl;
-//				arrow->ativo = false;
-//				enemy->ativo = false;
-				std::cout<< "Dentreo" << std::endl;
+			Enemy *enemy = *itEnemy;
+			if (enemy->ativo == false) {
+				enemyVector.erase(itEnemy);
+				continue;
 			}
+			if (arrow->getMyBounds().intersects(enemy->getMyBounds())) {
+				arrow->ativo = false;
+				enemy->ativo = false;
+				arrowVector.erase(itArrow);
+				enemyVector.erase(itEnemy);
+				std::cout << "colidiu" << std::endl;
+			}
+
 		}
 	}
 	// Get the Coliisor Bounds of all characters
 	/*auto playerCollider = GetPlayerCollider(player->sprite);
-	auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
-	auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
+	 auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
+	 auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
 
-	// Testing the collision with a enemy and showing the damage given
-	if (playerCollider.intersects(oneEyeCollider)
-			and player->cooldownCount.getElapsedTime().asSeconds()
-					>= player->cooldownTime) {
-		player->vidas -= 1;
+	 // Testing the collision with a enemy and showing the damage given
+	 if (playerCollider.intersects(oneEyeCollider)
+	 and player->cooldownCount.getElapsedTime().asSeconds()
+	 >= player->cooldownTime) {
+	 player->vidas -= 1;
 
-		char str[5];
-		if (player->vidas >= 0) {
-			sprintf(str, "Vidas: \t%d", player->vidas);
-			lifeText.setString(str);
-		}
+	 char str[5];
+	 if (player->vidas >= 0) {
+	 sprintf(str, "Vidas: \t%d", player->vidas);
+	 lifeText.setString(str);
+	 }
 
-	}
+	 }
 
-	if (playerCollider.intersects(EnemyCollider)
-			and player->cooldownCount.getElapsedTime().asSeconds()
-					>= player->cooldownTime) {
-		player->vidas -= 3;
+	 if (playerCollider.intersects(EnemyCollider)
+	 and player->cooldownCount.getElapsedTime().asSeconds()
+	 >= player->cooldownTime) {
+	 player->vidas -= 3;
 
-		char str[5];
-		if (player->vidas >= 0) {
-			sprintf(str, "Vidas: \t%d", player->vidas);
-			lifeText.setString(str);
-		}
+	 char str[5];
+	 if (player->vidas >= 0) {
+	 sprintf(str, "Vidas: \t%d", player->vidas);
+	 lifeText.setString(str);
+	 }
 
-	}
-*/
+	 }
+	 */
 // Code for adding Collision between the player and the map
 //	for (auto &rect : colliders) {
 //		sf::FloatRect intersect;
@@ -242,7 +250,6 @@ void Game::Update(float &deltaTime) {
 //			}
 //		}
 //	}
-
 	moveCamera();
 }
 
