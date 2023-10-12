@@ -51,6 +51,8 @@ public:
 	sf::FloatRect cameraBounds;
 
 	std::list<Character*> charactersVector;
+	std::list<Enemy*> enemyVector;
+	std::list<Arrow*> arrowVector;
 
 	static Game * getGame();
 

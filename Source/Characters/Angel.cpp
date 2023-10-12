@@ -117,6 +117,7 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
 	if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
 		Arrow *arrow = new Arrow(playerPosition, shootDirection);
 		Game::getGame()->charactersVector.push_back(arrow);
+		Game::getGame()->arrowVector.push_back(arrow);
 		cooldownCount.restart();
 	}
 

@@ -57,6 +57,16 @@ void Game::carregaAssets() {
 	_textura.setSmooth(true);
 	resources->addTextura("Enemy", _textura);
 
+
+	if (!image.loadFromFile("Assets/Characters/vilages.png")) {
+			std::cerr << "Erro carregando imagem vilages.png" << std::endl;
+		}
+	image.createMaskFromColor(sf::Color(0, 102, 0));
+	_textura.loadFromImage(image);
+	_textura.setSmooth(true);
+	resources->addTextura("Vilages", _textura);
+
+
 	resources->addTextura("OneEye",
 			"Assets/Characters/Enemies/OneEye_Sheet.png");
 	resources->addTextura("Nebulon_Sheet",
@@ -98,18 +108,22 @@ void Game::Init() {
 	sf::Vector2f enemyPosition(static_cast<float>(oneEyeEntity.getPosition().x),
 			static_cast<float>(oneEyeEntity.getPosition().y));
 	charactersVector.push_back(new OneEye(enemyPosition));
+	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
 
 	charactersVector.push_back(new BlueDragon(enemyPosition));
 
 	enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
 	enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
 	charactersVector.push_back(new Enemy(enemyPosition));
+	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
 
 	charactersVector.push_back(new RedDemon(enemyPosition));
+	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
 
 	enemyPosition.x += 30;
 
 	charactersVector.push_back(new NapperBat(enemyPosition));
+	enemyVector.push_back(dynamic_cast<Enemy*>(charactersVector.back()));
 
 	camera.setSize( { 256, 144 });
 	camera.zoom(1.6f);
@@ -163,6 +177,22 @@ void Game::Update(float &deltaTime) {
 	}
 
 	//todo[estabelecer colisões]
+
+	for (std::list<Arrow*>::iterator itArrow = arrowVector.begin();
+				itArrow != arrowVector.end(); ++itArrow) {
+		Arrow *arrow = *itArrow;
+		for (std::list<Enemy*>::iterator itEnemy = enemyVector.begin();
+						itEnemy!= enemyVector.end(); ++itEnemy) {
+			Enemy *enemy = *itEnemy;
+
+			if(arrow->getMyBounds().intersects(enemy->getMyBounds())){
+//				std::cout<< "Colidiu" << std::endl;
+//				arrow->ativo = false;
+//				enemy->ativo = false;
+				std::cout<< "Dentreo" << std::endl;
+			}
+		}
+	}
 	// Get the Coliisor Bounds of all characters
 	/*auto playerCollider = GetPlayerCollider(player->sprite);
 	auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
