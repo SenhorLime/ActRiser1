@@ -19,7 +19,6 @@
 
 #include "../GameMap/TileMap.hpp"
 #include "../Characters/Angel.hpp"
-#include "../Characters/OneEye.hpp"
 #include "../Characters/Enemy.hpp"
 #include "../Characters/NapperBat.hpp"
 #include "../Characters/BlueDragon.hpp"
@@ -28,60 +27,54 @@
 
 class Game {
 private:
-	TileMap GameMap;
+  TileMap GameMap;
 
-	Angel * player;
+  Angel *player;
 
-	sf::View camera;
+  sf::View camera;
 
-	sf::Font textFont;
-	sf::Text lifeText;
+  sf::Font textFont;
+  sf::Text lifeText;
 
-	std::vector<sf::FloatRect> colliders;
-	bool showCollider = false;
+  std::vector<sf::FloatRect> colliders;
+  bool showCollider = false;
 
-	static Game *instance;
+  static Game *instance;
 
-	sf::RenderWindow * window;
-	sf::Clock time;
+  sf::RenderWindow *window;
+  sf::Clock time;
 
-	sf::Music * backgroundMusic;
+  sf::Music *backgroundMusic;
 
 public:
-	sf::FloatRect cameraBounds;
+  sf::FloatRect cameraBounds;
 
-	std::list<Character*> charactersVector;
-	std::list<Enemy*> enemyVector;
-	std::list<Arrow*> arrowVector;
+  std::list<Character *> charactersVector;
+  std::list<Enemy *> enemyVector;
+  std::list<Arrow *> arrowVector;
 
-	static Game * getGame();
+  static Game *getGame();
 
-	void Init();
+  void Init();
 
-	void run();
+  void run();
 
-	void Update(float &deltaTime);
+  void Update(float &deltaTime);
 
-	void Render(sf::RenderTarget * target);
+  void Render(sf::RenderTarget *target);
 
-	void close();
+  void close();
 
-	virtual ~Game();
-
+  virtual ~Game();
 
 
 private:
-	Game();
-	void GameMusic(sf::Music * backgroundMusic) ;
+  Game();
 
-	void carregaAssets();
+  void GameMusic(sf::Music *backgroundMusic);
 
-	void moveCamera() ;
+  void carregaAssets();
 
-	void SetPlayerPosition(ldtk::Entity &playerEntity);
-
-	void SetOneEyePostion(ldtk::Entity &oneEyeEntity);
-	void SetNebulonPosition(ldtk::Entity &nebulonEntity);
-
+  void moveCamera();
 
 };

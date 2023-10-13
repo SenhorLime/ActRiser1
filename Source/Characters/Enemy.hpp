@@ -33,14 +33,14 @@ protected:
   float cooldownTime;
   float deltaTime;
   sf::Vector2f movement;
-  int hitPoints = 1, damage, spRecovery;
+  int hitPoints, damage, spRecovery;
 
 protected:
-  virtual void setPosition(sf::Vector2f &position);
-
   virtual void initEnemy();
 
   virtual void MoveCharacter();
+
+  virtual void setPosition(sf::Vector2f &position);
 
   virtual void SetMovementDirection(sf::Vector2f &direction);
 

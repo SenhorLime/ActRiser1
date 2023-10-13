@@ -1,9 +1,8 @@
-
 #include "Enemy.hpp"
 #include "../Game/Game.hpp"
-//#include <ctime>
 
 void Enemy::MoveCharacter() {}
+void Enemy::initEnemy() {}
 
 Enemy::Enemy() {
     initEnemy();
@@ -12,17 +11,6 @@ Enemy::Enemy() {
 Enemy::Enemy(sf::Vector2f &position) {
     sprite.setPosition(position);
     initEnemy();
-}
-
-void Enemy::initEnemy() {
-    //cooldownTime = 2.f;
-    speed = 15.f;
-    deltaTime = 0;
-
-    LoadTextures("Nebulon_Sheet");
-    SetSprites();
-    CropSprites(sf::IntRect(1, 2, 14, 14));
-    SetScale(sf::Vector2f(0.65f, 0.65f));
 }
 
 void Enemy::UpdateDeltaTime(float &dt) {
