@@ -1,77 +1,120 @@
 
 #include "Enemy.hpp"
+#include "../Game/Game.hpp"
+//#include <ctime>
+
+void Enemy::MoveCharacter() {}
 
 Enemy::Enemy() {
-	initEnemy();
+    initEnemy();
 }
 
 Enemy::Enemy(sf::Vector2f &position) {
-	sprite.setPosition(position);
-	initEnemy();
+    sprite.setPosition(position);
+    initEnemy();
 }
 
 void Enemy::initEnemy() {
-	//cooldownTime = 2.f;
-	speed = 15.f;
-	deltaTime = 0;
+    //cooldownTime = 2.f;
+    speed = 15.f;
+    deltaTime = 0;
 
-	LoadTextures("Nebulon_Sheet");
-	SetSprites();
-	CropSprites(sf::IntRect(1, 2, 14, 14));
-	SetScale(sf::Vector2f(0.65f, 0.65f));
+    LoadTextures("Nebulon_Sheet");
+    SetSprites();
+    CropSprites(sf::IntRect(1, 2, 14, 14));
+    SetScale(sf::Vector2f(0.65f, 0.65f));
 }
 
 void Enemy::UpdateDeltaTime(float &dt) {
-	Character::UpdateDeltaTime(dt);
-	MoveCharacter();
+    Character::UpdateDeltaTime(dt);
+    deltaTime = dt;
+    MoveCharacter();
 }
 
-void Enemy::MoveCharacter() {
-	sf::Vector2f movement(0.f, 0.f);
-	static int time = 0;
-	time++;
-
-	if (time <= 150) {
-		movement.y += 2.f;
-
-		if (time % 15 == 0 or time % 45 == 0) {
-			CropSprites(sf::IntRect(1, 17, 14, 15));
-		}
-
-		if (time % 30 == 0 or time % 60 == 0) {
-			CropSprites(sf::IntRect(1, 49, 14, 15));
-		}
-
-	} else if (time <= 300) {
-		movement.y -= 2.f;
-
-		if (time == 151) {
-			CropSprites(sf::IntRect(17, 17, 14, 15));
-		}
-
-		if (time % 15 == 0 or time % 45 == 0) {
-			CropSprites(sf::IntRect(17, 17, 14, 15));
-		}
-
-		if (time % 30 == 0 or time % 60 == 0) {
-			CropSprites(sf::IntRect(17, 49, 14, 15));
-		}
-
-	} else if (time == 301) {
-		time = 0;
-		CropSprites(sf::IntRect(1, 1, 14, 15));
-	}
-
-	SetMovementDirection(movement);
+void Enemy::setPosition(sf::Vector2f &position) {
+    animatedSprite.setPosition(position);
+    sprite.setPosition(position);
 }
 
 void Enemy::SetMovementDirection(sf::Vector2f &direction) {
-	sf::Vector2f movement = direction * speed * deltaTime;
-	sprite.move(movement);
+    sf::Vector2f movement = direction * speed * deltaTime;
+    sprite.move(movement);
+    animatedSprite.move(movement);
 }
-void Enemy::takeDemage(int value){
-	hitPoints-=value;
-	if(hitPoints<=0){
-		ativo = false;
-	}
+
+bool Enemy::saindoDaTela(sf::Vector2f &direction) {
+    sf::FloatRect sprRect = sprite.getGlobalBounds();
+    sf::FloatRect camRect = Game::getGame()->cameraBounds;
+    if ((sprRect.left + direction.x < 0)
+        or (((sprRect.left + sprRect.width) + direction.x > camRect.width))
+        or ((sprRect.top + direction.y < 0))
+        or (((sprRect.top + sprRect.height) + direction.y > camRect.height))) {
+        return (true);
+    }
+    return false;
+}
+
+void Enemy::voltarPraTela(sf::Vector2f &direction) {
+
+    sf::FloatRect sprRect = sprite.getGlobalBounds();
+    sf::FloatRect camRect = Game::getGame()->cameraBounds;
+
+    if ((sprRect.left + movement.x < 0)) {
+        goRight();
+    } else if (((sprRect.left + sprRect.width) + movement.x > camRect.width)) {
+        goLeft();
+    } else if ((sprRect.top + movement.y < 0)) {
+        goDown();
+    } else if (((sprRect.top + sprRect.height) + movement.y > camRect.height)) {
+        goUp();
+    }
+
+}
+
+void Enemy::goLeft() {
+    animatedSprite.setAnimation(&(animacoes["MoveLeft"]));
+    movement.x = -1.0f;
+    cooldownCount.restart();
+    speed = 50.f;
+    status = Status::MoveLeft;
+}
+
+void Enemy::goRight() {
+    animatedSprite.setAnimation(&(animacoes["MoveRight"]));
+    movement.x = 1.0f;
+    cooldownCount.restart();
+    speed = 50.f;
+    status = Status::MoveRight;
+}
+
+void Enemy::goDown() {
+    animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+    movement.y = 1.0f;
+    cooldownCount.restart();
+    speed = 50.f;
+    status = Status::MoveDown;
+}
+
+void Enemy::goUp() {
+    animatedSprite.setAnimation(&(animacoes["MoveUp"]));
+    movement.y = -1.0f;
+    cooldownCount.restart();
+    speed = 50.f;
+    status = Status::MoveUp;
+}
+
+void Enemy::goStop() {
+    animatedSprite.setAnimation(&(animacoes["MoveDown"]));
+    movement.y = 0;
+    movement.x = 0;
+    cooldownCount.restart();
+    speed = 0;
+    status = Status::Stopped;
+}
+
+void Enemy::takeDemage(int value) {
+    hitPoints -= value;
+    if (hitPoints <= 0) {
+        ativo = false;
+    }
 }

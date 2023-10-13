@@ -2,49 +2,22 @@
 
 #include "Enemy.hpp"
 
-class BlueDragon: public Enemy {
+class BlueDragon : public Enemy {
 public:
-	enum Status {
-		MoveUp,
-		MoveDown,
-		Stopped,
-		MoveRight,
-		MoveLeft,
-		MoveUpRigth,
-		MoveUpLeft,
-		MoveDownRight,
-		MoveDownLeft,
-		burn,
-		flee
-	};
-	BlueDragon();
-	BlueDragon(sf::Vector2f &position);
+  BlueDragon();
 
-	virtual void UpdateDeltaTime(float &dt);
-	void takeDemage(int value);
+  BlueDragon(sf::Vector2f &position);
+
 private:
-	Status status;
-	sf::Clock cooldownCount;
-	float cooldownTime;
-	float deltaTime;
-	sf::Vector2f movement;
+  void initEnemy();
 
-	void initEnemy();
-	void MoveCharacter();
-	void SetMovementDirection(sf::Vector2f &direction);
-	void setPosition(sf::Vector2f &position);
-	bool saindoDaTela(sf::Vector2f &direction);
-	void voltarPraTela(sf::Vector2f &direction);
+  void MoveCharacter();
 
-	void goLeft();
-	void goRight();
-	void goDown();
-	void goUp();
-	void goStop();
-	void goUpRigth();
-	void goUpLeft();
-	void goDownRight();
-	void goDownLeft();
+  void goUpRigth();
 
+  void goUpLeft();
 
+  void goDownRight();
+
+  void goDownLeft();
 };
