@@ -25,7 +25,7 @@ public:
 
   void UpdateDeltaTime(float &dt) override;
 
-  virtual void takeDemage(int);
+  virtual int GetDamage();
 
 protected:
   Status status;
@@ -33,7 +33,7 @@ protected:
   float cooldownTime;
   float deltaTime;
   sf::Vector2f movement;
-  int hitPoints, damage, spRecovery;
+  int damage, spRecovery;
 
 protected:
   virtual void initEnemy();

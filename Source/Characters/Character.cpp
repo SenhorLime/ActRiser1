@@ -56,6 +56,13 @@ void Character::Draw(sf::RenderTarget *target) {
 
 }
 
+void Character::takeDamage(int value) {
+    hitPoints -= value;
+    if (hitPoints <= 0) {
+        ativo = false;
+    }
+}
+
 Character::~Character() {
 
 }

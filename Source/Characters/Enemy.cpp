@@ -2,7 +2,10 @@
 #include "../Game/Game.hpp"
 
 void Enemy::MoveCharacter() {}
+
 void Enemy::initEnemy() {}
+
+int Enemy::GetDamage() { return damage; }
 
 Enemy::Enemy() {
     initEnemy();
@@ -98,11 +101,4 @@ void Enemy::goStop() {
     cooldownCount.restart();
     speed = 0;
     status = Status::Stopped;
-}
-
-void Enemy::takeDemage(int value) {
-    hitPoints -= value;
-    if (hitPoints <= 0) {
-        ativo = false;
-    }
 }

@@ -1,6 +1,4 @@
 #pragma once
-//#ifndef ANIMATION_HPP_
-//#define ANIMATION_HPP_
 
 #include <vector>
 #include <SFML/System/Vector2.hpp>
@@ -24,20 +22,22 @@ public:
     SendPower
   };
 
-  sf::Clock cooldownCount;
-  float cooldownTime;
   float offset_x;
 
   Status status = Stopped;
 
 private:
   int pontos;
+  float cooldownTime;
   sf::Vector2f shootDirection;
+  sf::Clock cooldownCount;
 
 public:
   Angel();
 
-  virtual void UpdateDeltaTime(float &dt);
+  void UpdateDeltaTime(float &dt) override;
+
+  bool CanTakeDamage();
 
   sf::Vector2f GetPostion();
 
@@ -50,6 +50,4 @@ private:
 
   void ShootArrow(const sf::Vector2f &playerPosition);
 
-
 };
-//#endif /* ANIMATION_HPP_ */

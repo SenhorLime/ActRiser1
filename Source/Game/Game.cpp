@@ -151,7 +151,7 @@ void Game::run() {
 
 void Game::Update(float &deltaTime) {
     static long i = 0;
-    std::cout << "Iteração: " << i++ << std::endl;
+//    std::cout << "Iteração: " << i++ << std::endl;
     for (Character *personagem: charactersVector) {
         personagem->UpdateDeltaTime(deltaTime);
     }
@@ -160,22 +160,28 @@ void Game::Update(float &deltaTime) {
     for (std::list<Enemy *>::iterator itEnemy = enemyVector.begin();
          itEnemy != enemyVector.end(); ++itEnemy) {
         Enemy *enemy = *itEnemy;
-        if (enemy->ativo == false) {
+        if (!enemy->ativo) {
             enemyVector.erase(itEnemy);
+            continue;
+        }
+
+        if (enemy->getMyBounds().intersects(player->getMyBounds()) and player->CanTakeDamage()) {
+            player->takeDamage(enemy->GetDamage());
+            std::cout << "Jogador tomou dano" << std::endl;
             continue;
         }
 
         for (std::list<Arrow *>::iterator itArrow = arrowVector.begin();
              itArrow != arrowVector.end(); ++itArrow) {
             Arrow *arrow = *itArrow;
-            if (arrow->ativo == false) {
+            if (!arrow->ativo) {
                 arrowVector.erase(itArrow);
                 continue;
             }
             if (arrow->getMyBounds().intersects(enemy->getMyBounds())) {
                 arrow->ativo = false;
                 arrowVector.erase(itArrow);
-                enemy->takeDemage(1);
+                enemy->takeDamage(1);
                 std::cout << "colidiu" << std::endl;
             }
 
@@ -186,7 +192,7 @@ void Game::Update(float &deltaTime) {
     for (std::list<Character *>::iterator it = charactersVector.begin();
          it != charactersVector.end(); ++it) {
         Character *personagem = *it;
-        if (personagem->ativo == false) {
+        if (!personagem->ativo) {
             delete (*it);
             charactersVector.erase(it);
         }

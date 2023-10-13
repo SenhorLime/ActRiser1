@@ -23,6 +23,8 @@ public:
 
   void Draw(sf::RenderTarget *target) override;
 
+  virtual void takeDamage(int);
+
   virtual ~Character();
 
 protected:
@@ -30,7 +32,7 @@ protected:
   float speed;
   float deltaTime;
   sf::IntRect myBounds;
-  int hitPoints ;
+  int hitPoints;
 
 protected:
   void CropSprites(sf::IntRect spriteRect) override;
