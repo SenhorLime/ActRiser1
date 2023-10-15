@@ -43,7 +43,7 @@
 	"defs": { "layers": [
 		{
 			"__type": "Entities",
-			"identifier": "Spanws",
+			"identifier": "Monster_Lairs",
 			"type": "Entities",
 			"uid": 55,
 			"doc": null,
@@ -351,7 +351,7 @@
 			"fieldInstances": [],
 			"layerInstances": [
 				{
-					"__identifier": "Spanws",
+					"__identifier": "Monster_Lairs",
 					"__type": "Entities",
 					"__cWid": 32,
 					"__cHei": 32,

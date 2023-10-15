@@ -7,15 +7,14 @@
 #include <SFML/Graphics/rect.hpp>
 
 Angel::Angel() {
-    cooldownTime = 0.5f;
-    speed = 75.f;
+    cooldownTime = 1.f;
+    speed = 95.f;
     deltaTime = 0;
     hitPoints = 8;
     pontos = 0;
     offset_x = 0;
     sprite.setPosition(200, 200);
     defineAnimacoes();
-
 }
 
 void Angel::defineAnimacoes() {

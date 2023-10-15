@@ -3,7 +3,9 @@
 #include "./ResourceLoader.hpp"
 
 #include <iostream>
+#include <typeinfo>
 #include <cstddef> //For nullptr_t
+#include <random>
 
 Game *Game::instance = nullptr;;
 
@@ -68,7 +70,6 @@ void Game::carregaAssets() {
 }
 
 void Game::Init() {
-
     carregaAssets();
 
     //-------------------Controle do Mapa ------------------------//
@@ -79,12 +80,10 @@ void Game::Init() {
     GameMap.Load(ldtkLevel0);
 
     // Get the layer of Entities
-    auto &charactherSpawns = ldtkLevel0.getLayer("Spanws");
+    auto &charactherSpawns = ldtkLevel0.getLayer("Monster_Lairs");
 
-    ldtk::Entity &oneEyeEntity = charactherSpawns.getEntitiesByName(
-        "Blue_Dragon")[0].get();
-    ldtk::Entity &EnemyEntity =
-        charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
+    ldtk::Entity &BlueDragonLair = charactherSpawns.getEntitiesByName("Blue_Dragon")[0].get();
+    ldtk::Entity &NapperBatLair = charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
     //---------------------------------------------------//
 
     backgroundMusic = ResourceLoader::getResourceLoader()->getMusics(
@@ -94,14 +93,14 @@ void Game::Init() {
     player = new Angel();
     charactersVector.push_back(player);
 
-    sf::Vector2f enemyPosition(static_cast<float>(oneEyeEntity.getPosition().x),
-                               static_cast<float>(oneEyeEntity.getPosition().y));
+    sf::Vector2f enemyPosition(static_cast<float>(BlueDragonLair.getPosition().x),
+                               static_cast<float>(BlueDragonLair.getPosition().y));
 
     charactersVector.push_back(new BlueDragon(enemyPosition));
     enemyVector.push_back(dynamic_cast<Enemy *>(charactersVector.back()));
 
-    enemyPosition.x = static_cast<float>(EnemyEntity.getPosition().x);
-    enemyPosition.y = static_cast<float>(EnemyEntity.getPosition().y);
+    enemyPosition.x = static_cast<float>(NapperBatLair.getPosition().x);
+    enemyPosition.y = static_cast<float>(NapperBatLair.getPosition().y);
     charactersVector.push_back(new Enemy(enemyPosition));
     enemyVector.push_back(dynamic_cast<Enemy *>(charactersVector.back()));
 
@@ -167,7 +166,7 @@ void Game::Update(float &deltaTime) {
 
         if (enemy->getMyBounds().intersects(player->getMyBounds()) and player->CanTakeDamage()) {
             player->takeDamage(enemy->GetDamage());
-            std::cout << "Jogador tomou dano" << std::endl;
+            std::cout << typeid(*player).name() << " colidiu com " << typeid(*enemy).name() << std::endl;
             continue;
         }
 
@@ -182,7 +181,7 @@ void Game::Update(float &deltaTime) {
                 arrow->ativo = false;
                 arrowVector.erase(itArrow);
                 enemy->takeDamage(1);
-                std::cout << "colidiu" << std::endl;
+                std::cout << typeid(*arrow).name() << " colidiu com " << typeid(*enemy).name() << std::endl;
             }
 
         }
@@ -197,38 +196,6 @@ void Game::Update(float &deltaTime) {
             charactersVector.erase(it);
         }
     }
-    // Get the Coliisor Bounds of all characters
-    /*auto playerCollider = GetPlayerCollider(player->sprite);
-     auto oneEyeCollider = GetEnemyCollider(charactersVector[1]->sprite);
-     auto EnemyCollider = GetEnemyCollider(charactersVector[2]->sprite);
-
-     // Testing the collision with a enemy and showing the damage given
-     if (playerCollider.intersects(oneEyeCollider)
-     and player->cooldownCount.getElapsedTime().asSeconds()
-     >= player->cooldownTime) {
-     player->vidas -= 1;
-
-     char str[5];
-     if (player->vidas >= 0) {
-     sprintf(str, "Vidas: \t%d", player->vidas);
-     lifeText.setString(str);
-     }
-
-     }
-
-     if (playerCollider.intersects(EnemyCollider)
-     and player->cooldownCount.getElapsedTime().asSeconds()
-     >= player->cooldownTime) {
-     player->vidas -= 3;
-
-     char str[5];
-     if (player->vidas >= 0) {
-     sprintf(str, "Vidas: \t%d", player->vidas);
-     lifeText.setString(str);
-     }
-
-     }
-     */
 // Code for adding Collision between the player and the map
 //	for (auto &rect : colliders) {
 //		sf::FloatRect intersect;
@@ -250,26 +217,24 @@ void Game::Update(float &deltaTime) {
 }
 
 void Game::moveCamera() {
-    sf::Vector2f movment;// = (anjinho->sprite.getPosition() - camera.getCenter())/5.f;
+    sf::Vector2f movement;// = (anjinho->sprite.getPosition() - camera.getCenter())/5.f;
     int offset = 10;
 
     //Controla o movimento ao longo de x.
     if ((player->sprite.getPosition().x + offset > camera.getSize().x / 2)
         && (player->sprite.getPosition().x - offset
             < cameraBounds.width - camera.getSize().x / 2))
-        movment.x = (player->sprite.getPosition().x - camera.getCenter().x)
-                    / 5.f;
+        movement.x = (player->sprite.getPosition().x - camera.getCenter().x)
+                     / 5.f;
 
     //Controla o movimento ao longo de y.
     if ((player->sprite.getPosition().y + offset > camera.getSize().y / 2)
         && (player->sprite.getPosition().y - offset
             < cameraBounds.height - camera.getSize().y / 2))
-        movment.y = (player->sprite.getPosition().y - camera.getCenter().y)
-                    / 5.f;
+        movement.y = (player->sprite.getPosition().y - camera.getCenter().y)
+                     / 5.f;
 
-    //Vers�o do movimento sem controle de bordas
-    //movment = (anjinho->sprite.getPosition()- camera.getCenter())/ 5.f;
-    camera.move(movment);
+    camera.move(movement);
 }
 
 void Game::Render(sf::RenderTarget *target) {
