@@ -48,6 +48,13 @@ void Game::carregaAssets() {
     _textura.setSmooth(true);
     resources->addTextura("Angel", _textura);
 
+//    if (!image.loadFromFile("Assets/Angel/Angel_Life.png")) {
+//        std::cerr << "Erro carregando imagem Angel_Life.png" << std::endl;
+//    }
+//    _textura.loadFromImage(image);
+//    _textura.setSmooth(true);
+//    resources->addTextura("HP_Point", _textura);
+
     if (!image.loadFromFile("Assets/Enemy/Enemy.png")) {
         std::cerr << "Erro carregando imagem Enemy.png" << std::endl;
     }
@@ -64,8 +71,8 @@ void Game::carregaAssets() {
     _textura.setSmooth(true);
     resources->addTextura("Vilages", _textura);
 
-    resources->addMusics("musicFilmore",
-                         "Assets/Music/15-Birth-of-the-People.ogg");
+    resources->addMusics("musicFilmore","Assets/Music/15-Birth-of-the-People.ogg");
+    resources->addSoundEfects("Arrow", "Assets/Sounds/Arrow_Release.wav");
 
 }
 

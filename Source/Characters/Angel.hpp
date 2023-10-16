@@ -50,4 +50,5 @@ private:
 
   void ShootArrow(const sf::Vector2f &playerPosition);
 
+  void PlayArrowSound();
 };

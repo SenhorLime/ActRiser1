@@ -111,8 +111,13 @@ void Angel::MoveCharacter() {
     SetMovementDirection(movement);
 }
 
-void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
+void Angel::PlayArrowSound() {
+    sf::SoundBuffer* arrowShoot = ResourceLoader::getResourceLoader()->getSoundEfects("Arrow");
 
+    ResourceLoader::getResourceLoader()->PlaySoundEffect(arrowShoot);
+}
+
+void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
     if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
         Arrow *arrow = new Arrow(playerPosition, shootDirection);
         Game::getGame()->charactersVector.push_back(arrow);
@@ -120,6 +125,7 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
         cooldownCount.restart();
     }
 
+    PlayArrowSound();
 }
 
 void Angel::UpdateDeltaTime(float &dt) {

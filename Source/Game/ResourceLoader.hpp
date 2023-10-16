@@ -18,34 +18,39 @@
 
 class ResourceLoader {
 public:
+  static ResourceLoader *instance;
 
-	static ResourceLoader *instance;
+  std::map<std::string, sf::Texture> textureMap;
+  std::map<std::string, sf::SoundBuffer *> soundMap;
+  std::map<std::string, sf::Music *> musicMap;
 
-	std::map<std::string, sf::Texture> textureMap;
-	std::map<std::string, sf::Sound> soundMap;
-	std::map<std::string, sf::Music *> musicMap;
+  sf::Sound soundEffects;
+  sf::Music musics;
+  sf::Texture textura;
 
+  ResourceLoader();
 
-	sf::Sound sondEfects;
-	sf::Music musics;
-	sf::Texture textura;
+  static ResourceLoader *getResourceLoader();
 
-	ResourceLoader();
-	static ResourceLoader * getResourceLoader();
+  virtual ~ResourceLoader();
 
-	virtual ~ResourceLoader();
-	sf::Music * getMusics(std::string nome) ;
-	void addMusics(std::string nome, std::string path);
+  sf::Music *getMusics(std::string nome);
 
-	sf::Sound * getSondEfects(std::string nome) ;
-	void addSondEfects(std::string nome, std::string path);
+  void addMusics(std::string nome, std::string path);
 
-	sf::Texture * getTextura(std::string nome);
-	void addTextura(std::string nome, std::string path);
-	void addTextura(std::string nome, sf::Texture & texture);
+  sf::SoundBuffer *getSoundEfects(std::string nome);
 
-	private:
+  void addSoundEfects(std::string nome, std::string path);
 
+  virtual void PlaySoundEffect(sf::SoundBuffer *soundEffect);
+
+  sf::Texture *getTextura(std::string nome);
+
+  void addTextura(std::string nome, std::string path);
+
+  void addTextura(std::string nome, sf::Texture &texture);
+
+private:
 };
 
 #endif /* SOURCE_GAME_RESOURCELOADER_HPP_ */

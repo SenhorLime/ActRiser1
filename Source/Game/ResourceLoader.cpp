@@ -16,66 +16,82 @@ ResourceLoader::ResourceLoader() {
 
 }
 
-ResourceLoader* ResourceLoader::getResourceLoader() {
-	if (instance == nullptr) {
-		instance = new ResourceLoader();
-	}
-	return instance;
+ResourceLoader *ResourceLoader::getResourceLoader() {
+    if (instance == nullptr) {
+        instance = new ResourceLoader();
+    }
+    return instance;
 }
 
-sf::Music* ResourceLoader::getMusics(std::string nome) {
-	auto it = musicMap.find(nome);
-		if (it == musicMap.end()) {
-			std::cerr << "Não foi possivel abrir a textura " << nome << "."
-					<< std::endl;
-			return nullptr;
-		}
-		return ((it->second));
+sf::Music *ResourceLoader::getMusics(std::string nome) {
+    auto it = musicMap.find(nome);
+    if (it == musicMap.end()) {
+        std::cerr << "Nï¿½o foi possivel abrir a textura " << nome << "."
+                  << std::endl;
+        return nullptr;
+    }
+    return ((it->second));
 }
 
 void ResourceLoader::addMusics(std::string nome, std::string path) {
-	sf::Music * _music = new sf::Music();
-	if (!_music->openFromFile(path)) {
-		std::cerr << "Não foi possivel adicionar a música: " << nome
-				<< ". Local:" << path << std::endl;
-	}
-	musicMap.insert( { nome, _music});
+    sf::Music *_music = new sf::Music();
+    if (!_music->openFromFile(path)) {
+        std::cerr << "Nï¿½o foi possivel adicionar a mï¿½sica: " << nome
+                  << ". Local:" << path << std::endl;
+    }
+    musicMap.insert({nome, _music});
 }
 
-sf::Sound* ResourceLoader::getSondEfects(std::string nome) {
-	return &sondEfects;
+sf::SoundBuffer *ResourceLoader::getSoundEfects(std::string nome) {
+    auto it = soundMap.find(nome);
+    if (it == soundMap.end()) {
+        std::cerr << "Nï¿½o foi possivel abrir a textura " << nome << "."
+                  << std::endl;
+        return nullptr;
+    }
+    return ((it->second));
 }
 
-void ResourceLoader::addSondEfects(std::string nome, std::string path) {
-	this->sondEfects = sondEfects;
+void ResourceLoader::addSoundEfects(std::string nome, std::string path) {
+    sf::SoundBuffer *_soundEffect = new sf::SoundBuffer();
+    if (!_soundEffect->loadFromFile(path)) {
+        std::cerr << "Nï¿½o foi possivel adicionar a mï¿½sica: " << nome
+                  << ". Local:" << path << std::endl;
+    }
+    soundMap.insert({nome, _soundEffect});
 }
 
-sf::Texture * ResourceLoader::getTextura(std::string nome)  {
-	auto it = textureMap.find(nome);
-	if (it == textureMap.end()) {
-		std::cerr << "Não foi possivel abrir a textura " << nome << "."
-				<< std::endl;
-		return nullptr;
-	}
+void ResourceLoader::PlaySoundEffect(sf::SoundBuffer *soundEffect) {
+    soundEffects.setBuffer(*soundEffect);
+    soundEffects.play();
+}
 
-  return ( &( textureMap[nome]));
+sf::Texture *ResourceLoader::getTextura(std::string nome) {
+    auto it = textureMap.find(nome);
+    if (it == textureMap.end()) {
+        std::cerr << "Nï¿½o foi possivel abrir a textura " << nome << "."
+                  << std::endl;
+        return nullptr;
+    }
+
+    return (&(textureMap[nome]));
 }
 
 void ResourceLoader::addTextura(std::string nome, std::string path) {
-	sf::Texture _texture;
-	if (!_texture.loadFromFile(path)) {
-		std::cerr << "Não foi possivel adicionar a textura: " << nome
-				<< ". Local:" << path << std::endl;
-	}
-	addTextura(nome, _texture);
+    sf::Texture _texture;
+    if (!_texture.loadFromFile(path)) {
+        std::cerr << "Nï¿½o foi possivel adicionar a textura: " << nome
+                  << ". Local:" << path << std::endl;
+    }
+    addTextura(nome, _texture);
 }
 
-void ResourceLoader::addTextura(std::string nome, sf::Texture & texture){
-	textureMap.insert( { nome, sf::Texture(texture) });
+void ResourceLoader::addTextura(std::string nome, sf::Texture &texture) {
+    textureMap.insert({nome, sf::Texture(texture)});
 }
 
 
 ResourceLoader::~ResourceLoader() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
