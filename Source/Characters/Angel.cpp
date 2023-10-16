@@ -119,7 +119,7 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
         cooldownCount.restart();
     }
 
-    PlaySoundEffect(resourceLoader->getSoundEfects("Arrow"));
+    SoundManager::SoundPlayer()->PlaySoundEffect("Arrow");
 }
 
 void Angel::UpdateDeltaTime(float &dt) {

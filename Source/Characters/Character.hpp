@@ -6,7 +6,7 @@
 
 #include "GameObject.hpp"
 #include "Animation.hpp"
-#include "../Game/ResourceLoader.hpp"
+#include "../Game/SoundManager.hpp"
 
 class Character : public GameObject {
 public:
@@ -38,6 +38,4 @@ protected:
   void CropSprites(sf::IntRect spriteRect) override;
 
   virtual void MoveCharacther(sf::Vector2f movement);
-
-  virtual void PlaySoundEffect(sf::SoundBuffer* soundEffect);
 };

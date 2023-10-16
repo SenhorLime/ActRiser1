@@ -61,11 +61,6 @@ void ResourceLoader::addSoundEfects(std::string nome, std::string path) {
     soundMap.insert({nome, _soundEffect});
 }
 
-void ResourceLoader::PlaySoundEffect(sf::SoundBuffer *soundEffect) {
-    soundEffects.setBuffer(*soundEffect);
-    soundEffects.play();
-}
-
 sf::Texture *ResourceLoader::getTextura(std::string nome) {
     auto it = textureMap.find(nome);
     if (it == textureMap.end()) {

@@ -42,8 +42,6 @@ public:
 
   void addSoundEfects(std::string nome, std::string path);
 
-  virtual void PlaySoundEffect(sf::SoundBuffer *soundEffect);
-
   sf::Texture *getTextura(std::string nome);
 
   void addTextura(std::string nome, std::string path);

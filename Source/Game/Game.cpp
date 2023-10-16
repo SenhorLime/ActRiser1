@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "Collision.hpp"
-#include "./ResourceLoader.hpp"
+#include "ResourceLoader.hpp"
+#include "SoundManager.hpp"
 
 #include <iostream>
 #include <typeinfo>
@@ -71,7 +72,7 @@ void Game::carregaAssets() {
     _textura.setSmooth(true);
     resources->addTextura("Vilages", _textura);
 
-    resources->addMusics("musicFilmore","Assets/Music/15-Birth-of-the-People.ogg");
+    resources->addMusics("musicFilmore", "Assets/Music/15-Birth-of-the-People.ogg");
     resources->addSoundEfects("Arrow", "Assets/Sounds/Arrow_Release.wav");
 
 }
@@ -93,9 +94,7 @@ void Game::Init() {
     ldtk::Entity &NapperBatLair = charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
     //---------------------------------------------------//
 
-    backgroundMusic = ResourceLoader::resourceLoader()->getMusics(
-        "musicFilmore");
-    GameMusic(backgroundMusic);
+    SoundManager::SoundPlayer()->PlayMusic("musicFilmore");
 
     player = new Angel();
     charactersVector.push_back(player);
