@@ -10,8 +10,6 @@ sf::FloatRect Character::getMyBounds() {
 	} else {
 		return animatedSprite.getGlobalBounds();
 	}
-
-	//if (typeid(*this) == typeid(Arrow)) {std::cout<< "Arrow" << std::endl;}
 }
 
 void Character::UpdateDeltaTime(float &dt) {
@@ -61,6 +59,10 @@ void Character::takeDamage(int value) {
     if (hitPoints <= 0) {
         ativo = false;
     }
+}
+
+void Character::PlaySoundEffect(sf::SoundBuffer* soundEffect) {
+    ResourceLoader::resourceLoader()->PlaySoundEffect(soundEffect);
 }
 
 Character::~Character() {

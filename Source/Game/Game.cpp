@@ -35,7 +35,7 @@ void Game::GameMusic(sf::Music *backgroundMusic) {
 }
 
 void Game::carregaAssets() {
-    ResourceLoader *resources = ResourceLoader::getResourceLoader();
+    ResourceLoader *resources = ResourceLoader::resourceLoader();
 
     sf::Image image;
     if (!image.loadFromFile("Assets/Angel/angel.png")) {
@@ -93,7 +93,7 @@ void Game::Init() {
     ldtk::Entity &NapperBatLair = charactherSpawns.getEntitiesByName("Napper_Bat")[0].get();
     //---------------------------------------------------//
 
-    backgroundMusic = ResourceLoader::getResourceLoader()->getMusics(
+    backgroundMusic = ResourceLoader::resourceLoader()->getMusics(
         "musicFilmore");
     GameMusic(backgroundMusic);
 

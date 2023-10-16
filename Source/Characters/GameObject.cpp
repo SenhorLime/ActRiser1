@@ -8,7 +8,7 @@
 #include "GameObject.hpp"
 
 void GameObject::LoadTextures(std::string textureName) {
-  _texture = ResourceLoader::getResourceLoader()->getTextura(textureName);
+  _texture = resourceLoader->getTextura(textureName);
 }
 
 void GameObject::SetSprites() {

@@ -16,7 +16,7 @@ ResourceLoader::ResourceLoader() {
 
 }
 
-ResourceLoader *ResourceLoader::getResourceLoader() {
+ResourceLoader *ResourceLoader::resourceLoader() {
     if (instance == nullptr) {
         instance = new ResourceLoader();
     }

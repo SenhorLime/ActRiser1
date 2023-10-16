@@ -23,7 +23,7 @@ void NapperBat::initEnemy() {
     //CropSprites(sf::IntRect(1, 2, 14, 14));
     //SetScale(sf::Vector2f(0.65f, 0.65f));
 
-    _texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");
+    _texture = resourceLoader->getTextura("Enemy");
 
 
     Animation walkLeft(_texture);

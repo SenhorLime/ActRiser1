@@ -20,7 +20,7 @@ Angel::Angel() {
 void Angel::defineAnimacoes() {
     //load of the texture image
 
-    _texture = ResourceLoader::getResourceLoader()->getTextura("Angel");
+    _texture = resourceLoader->getTextura("Angel");
 
     //Criando uma anima��o  para cada status
     //MoveUp, MoveDown, Stopped, MoveRight, MoveLeft, ShootUp, ShootDown, ShootRight, ShootLeft, SendPower
@@ -111,12 +111,6 @@ void Angel::MoveCharacter() {
     SetMovementDirection(movement);
 }
 
-void Angel::PlayArrowSound() {
-    sf::SoundBuffer* arrowShoot = ResourceLoader::getResourceLoader()->getSoundEfects("Arrow");
-
-    ResourceLoader::getResourceLoader()->PlaySoundEffect(arrowShoot);
-}
-
 void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
     if (cooldownCount.getElapsedTime().asSeconds() >= cooldownTime) {
         Arrow *arrow = new Arrow(playerPosition, shootDirection);
@@ -125,7 +119,7 @@ void Angel::ShootArrow(const sf::Vector2f &playerPosition) {
         cooldownCount.restart();
     }
 
-    PlayArrowSound();
+    PlaySoundEffect(resourceLoader->getSoundEfects("Arrow"));
 }
 
 void Angel::UpdateDeltaTime(float &dt) {

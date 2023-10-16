@@ -28,6 +28,7 @@ public:
 protected:
   float deltaTime;
   sf::Texture *_texture;
+  ResourceLoader* resourceLoader = ResourceLoader::resourceLoader();
 
 protected:
   virtual void SetSprites();

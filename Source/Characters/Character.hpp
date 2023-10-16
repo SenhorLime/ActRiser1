@@ -39,4 +39,5 @@ protected:
 
   virtual void MoveCharacther(sf::Vector2f movement);
 
+  virtual void PlaySoundEffect(sf::SoundBuffer* soundEffect);
 };

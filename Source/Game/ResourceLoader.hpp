@@ -30,7 +30,7 @@ public:
 
   ResourceLoader();
 
-  static ResourceLoader *getResourceLoader();
+  static ResourceLoader *resourceLoader();
 
   virtual ~ResourceLoader();
 

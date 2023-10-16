@@ -23,7 +23,7 @@ void BlueDragon::initEnemy() {
     //CropSprites(sf::IntRect(1, 2, 14, 14));
     //SetScale(sf::Vector2f(0.65f, 0.65f));
 
-    _texture = ResourceLoader::getResourceLoader()->getTextura("Enemy");;
+    _texture = resourceLoader->getTextura("Enemy");;
 
     Animation walkLeft(_texture);
     walkLeft.addFrames(sf::IntRect(142, 16, 19, 16), 1, 2);
