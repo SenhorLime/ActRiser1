@@ -6,8 +6,7 @@
  */
 
 #include "Animation.hpp"
-#include "NapperBat.hpp"
-#include "Angel.hpp"
+#include "Enemies/Includes/NapperBat.hpp"
 
 Animation::Animation(sf::Texture *texture) :
 		_texture(texture) {

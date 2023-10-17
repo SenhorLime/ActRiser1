@@ -6,17 +6,23 @@
  */
 
 #pragma once
+// #define FASE_TESTE
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include "Animation.hpp"
+#include "../Game/SoundManager.hpp"
 #include "../Game/ResourceLoader.hpp"
 
 class GameObject {
 public:
+  bool ativo = true;
   sf::Sprite sprite;
+  AnimatedSprite animatedSprite;
+  std::map<std::string, Animation> animacoes;
 
 public:
   virtual void UpdateDeltaTime(float &dt);
@@ -33,9 +39,5 @@ protected:
 protected:
   virtual void SetSprites();
 
-  virtual void LoadTextures(std::string textureName);
-
   virtual void CropSprites(sf::IntRect spriteRect);
-
-  virtual void SetScale(sf::Vector2f spriteScale);
 };

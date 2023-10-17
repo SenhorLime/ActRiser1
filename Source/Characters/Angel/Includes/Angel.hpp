@@ -3,9 +3,9 @@
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Clock.hpp>
-#include "Character.hpp"
-#include "Arrow.hpp"
 
+#include "Arrow.hpp"
+#include "../../Character.hpp"
 
 class Angel : public Character {
 public:
@@ -40,6 +40,8 @@ public:
   bool CanTakeDamage();
 
   sf::Vector2f GetPostion();
+
+  void takeDamage(int) override;
 
 private:
   void SetMovementDirection(sf::Vector2f &direction);

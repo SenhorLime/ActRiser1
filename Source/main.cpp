@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-
 int main() {
 
 	// Initializing the game from the LDtk project data

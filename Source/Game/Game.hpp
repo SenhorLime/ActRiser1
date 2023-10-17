@@ -18,11 +18,12 @@
 #include <SFML/Audio/Music.hpp>
 
 #include "../GameMap/TileMap.hpp"
-#include "../Characters/Angel.hpp"
+
 #include "../Characters/Enemy.hpp"
-#include "../Characters/NapperBat.hpp"
-#include "../Characters/BlueDragon.hpp"
-#include "../Characters/RedDemon.hpp"
+#include "../Characters/Angel/Includes/Angel.hpp"
+#include "../Characters/Enemies/Includes/NapperBat.hpp"
+#include "../Characters/Enemies/Includes/BlueDragon.hpp"
+#include "../Characters/Enemies/Includes/RedDemon.hpp"
 
 
 class Game {

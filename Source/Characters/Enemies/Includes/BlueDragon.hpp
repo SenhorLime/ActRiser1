@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enemy.hpp"
+#include "../../Enemy.hpp"
 
 class BlueDragon : public Enemy {
 public:

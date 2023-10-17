@@ -1,10 +1,10 @@
-#include "Angel.hpp"
-#include "../Game/Game.hpp"
-#include "../Game/ResourceLoader.hpp"
+#include "../../Game/Game.hpp"
+#include "Includes/Angel.hpp"
+
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
-#include <SFML/Graphics/rect.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 Angel::Angel() {
     cooldownTime = 1.f;
@@ -214,6 +214,13 @@ void Angel::SetMovementDirection(sf::Vector2f &direction) {
     }
 
     MoveCharacther(movement);
+}
+
+void Angel::takeDamage(int value) {
+    hitPoints -= value;
+//    if (hitPoints <= 0) {
+//        ativo = false;
+//    }
 }
 
 bool Angel::CanTakeDamage() {

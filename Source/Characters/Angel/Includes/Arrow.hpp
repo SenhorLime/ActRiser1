@@ -3,7 +3,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "Character.hpp"
+
+#include "../../Character.hpp"
 
 
 class Arrow: public Character {

@@ -5,23 +5,12 @@
 #include <vector>
 
 #include "GameObject.hpp"
-#include "Animation.hpp"
-#include "../Game/SoundManager.hpp"
 
 class Character : public GameObject {
-public:
-  bool ativo = true; // Vari�vel para retirar objeto do jogo.
-  //Para anima��es
-  AnimatedSprite animatedSprite;
-  std::map<std::string, Animation> animacoes;
-
-
 public:
   virtual sf::FloatRect getMyBounds();
 
   void UpdateDeltaTime(float &dt) override;
-
-  void Draw(sf::RenderTarget *target) override;
 
   virtual void takeDamage(int);
 

@@ -13,7 +13,9 @@
 #include <memory>
 #include <iostream>
 
-#include <SFML/Audio.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 class ResourceLoader {

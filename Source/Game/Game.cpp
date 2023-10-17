@@ -155,13 +155,13 @@ void Game::run() {
 }
 
 void Game::Update(float &deltaTime) {
-    static long i = 0;
-//    std::cout << "Iteração: " << i++ << std::endl;
+//    static long i = 0;
+//    std::cout << "Iteraï¿½ï¿½o: " << i++ << std::endl;
     for (Character *personagem: charactersVector) {
         personagem->UpdateDeltaTime(deltaTime);
     }
 
-    //todo[estabelecer colisões]
+    //todo[estabelecer colisï¿½es]
     for (std::list<Enemy *>::iterator itEnemy = enemyVector.begin();
          itEnemy != enemyVector.end(); ++itEnemy) {
         Enemy *enemy = *itEnemy;
@@ -172,7 +172,9 @@ void Game::Update(float &deltaTime) {
 
         if (enemy->getMyBounds().intersects(player->getMyBounds()) and player->CanTakeDamage()) {
             player->takeDamage(enemy->GetDamage());
+#ifdef FASE_TESTE
             std::cout << typeid(*player).name() << " colidiu com " << typeid(*enemy).name() << std::endl;
+#endif
             continue;
         }
 
@@ -187,7 +189,9 @@ void Game::Update(float &deltaTime) {
                 arrow->ativo = false;
                 arrowVector.erase(itArrow);
                 enemy->takeDamage(1);
+#ifdef FASE_TESTE
                 std::cout << typeid(*arrow).name() << " colidiu com " << typeid(*enemy).name() << std::endl;
+#endif
             }
 
         }
